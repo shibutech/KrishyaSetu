@@ -62,6 +62,14 @@ def serve_home():
         return FileResponse(index_path)
     return {"message": "Frontend not found"}
 
+@app.get("/index.html")
+def index():
+    return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
+
+@app.get("/splash.html")
+def splash():
+    return FileResponse(os.path.join(FRONTEND_DIR, "splash.html"))
+
 @app.get("/health")
 async def health():
     return {"status": "ok"}
