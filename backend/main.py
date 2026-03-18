@@ -70,6 +70,62 @@ def index():
 def splash():
     return FileResponse(os.path.join(FRONTEND_DIR, "splash.html"))
 
+@app.get("/language.html")
+def language():
+    return FileResponse(os.path.join(FRONTEND_DIR, "language.html"))
+
+@app.get("/signup.html")
+def signup():
+    return FileResponse(os.path.join(FRONTEND_DIR, "signup.html"))
+
+@app.get("/login.html")
+def login():
+    return FileResponse(os.path.join(FRONTEND_DIR, "login.html"))
+
+@app.get("/permissions.html")
+def permissions():
+    return FileResponse(os.path.join(FRONTEND_DIR, "permissions.html"))
+
+@app.get("/navbar.html")
+def navbaer():
+    return FileResponse(os.path.join(FRONTEND_DIR, "navbar.html"))
+
+@app.get("/dashboard.html")
+def dashboard():
+    return FileResponse(os.path.join(FRONTEND_DIR, "dashboard.html"))
+
+@app.get("/market.html")
+def market():
+    return FileResponse(os.path.join(FRONTEND_DIR, "market.html"))
+
+@app.get("/arscan.html")
+def arscan():
+    return FileResponse(os.path.join(FRONTEND_DIR, "arscan.html"))
+
+@app.get("/chatbot.html")
+def chatbot():
+    return FileResponse(os.path.join(FRONTEND_DIR, "chatbot.html"))
+
+@app.get("/pest.html")
+def pest():
+    return FileResponse(os.path.join(FRONTEND_DIR, "pest.html"))
+
+@app.get("/soil.html")
+def soil():
+    return FileResponse(os.path.join(FRONTEND_DIR, "soil.html"))
+
+@app.get("/calendar.html")
+def calendar():
+    return FileResponse(os.path.join(FRONTEND_DIR, "calendar.html"))
+
+@app.get("/reports.html")
+def reports():
+    return FileResponse(os.path.join(FRONTEND_DIR, "reports.html"))
+
+@app.get("/profile.html")
+def profile():
+    return FileResponse(os.path.join(FRONTEND_DIR, "profile.html"))
+
 @app.get("/health")
 async def health():
     return {"status": "ok"}
