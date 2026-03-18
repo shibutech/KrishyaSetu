@@ -61,7 +61,7 @@ async function getCacheSize() {
     const cache = await caches.open(CACHE_NAME);
     const requests = await cache.keys();
     let totalSize = 0;
-    
+
     for (const request of requests) {
         const response = await cache.match(request);
         if (response) {
@@ -70,7 +70,7 @@ async function getCacheSize() {
             totalSize += blob.size;
         }
     }
-    
+
     return totalSize;
 }
 
@@ -78,7 +78,7 @@ async function cleanupExpiredCache() {
     const cache = await caches.open(CACHE_NAME);
     const requests = await cache.keys();
     const now = Date.now();
-    
+
     for (const request of requests) {
         const response = await cache.match(request);
         if (response && response.headers.get('date')) {
@@ -93,20 +93,20 @@ async function cleanupExpiredCache() {
 
 async function enforceCacheSizeLimit() {
     const currentSize = await getCacheSize();
-    
+
     if (currentSize > MAX_CACHE_SIZE) {
         const cache = await caches.open(CACHE_NAME);
         const requests = await cache.keys();
-        
+
         // Sort by last modified (if available) or URL
         requests.sort((a, b) => a.localeCompare(b));
-        
+
         // Remove oldest entries until under limit
         while (currentSize > MAX_CACHE_SIZE * 0.8 && requests.length > 0) {
             const oldestRequest = requests.shift();
             await cache.delete(oldestRequest);
             console.log('Cache size limit exceeded, removed:', oldestRequest);
-            
+
             // Recalculate size
             const response = await cache.match(oldestRequest);
             if (response) {
@@ -126,18 +126,18 @@ function shouldCacheUpdate(url) {
         'googleapis.com',
         'openweathermap.org'
     ];
-    
+
     return !dynamicPatterns.some(pattern => url.includes(pattern));
 }
 
 function getCacheStrategy(request) {
     const url = request.url;
-    
+
     // Network-first for dynamic content
     if (!shouldCacheUpdate(url)) {
         return 'network-first';
     }
-    
+
     // Cache-first for static assets
     return 'cache-first';
 }
@@ -181,7 +181,7 @@ self.addEventListener('fetch', (event) => {
                             if (!networkResponse || networkResponse.status !== 200) {
                                 return cachedResponse || networkResponse;
                             }
-                            
+
 
                             // Cache successful network response
                             const responseToCache = networkResponse.clone();
@@ -189,7 +189,7 @@ self.addEventListener('fetch', (event) => {
                                 .then((cache) => {
                                     cache.put(event.request, responseToCache);
                                 });
-                            
+
 
                             return networkResponse;
                         })
@@ -219,24 +219,18 @@ self.addEventListener('fetch', (event) => {
                         }
 
                         // Clone response to put in cache
-                        const responseToCache = networkResponse.clone();
+
 
                         // Cache response for future use
                         caches.open(CACHE_NAME)
                             .then((cache) => {
                                 // Add timestamp for expiry tracking
-                                const responseToCache = networkResponse.clone();
-                                const headers = new Headers(responseToCache.headers);
-                                headers.set('date', new Date().toUTCString());
-                                headers.set('cache-timestamp', Date.now().toString());
-                                
-                                const cachedResponse = new Response(responseToCache.body, {
-                                    status: responseToCache.status,
-                                    statusText: responseToCache.statusText,
-                                    headers: headers
-                                });
-                                
-                                return cache.put(event.request, cachedResponse);
+                                const responseClone = networkResponse.clone();
+
+                                caches.open(CACHE_NAME)
+                                    .then((cache) => {
+                                        cache.put(event.request, responseClone);
+                                    });
                             });
 
                         return networkResponse;
