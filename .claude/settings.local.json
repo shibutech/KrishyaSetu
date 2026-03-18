@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la | findstr package)",
+      "Bash(dir package.json)",
+      "Bash(dir *.js)",
+      "Bash(npx http-server:*)",
+      "Bash(start frontend/index.html)"
+    ]
+  }
+}

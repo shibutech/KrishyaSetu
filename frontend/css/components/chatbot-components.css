@@ -1,0 +1,901 @@
+/*
+===========================================
+KRISHYASETU CHATBOT COMPONENTS
+===========================================
+Components for AI chatbot and voice interface
+===========================================
+*/
+
+/* ========================================
+CHAT WINDOW COMPONENTS
+======================================= */
+
+/* Chat Container */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Chat Header */
+.chat-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+}
+
+.chat-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.chat-info {
+    flex: 1;
+}
+
+.chat-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 2px 0;
+}
+
+.chat-status {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.status-indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--success);
+}
+
+.status-indicator.away {
+    background: var(--warning);
+}
+
+.status-indicator.offline {
+    background: var(--text-muted);
+}
+
+.chat-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.chat-action-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--bg-primary);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.chat-action-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+/* Chat Messages */
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chat-messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* Message Bubble */
+.message {
+    display: flex;
+    gap: 8px;
+    max-width: 80%;
+}
+
+.message.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.message.bot {
+    align-self: flex-start;
+}
+
+.message-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.message.user .message-avatar {
+    background: var(--accent);
+    color: white;
+}
+
+.message.bot .message-avatar {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.message-bubble {
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.message.user .message-bubble {
+    background: var(--accent);
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.message.bot .message-bubble {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-bottom-left-radius: 4px;
+}
+
+.message-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin: 0 4px;
+}
+
+.message.user .message-time {
+    text-align: right;
+}
+
+.message.bot .message-time {
+    text-align: left;
+}
+
+/* Message States */
+.message-typing {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 16px;
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    border-bottom-left-radius: 4px;
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    animation: typing-bounce 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes typing-bounce {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ========================================
+VOICE INPUT COMPONENTS
+======================================= */
+
+/* Voice Input Container */
+.voice-input-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+}
+
+.voice-input-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-primary);
+    border: 2px solid var(--border);
+    border-radius: 24px;
+    padding: 8px 16px;
+    transition: all 0.3s ease;
+}
+
+.voice-input-wrapper:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+.voice-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+}
+
+.voice-input::placeholder {
+    color: var(--text-placeholder);
+}
+
+/* Voice Recording Button */
+.voice-record-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.voice-record-btn:hover {
+    background: var(--accent-hover);
+    transform: scale(1.05);
+}
+
+.voice-record-btn.recording {
+    background: var(--error);
+    animation: recording-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes recording-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
+/* Voice Wave Animation */
+.voice-wave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--error);
+    opacity: 0;
+    animation: voice-wave 1.5s ease-out infinite;
+}
+
+.voice-record-btn.recording .voice-wave {
+    opacity: 1;
+}
+
+@keyframes voice-wave {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+    }
+}
+
+/* Send Button */
+.send-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.send-btn:hover {
+    background: var(--accent-hover);
+    transform: scale(1.05);
+}
+
+.send-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ========================================
+QUICK ACTIONS COMPONENTS
+======================================= */
+
+/* Quick Actions Container */
+.quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+}
+
+.quick-actions-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+}
+
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 8px;
+}
+
+.quick-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--text-primary);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.quick-action-btn:hover {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.quick-action-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.quick-action-text {
+    flex: 1;
+    font-weight: 500;
+}
+
+/* ========================================
+CHAT SUGGESTIONS COMPONENTS
+======================================= */
+
+/* Suggestions Container */
+.chat-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+}
+
+.suggestion-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    color: var(--text-primary);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.suggestion-chip:hover {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+.suggestion-icon {
+    font-size: 14px;
+}
+
+/* ========================================
+VOICE OUTPUT COMPONENTS
+======================================= */
+
+/* Voice Output Controls */
+.voice-output {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--bg-secondary);
+    border-radius: 20px;
+    margin: 8px 16px;
+}
+
+.voice-play-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.voice-play-btn:hover {
+    background: var(--accent-hover);
+}
+
+.voice-play-btn.playing {
+    background: var(--error);
+}
+
+.voice-speed {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.speed-control {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.speed-btn {
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: var(--bg-primary);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    font-size: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.speed-btn:hover {
+    background: var(--bg-hover);
+}
+
+.speed-btn.active {
+    background: var(--accent);
+    color: white;
+}
+
+/* ========================================
+CHAT HISTORY COMPONENTS
+======================================= */
+
+/* Chat History List */
+.chat-history {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 8px;
+}
+
+.chat-history-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.chat-history-item:hover {
+    background: var(--bg-hover);
+    transform: translateX(4px);
+}
+
+.chat-history-preview {
+    flex: 1;
+    min-width: 0;
+}
+
+.chat-history-question {
+    font-size: 12px;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chat-history-answer {
+    font-size: 11px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chat-history-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+/* ========================================
+SPECIAL MESSAGE TYPES
+======================================= */
+
+/* Weather Message */
+.weather-message {
+    background: linear-gradient(135deg, var(--info), var(--accent));
+    color: white;
+    padding: 16px;
+    border-radius: 12px;
+    margin: 8px 0;
+}
+
+.weather-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.weather-icon {
+    font-size: 24px;
+}
+
+.weather-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.weather-details {
+    font-size: 12px;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+/* Market Price Message */
+.market-message {
+    background: linear-gradient(135deg, var(--success), var(--accent));
+    color: white;
+    padding: 16px;
+    border-radius: 12px;
+    margin: 8px 0;
+}
+
+.market-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.market-icon {
+    font-size: 24px;
+}
+
+.market-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.market-details {
+    font-size: 12px;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.price-change {
+    font-weight: 600;
+}
+
+.price-change.up {
+    color: #10b981;
+}
+
+.price-change.down {
+    color: #ef4444;
+}
+
+/* Disease Alert Message */
+.disease-message {
+    background: linear-gradient(135deg, var(--error), var(--warning));
+    color: white;
+    padding: 16px;
+    border-radius: 12px;
+    margin: 8px 0;
+}
+
+.disease-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.disease-icon {
+    font-size: 24px;
+}
+
+.disease-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.disease-details {
+    font-size: 12px;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+/* ========================================
+RESPONSIVE DESIGN
+======================================= */
+
+@media (max-width: 768px) {
+    .chat-container {
+        height: 400px;
+    }
+    
+    .chat-header {
+        padding: 12px;
+    }
+    
+    .chat-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+    }
+    
+    .chat-name {
+        font-size: 13px;
+    }
+    
+    .chat-status {
+        font-size: 10px;
+    }
+    
+    .chat-action-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+    
+    .chat-messages {
+        padding: 12px;
+    }
+    
+    .message {
+        max-width: 90%;
+    }
+    
+    .message-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+    
+    .message-bubble {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+    
+    .voice-input-container {
+        padding: 12px;
+    }
+    
+    .voice-record-btn,
+    .send-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+    
+    .quick-actions {
+        padding: 12px;
+    }
+    
+    .quick-actions-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+    
+    .quick-action-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+    
+    .quick-action-icon {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chat-container {
+        height: 350px;
+    }
+    
+    .chat-header {
+        padding: 8px;
+    }
+    
+    .chat-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+    }
+    
+    .chat-name {
+        font-size: 12px;
+    }
+    
+    .chat-status {
+        font-size: 9px;
+    }
+    
+    .chat-action-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+    }
+    
+    .chat-messages {
+        padding: 8px;
+    }
+    
+    .message {
+        max-width: 95%;
+    }
+    
+    .message-avatar {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+    }
+    
+    .message-bubble {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+    
+    .voice-input-container {
+        padding: 8px;
+    }
+    
+    .voice-record-btn,
+    .send-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+    
+    .quick-actions {
+        padding: 8px;
+    }
+    
+    .quick-actions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .quick-action-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .quick-action-icon {
+        font-size: 16px;
+    }
+    
+    .chat-suggestions {
+        padding: 6px 12px;
+    }
+    
+    .suggestion-chip {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    .suggestion-icon {
+        font-size: 12px;
+    }
+}

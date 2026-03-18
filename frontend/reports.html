@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - KrishyaSetu</title>
+    <link rel="manifest" href="pwa/manifest.json">
+    <meta name="theme-color" content="#16a34a">
+    <link rel="stylesheet" href="css/krishyasetu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="js/common.js"></script>
+    <style>
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .chart-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.2s ease;
+        }
+
+        .chart-card:hover {
+            box-shadow: 0 4px 12px var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .chart-period {
+            display: flex;
+            gap: 4px;
+        }
+
+        .period-btn {
+            padding: 4px 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-input);
+            color: var(--text-secondary);
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .period-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .period-btn:hover:not(.active) {
+            background: var(--border);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            margin-bottom: 16px;
+        }
+
+        .chart-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 12px;
+            background: var(--bg-input);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .insights-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .insights-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .insights-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .export-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .export-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .insight-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg-input);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .insight-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-light-bg);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .insight-content {
+            flex: 1;
+        }
+
+        .insight-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .insight-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-light-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 12px;
+        }
+
+        .metric-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .metric-change {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .metric-change.positive {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+
+        .metric-change.negative {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        @media (max-width: 768px) {
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .performance-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar will be loaded here -->
+
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <ul class="mobile-sidebar-links">
+            <li><a href="dashboard.html" class="mobile-sidebar-link">Dashboard</a></li>
+            <li><a href="chatbot.html" class="mobile-sidebar-link">Chatbot</a></li>
+            <li><a href="arscan.html" class="mobile-sidebar-link">AR Scan</a></li>
+            <li><a href="soil.html" class="mobile-sidebar-link">Soil Analysis</a></li>
+            <li><a href="pest.html" class="mobile-sidebar-link">Pest Detection</a></li>
+            <li><a href="calendar.html" class="mobile-sidebar-link">Calendar</a></li>
+            <li><a href="market.html" class="mobile-sidebar-link">Market</a></li>
+            <li><a href="reports.html" class="mobile-sidebar-link active">Reports</a></li>
+            <li><a href="profile.html" class="mobile-sidebar-link">Profile</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Header -->
+            <div class="welcome-section">
+                <h1 class="welcome-title">Farm Reports 📊</h1>
+                <p class="welcome-subtitle">Analytics and insights for your farming operations</p>
+            </div>
+
+            <!-- Performance Metrics -->
+            <div class="performance-metrics">
+                <div class="metric-card">
+                    <div class="metric-icon">🌾</div>
+                    <div class="metric-value">85%</div>
+                    <div class="metric-label">Crop Health Score</div>
+                    <div class="metric-change positive">+5% from last month</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">💰</div>
+                    <div class="metric-value">₹45K</div>
+                    <div class="metric-label">Monthly Revenue</div>
+                    <div class="metric-change positive">+12% from last month</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">💧</div>
+                    <div class="metric-value">72%</div>
+                    <div class="metric-label">Water Efficiency</div>
+                    <div class="metric-change positive">+3% from last month</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">🌱</div>
+                    <div class="metric-value">12</div>
+                    <div class="metric-label">Active Crops</div>
+                    <div class="metric-change negative">-2 from last month</div>
+                </div>
+            </div>
+
+            <!-- Charts Grid -->
+            <div class="reports-grid">
+                <!-- Crop Health Trends -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Crop Health Trends</h3>
+                        <div class="chart-period">
+                            <button class="period-btn active" data-period="week">Week</button>
+                            <button class="period-btn" data-period="month">Month</button>
+                            <button class="period-btn" data-period="year">Year</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="cropHealthChart"></canvas>
+                    </div>
+                    <div class="chart-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">85%</div>
+                            <div class="stat-label">Average Health</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">92%</div>
+                            <div class="stat-label">Best Performer</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Price Trends -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Market Price Trends</h3>
+                        <div class="chart-period">
+                            <button class="period-btn active" data-period="week">Week</button>
+                            <button class="period-btn" data-period="month">Month</button>
+                            <button class="period-btn" data-period="year">Year</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="marketPriceChart"></canvas>
+                    </div>
+                    <div class="chart-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">+8.5%</div>
+                            <div class="stat-label">Avg. Growth</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">₹2,850</div>
+                            <div class="stat-label">Avg. Price/Qt</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Patterns -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Weather Patterns</h3>
+                        <div class="chart-period">
+                            <button class="period-btn active" data-period="week">Week</button>
+                            <button class="period-btn" data-period="month">Month</button>
+                            <button class="period-btn" data-period="year">Year</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="weatherChart"></canvas>
+                    </div>
+                    <div class="chart-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">28°C</div>
+                            <div class="stat-label">Avg. Temperature</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">65%</div>
+                            <div class="stat-label">Avg. Humidity</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Yield Analysis -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Yield Analysis</h3>
+                        <div class="chart-period">
+                            <button class="period-btn active" data-period="week">Week</button>
+                            <button class="period-btn" data-period="month">Month</button>
+                            <button class="period-btn" data-period="year">Year</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="yieldChart"></canvas>
+                    </div>
+                    <div class="chart-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">4.2t</div>
+                            <div class="stat-label">Avg. Yield/Ha</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">+15%</div>
+                            <div class="stat-label">vs. Last Year</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Insights -->
+            <div class="insights-card">
+                <div class="insights-header">
+                    <h3 class="insights-title">🤖 AI-Powered Insights</h3>
+                    <div style="position: relative;">
+                        <button class="export-btn" id="exportBtnTrigger">
+                            <i class="fas fa-download"></i>
+                            Export Report
+                        </button>
+                        
+                        <!-- Export Modal / Dropdown -->
+                        <div id="exportModal" style="display: none; position: absolute; right: 0; top: 110%; background: var(--bg-card); border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-radius: 8px; z-index: 100; min-width: 200px;">
+                            <div style="padding: 12px 16px; border-bottom: 1px solid var(--border); font-weight: 600; font-size: 14px; color: var(--text-primary);">
+                                Save Report As
+                            </div>
+                            <button id="exportPdfBtn" style="width: 100%; text-align: left; padding: 12px 16px; background: none; border: none; cursor: pointer; color: var(--text-primary); transition: background 0.2s; border-bottom: 1px solid var(--border);">
+                                <i class="fas fa-file-pdf" style="margin-right: 8px; color: #ef4444;"></i> PDF Document (.pdf)
+                            </button>
+                            <button id="exportPrintBtn" style="width: 100%; text-align: left; padding: 12px 16px; background: none; border: none; cursor: pointer; color: var(--text-primary); transition: background 0.2s;">
+                                <i class="fas fa-print" style="margin-right: 8px; color: var(--text-secondary);"></i> Print / Save Format
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insight-item">
+                    <div class="insight-icon">🌾</div>
+                    <div class="insight-content">
+                        <div class="insight-title">Optimal Harvest Time</div>
+                        <div class="insight-description">
+                            Based on current growth patterns and weather forecasts, your wheat crop will reach optimal
+                            maturity in 12-14 days. Harvesting during this window will maximize yield quality and market
+                            value.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insight-item">
+                    <div class="insight-icon">💧</div>
+                    <div class="insight-content">
+                        <div class="insight-title">Irrigation Optimization</div>
+                        <div class="insight-description">
+                            Your current irrigation schedule could be optimized to save 15% water while maintaining crop
+                            health. Consider reducing frequency during the upcoming humid period.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insight-item">
+                    <div class="insight-icon">🐛</div>
+                    <div class="insight-content">
+                        <div class="insight-title">Pest Risk Alert</div>
+                        <div class="insight-description">
+                            Weather conditions are becoming favorable for aphid reproduction in your area. Implement
+                            preventive measures within the next 7 days to avoid potential infestation.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insight-item">
+                    <div class="insight-icon">💰</div>
+                    <div class="insight-content">
+                        <div class="insight-title">Market Opportunity</div>
+                        <div class="insight-description">
+                            Rice prices are projected to increase by 8-10% in the next 3 weeks due to seasonal demand.
+                            Consider timing your harvest to capitalize on this market trend.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // BUG 03 Fix: themeToggle and hamburger live inside the navbar injected by common.js.
+        // Apply saved theme directly; listen for the custom themeChanged event instead.
+        const html = document.documentElement;
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+
+        window.addEventListener('themeChanged', (e) => {
+            html.setAttribute('data-theme', e.detail.theme);
+        });
+
+        // Hamburger menu is handled by common.js initNavbar()
+
+        // Chart Configuration
+        const chartColors = {
+            primary: '#16a34a',
+            secondary: '#f59e0b',
+            danger: '#ef4444',
+            info: '#3b82f6',
+            grid: 'rgba(156, 163, 175, 0.1)'
+        };
+
+        // Get theme-aware colors
+        function getChartColors() {
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            return {
+                text: isDark ? '#f1f5f9' : '#0f172a',
+                grid: isDark ? 'rgba(71, 85, 105, 0.3)' : 'rgba(156, 163, 175, 0.2)'
+            };
+        }
+
+        // Crop Health Chart
+        const cropHealthCtx = document.getElementById('cropHealthChart').getContext('2d');
+        const cropHealthChart = new Chart(cropHealthCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Wheat',
+                    data: [85, 87, 86, 88, 90, 89, 92],
+                    borderColor: chartColors.primary,
+                    backgroundColor: 'rgba(22, 163, 74, 0.1)',
+                    tension: 0.4
+                }, {
+                    label: 'Rice',
+                    data: [78, 80, 82, 81, 83, 85, 84],
+                    borderColor: chartColors.secondary,
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function (value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Market Price Chart
+        const marketPriceCtx = document.getElementById('marketPriceChart').getContext('2d');
+        const marketPriceChart = new Chart(marketPriceCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Wheat', 'Rice', 'Maize', 'Cotton', 'Tomato'],
+                datasets: [{
+                    label: 'Current Price',
+                    data: [2245, 3890, 1950, 6500, 1325],
+                    backgroundColor: chartColors.primary
+                }, {
+                    label: 'Last Month',
+                    data: [2100, 3750, 2000, 6200, 1250],
+                    backgroundColor: chartColors.grid
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function (value) {
+                                return '₹' + value;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Weather Chart
+        const weatherCtx = document.getElementById('weatherChart').getContext('2d');
+        const weatherChart = new Chart(weatherCtx, {
+            type: 'line',
+            data: {
+                labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+                datasets: [{
+                    label: 'Temperature (°C)',
+                    data: [22, 21, 24, 32, 30, 25],
+                    borderColor: chartColors.danger,
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    tension: 0.4,
+                    yAxisID: 'y'
+                }, {
+                    label: 'Humidity (%)',
+                    data: [75, 78, 65, 45, 50, 70],
+                    borderColor: chartColors.info,
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    yAxisID: 'y1'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Temperature (°C)'
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'Humidity (%)'
+                        },
+                        grid: {
+                            drawOnChartArea: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Yield Chart
+        const yieldCtx = document.getElementById('yieldChart').getContext('2d');
+        const yieldChart = new Chart(yieldCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Wheat', 'Rice', 'Maize', 'Pulses', 'Vegetables'],
+                datasets: [{
+                    data: [35, 25, 20, 12, 8],
+                    backgroundColor: [
+                        chartColors.primary,
+                        chartColors.secondary,
+                        chartColors.info,
+                        chartColors.danger,
+                        '#8b5cf6'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'right'
+                    }
+                }
+            }
+        });
+
+        // Period buttons
+        document.querySelectorAll('.period-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const parent = this.parentElement;
+                parent.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // In a real app, this would update the chart data
+                console.log('Period changed to:', this.getAttribute('data-period'));
+            });
+        });
+
+        // Export functionality modal logic
+        const exportBtnTrigger = document.getElementById('exportBtnTrigger');
+        const exportModal = document.getElementById('exportModal');
+        const exportPdfBtn = document.getElementById('exportPdfBtn');
+        const exportPrintBtn = document.getElementById('exportPrintBtn');
+
+        exportBtnTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            exportModal.style.display = exportModal.style.display === 'none' ? 'block' : 'none';
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (exportModal.style.display === 'block' && !exportModal.contains(e.target) && e.target !== exportBtnTrigger) {
+                exportModal.style.display = 'none';
+            }
+        });
+
+        exportPdfBtn.addEventListener('click', () => {
+            exportModal.style.display = 'none';
+            const element = document.querySelector('.main-content .container');
+            const originalHTML = exportBtnTrigger.innerHTML;
+            exportBtnTrigger.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+            exportBtnTrigger.style.opacity = '0.7';
+            exportBtnTrigger.style.pointerEvents = 'none';
+
+            const opt = {
+                margin: 10,
+                filename: `KrishyaSetu_Report_${new Date().toISOString().split('T')[0]}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            try {
+                html2pdf().set(opt).from(element).save().then(() => {
+                    exportBtnTrigger.innerHTML = originalHTML;
+                    exportBtnTrigger.style.opacity = '1';
+                    exportBtnTrigger.style.pointerEvents = 'auto';
+                    if (window.toast) {
+                        window.toast.success('Report downloaded as PDF successfully!');
+                    }
+                }).catch(err => {
+                    console.warn('PDF export error:', err);
+                    exportBtnTrigger.innerHTML = originalHTML;
+                    exportBtnTrigger.style.opacity = '1';
+                    exportBtnTrigger.style.pointerEvents = 'auto';
+                    if (window.toast) {
+                        window.toast.error('Failed to export PDF.');
+                    }
+                });
+            } catch (err) {
+                console.warn('PDF export synchronous error:', err);
+                exportBtnTrigger.innerHTML = originalHTML;
+                exportBtnTrigger.style.opacity = '1';
+                exportBtnTrigger.style.pointerEvents = 'auto';
+                if (window.toast) {
+                    window.toast.error('Failed to export PDF.');
+                }
+            }
+        });
+
+        exportPrintBtn.addEventListener('click', () => {
+            exportModal.style.display = 'none';
+            window.print();
+        });
+        // BUG 03 + BUG 21 Fix: Update charts on theme change via themeChanged event.
+        // Guard scale access — doughnut charts (yieldChart) have no x/y scales.
+        window.addEventListener('themeChanged', () => {
+            setTimeout(() => {
+                const colors = getChartColors();
+
+                [cropHealthChart, marketPriceChart, weatherChart, yieldChart].forEach(chart => {
+                    if (chart.options.scales) {
+                        if (chart.options.scales.x) {
+                            chart.options.scales.x.ticks = chart.options.scales.x.ticks || {};
+                            chart.options.scales.x.grid = chart.options.scales.x.grid || {};
+                            chart.options.scales.x.ticks.color = colors.text;
+                            chart.options.scales.x.grid.color = colors.grid;
+                        }
+                        if (chart.options.scales.y) {
+                            chart.options.scales.y.ticks = chart.options.scales.y.ticks || {};
+                            chart.options.scales.y.grid = chart.options.scales.y.grid || {};
+                            chart.options.scales.y.ticks.color = colors.text;
+                            chart.options.scales.y.grid.color = colors.grid;
+                        }
+                    }
+                    if (chart.options.plugins && chart.options.plugins.legend) {
+                        chart.options.plugins.legend.labels = chart.options.plugins.legend.labels || {};
+                        chart.options.plugins.legend.labels.color = colors.text;
+                    }
+                    chart.update();
+                });
+            }, 100);
+        });
+
+        // Set active navigation link
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.navbar-link, .mobile-sidebar-link');
+
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath.split('/').pop()) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+
+</html>

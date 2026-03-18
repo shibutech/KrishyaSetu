@@ -1,0 +1,385 @@
+/*
+===========================================
+KRISHYASETU UTILITY CLASSES
+===========================================
+Utility classes for rapid development
+PWA-optimized with performance focus
+===========================================
+*/
+
+/* ========================================
+DISPLAY UTILITIES
+======================================= */
+
+/* Base Display */
+.block { display: block; }
+.inline { display: inline; }
+.inline-block { display: inline-block; }
+.flex { display: flex; }
+.inline-flex { display: inline-flex; }
+.grid { display: grid; }
+.inline-grid { display: inline-grid; }
+.hidden { display: none; }
+
+/* Responsive Display - Mobile First */
+.sm\:block { display: none; }
+.sm\:flex { display: none; }
+.sm\:grid { display: none; }
+.sm\:hidden { display: block; }
+
+@media (min-width: 640px) {
+    .sm\:block { display: block; }
+    .sm\:flex { display: flex; }
+    .sm\:grid { display: grid; }
+    .sm\:hidden { display: none; }
+}
+
+.md\:block { display: none; }
+.md\:flex { display: none; }
+.md\:grid { display: none; }
+.md\:hidden { display: block; }
+
+@media (min-width: 768px) {
+    .md\:block { display: block; }
+    .md\:flex { display: flex; }
+    .md\:grid { display: grid; }
+    .md\:hidden { display: none; }
+}
+
+.lg\:block { display: none; }
+.lg\:flex { display: none; }
+.lg\:grid { display: none; }
+.lg\:hidden { display: block; }
+
+@media (min-width: 1024px) {
+    .lg\:block { display: block; }
+    .lg\:flex { display: flex; }
+    .lg\:grid { display: grid; }
+    .lg\:hidden { display: none; }
+}
+
+/* ========================================
+POSITION UTILITIES
+======================================= */
+
+.static { position: static; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.sticky { position: sticky; }
+
+/* Position Offsets */
+.top-0 { top: 0; }
+.top-1 { top: 4px; }
+.top-2 { top: 8px; }
+.top-3 { top: 12px; }
+.top-4 { top: 16px; }
+.top-5 { top: 20px; }
+
+.right-0 { right: 0; }
+.right-1 { right: 4px; }
+.right-2 { right: 8px; }
+.right-3 { right: 12px; }
+.right-4 { right: 16px; }
+.right-5 { right: 20px; }
+
+.bottom-0 { bottom: 0; }
+.bottom-1 { bottom: 4px; }
+.bottom-2 { bottom: 8px; }
+.bottom-3 { bottom: 12px; }
+.bottom-4 { bottom: 16px; }
+.bottom-5 { bottom: 20px; }
+
+.left-0 { left: 0; }
+.left-1 { left: 4px; }
+.left-2 { left: 8px; }
+.left-3 { left: 12px; }
+.left-4 { left: 16px; }
+.left-5 { left: 20px; }
+
+/* Inset Utilities */
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.inset-auto { top: auto; right: auto; bottom: auto; left: auto; }
+
+/* ========================================
+OVERFLOW UTILITIES
+======================================= */
+
+.overflow-auto { overflow: auto; }
+.overflow-hidden { overflow: hidden; }
+.overflow-visible { overflow: visible; }
+.overflow-scroll { overflow: scroll; }
+.overflow-x-auto { overflow-x: auto; }
+.overflow-x-hidden { overflow-x: hidden; }
+.overflow-x-scroll { overflow-x: scroll; }
+.overflow-y-auto { overflow-y: auto; }
+.overflow-y-hidden { overflow-y: hidden; }
+.overflow-y-scroll { overflow-y: scroll; }
+
+/* Text Overflow */
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.text-ellipsis { text-overflow: ellipsis; }
+.text-clip { text-overflow: clip; }
+
+/* ========================================
+Z-INDEX UTILITIES
+======================================= */
+
+.z-auto { z-index: auto; }
+.z-0 { z-index: 0; }
+.z-10 { z-index: 10; }
+.z-20 { z-index: 20; }
+.z-30 { z-index: 30; }
+.z-40 { z-index: 40; }
+.z-50 { z-index: 50; }
+
+/* PWA-specific z-index layers */
+.z-toast { z-index: 1000; }
+.z-modal { z-index: 2000; }
+.z-dropdown { z-index: 3000; }
+.z-tooltip { z-index: 4000; }
+.z-notification { z-index: 5000; }
+
+/* ========================================
+POINTER EVENTS UTILITIES
+======================================= */
+
+.pointer-events-none { pointer-events: none; }
+.pointer-events-auto { pointer-events: auto; }
+.pointer-events-fill { pointer-events: fill; }
+.pointer-events-stroke { pointer-events: stroke; }
+
+/* Touch-friendly cursor */
+.cursor-pointer { cursor: pointer; }
+.cursor-default { cursor: default; }
+.cursor-not-allowed { cursor: not-allowed; }
+.cursor-wait { cursor: wait; }
+.cursor-help { cursor: help; }
+.cursor-text { cursor: text; }
+.cursor-move { cursor: move; }
+.cursor-grab { cursor: grab; }
+.cursor-grabbing { cursor: grabbing; }
+
+/* ========================================
+TEXT UTILITIES
+======================================= */
+
+/* Text Alignment */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+/* Text Transformation */
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+.normal-case { text-transform: none; }
+
+/* Font Weights */
+.font-thin { font-weight: 100; }
+.font-light { font-weight: 300; }
+.font-normal { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.font-extrabold { font-weight: 800; }
+.font-black { font-weight: 900; }
+
+/* Font Sizes */
+.text-xs { font-size: 12px; }
+.text-sm { font-size: 14px; }
+.text-base { font-size: 16px; }
+.text-lg { font-size: 18px; }
+.text-xl { font-size: 20px; }
+.text-2xl { font-size: 24px; }
+.text-3xl { font-size: 30px; }
+.text-4xl { font-size: 36px; }
+.text-5xl { font-size: 48px; }
+
+/* Line Heights */
+.leading-none { line-height: 1; }
+.leading-tight { line-height: 1.25; }
+.leading-snug { line-height: 1.375; }
+.leading-normal { line-height: 1.5; }
+.leading-relaxed { line-height: 1.625; }
+.leading-loose { line-height: 2; }
+
+/* Letter Spacing */
+.tracking-tighter { letter-spacing: -0.05em; }
+.tracking-tight { letter-spacing: -0.025em; }
+.tracking-normal { letter-spacing: 0; }
+.tracking-wide { letter-spacing: 0.025em; }
+.tracking-wider { letter-spacing: 0.05em; }
+.tracking-widest { letter-spacing: 0.1em; }
+
+/* Word Spacing */
+.space-x-1 > :not([hidden]) ~ :not([hidden]) { margin-left: 4px; }
+.space-x-2 > :not([hidden]) ~ :not([hidden]) { margin-left: 8px; }
+.space-x-3 > :not([hidden]) ~ :not([hidden]) { margin-left: 12px; }
+.space-x-4 > :not([hidden]) ~ :not([hidden]) { margin-left: 16px; }
+.space-x-5 > :not([hidden]) ~ :not([hidden]) { margin-left: 20px; }
+
+/* Text Decoration */
+.underline { text-decoration: underline; }
+.line-through { text-decoration: line-through; }
+.no-underline { text-decoration: none; }
+
+/* ========================================
+VISIBILITY UTILITIES
+======================================= */
+
+.visible { visibility: visible; }
+.invisible { visibility: hidden; }
+
+/* Opacity */
+.opacity-0 { opacity: 0; }
+.opacity-25 { opacity: 0.25; }
+.opacity-50 { opacity: 0.5; }
+.opacity-75 { opacity: 0.75; }
+.opacity-100 { opacity: 1; }
+
+/* ========================================
+INTERSECTION OBSERVER UTILITIES
+======================================= */
+
+/* For lazy loading and animations */
+.observe-hidden { opacity: 0; transform: translateY(20px); }
+.observe-visible { 
+    opacity: 1; 
+    transform: translateY(0); 
+    transition: opacity 0.6s ease, transform 0.6s ease; 
+}
+
+/* ========================================
+PWA SPECIFIC UTILITIES
+======================================= */
+
+/* Safe Area Support for notched devices */
+.safe-top { padding-top: env(safe-area-inset-top); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+.safe-left { padding-left: env(safe-area-inset-left); }
+.safe-right { padding-right: env(safe-area-inset-right); }
+.safe-all { 
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+}
+
+/* PWA Install Prompt */
+.pwa-install-prompt {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: var(--z-notification);
+    background: var(--accent);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+/* Offline Indicator */
+.pwa-offline-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--error);
+    color: white;
+    text-align: center;
+    padding: 8px;
+    z-index: var(--z-notification);
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+.pwa-offline-indicator.show {
+    transform: translateY(0);
+}
+
+/* ========================================
+RESPONSIVE BREAKPOINT HELPERS
+======================================= */
+
+/* Container Queries for PWA */
+@container (min-width: 640px) {
+    .container-sm\:block { display: block; }
+    .container-sm\:flex { display: flex; }
+    .container-sm\:grid { display: grid; }
+}
+
+@container (min-width: 768px) {
+    .container-md\:block { display: block; }
+    .container-md\:flex { display: flex; }
+    .container-md\:grid { display: grid; }
+}
+
+@container (min-width: 1024px) {
+    .container-lg\:block { display: block; }
+    .container-lg\:flex { display: flex; }
+    .container-lg\:grid { display: grid; }
+}
+
+/* ========================================
+PERFORMANCE OPTIMIZED UTILITIES
+======================================= */
+
+/* Hardware Acceleration */
+.gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .motion-reduce {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .high-contrast-border {
+        border-width: 2px !important;
+        border-color: currentColor !important;
+    }
+}
+
+/* Dark Mode Detection */
+@media (prefers-color-scheme: dark) {
+    .dark-mode-auto {
+        /* Auto dark mode styles */
+    }
+}
+
+/* ========================================
+PRINT UTILITIES
+======================================= */
+
+@media print {
+    .print-hidden { display: none !important; }
+    .print-only { display: block !important; }
+    .print-break-before { page-break-before: always; }
+    .print-break-after { page-break-after: always; }
+    .print-break-inside-avoid { page-break-inside: avoid; }
+}
+
+/* ========================================
+DEBUG UTILITIES
+======================================= */
+
+/* Remove in production */
+.debug-border * { border: 1px solid red !important; }
+.debug-grid { 
+    background-image: 
+        linear-gradient(rgba(255,0,0,.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,0,0,.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Hide debug utilities in production */
+.production-hidden { display: none; }

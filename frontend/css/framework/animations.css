@@ -1,0 +1,515 @@
+/*
+===========================================
+KRISHYASETU ANIMATIONS & TRANSITIONS
+===========================================
+Smooth animations optimized for PWA performance
+===========================================
+*/
+
+/* ========================================
+TRANSITION SYSTEM
+======================================= */
+
+/* Base Transitions */
+.transition-none { transition: none; }
+.transition-all { 
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+.transition-colors { 
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+.transition-opacity { 
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+.transition-transform { 
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+.transition-height { 
+    transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+/* Duration Variants */
+.duration-75 { transition-duration: 75ms; }
+.duration-100 { transition-duration: 100ms; }
+.duration-150 { transition-duration: 150ms; }
+.duration-200 { transition-duration: 200ms; }
+.duration-300 { transition-duration: 300ms; }
+.duration-500 { transition-duration: 500ms; }
+.duration-700 { transition-duration: 700ms; }
+.duration-1000 { transition-duration: 1000ms; }
+
+/* Easing Functions */
+.ease-linear { transition-timing-function: linear; }
+.ease-in { transition-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+.ease-out { transition-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+.ease-in-out { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* Material Design Easing */
+.ease-emphasized { 
+    transition-timing-function: cubic-bezier(0.2, 0, 0, 1); 
+}
+.ease-decelerated { 
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1); 
+}
+.ease-accelerated { 
+    transition-timing-function: cubic-bezier(0.3, 0, 1, 1); 
+}
+
+/* ========================================
+LOADING ANIMATIONS
+======================================= */
+
+/* Spinners */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Bounce Animation */
+@keyframes bounce {
+    0%, 100% { 
+        transform: translateY(-25%);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% { 
+        transform: none;
+        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+}
+
+.animate-bounce {
+    animation: bounce 1s infinite;
+}
+
+/* Ping Animation */
+@keyframes ping {
+    75%, 100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+.animate-ping {
+    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* ========================================
+ENTRY ANIMATIONS
+======================================= */
+
+/* Fade In */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Slide In From Top */
+@keyframes slideInDown {
+    from { 
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to { 
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.animate-slide-in-down {
+    animation: slideInDown 0.3s ease-out;
+}
+
+/* Slide In From Bottom */
+@keyframes slideInUp {
+    from { 
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to { 
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.animate-slide-in-up {
+    animation: slideInUp 0.3s ease-out;
+}
+
+/* Slide In From Left */
+@keyframes slideInLeft {
+    from { 
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to { 
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 0.3s ease-out;
+}
+
+/* Slide In From Right */
+@keyframes slideInRight {
+    from { 
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to { 
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 0.3s ease-out;
+}
+
+/* Scale In */
+@keyframes scaleIn {
+    from { 
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to { 
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+}
+
+/* ========================================
+EXIT ANIMATIONS
+======================================= */
+
+/* Fade Out */
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.animate-fade-out {
+    animation: fadeOut 0.3s ease-in;
+}
+
+/* Slide Out To Top */
+@keyframes slideOutUp {
+    from { 
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to { 
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+.animate-slide-out-up {
+    animation: slideOutUp 0.3s ease-in;
+}
+
+/* Slide Out To Bottom */
+@keyframes slideOutDown {
+    from { 
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to { 
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+.animate-slide-out-down {
+    animation: slideOutDown 0.3s ease-in;
+}
+
+/* Scale Out */
+@keyframes scaleOut {
+    from { 
+        transform: scale(1);
+        opacity: 1;
+    }
+    to { 
+        transform: scale(0.9);
+        opacity: 0;
+    }
+}
+
+.animate-scale-out {
+    animation: scaleOut 0.2s ease-in;
+}
+
+/* ========================================
+HOVER EFFECTS
+======================================= */
+
+/* Hover Scale */
+.hover-scale {
+    transition: transform 0.2s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+/* Hover Lift */
+.hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px var(--shadow);
+}
+
+/* Hover Glow */
+.hover-glow {
+    transition: box-shadow 0.2s ease;
+}
+
+.hover-glow:hover {
+    box-shadow: 0 0 20px rgba(22, 163, 74, 0.3);
+}
+
+/* Hover Rotate */
+.hover-rotate {
+    transition: transform 0.2s ease;
+}
+
+.hover-rotate:hover {
+    transform: rotate(5deg);
+}
+
+/* ========================================
+MICRO-INTERACTIONS
+======================================= */
+
+/* Button Press Effect */
+.button-press {
+    transition: transform 0.1s ease;
+}
+
+.button-press:active {
+    transform: scale(0.95);
+}
+
+/* Checkbox Toggle */
+@keyframes checkboxCheck {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.checkbox-checked .checkbox-icon {
+    animation: checkboxCheck 0.2s ease;
+}
+
+/* Radio Button Select */
+@keyframes radioSelect {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
+}
+
+.radio-selected .radio-dot {
+    animation: radioSelect 0.2s ease;
+}
+
+/* Switch Toggle */
+@keyframes switchToggle {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(20px); }
+}
+
+.switch-checked .switch-thumb {
+    animation: switchToggle 0.2s ease;
+}
+
+/* ========================================
+PWA SPECIFIC ANIMATIONS
+======================================= */
+
+/* App Install Animation */
+@keyframes appInstall {
+    0% { 
+        transform: scale(0.8) translateY(20px);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05) translateY(-5px);
+    }
+    100% { 
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.pwa-install-animate {
+    animation: appInstall 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Notification Slide In */
+@keyframes notificationSlide {
+    0% { 
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% { 
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.notification-slide-in {
+    animation: notificationSlide 0.3s ease-out;
+}
+
+/* Offline Indicator Animation */
+@keyframes offlinePulse {
+    0%, 100% { 
+        background-color: var(--error);
+        opacity: 1;
+    }
+    50% { 
+        background-color: var(--warning);
+        opacity: 0.8;
+    }
+}
+
+.pwa-offline-pulse {
+    animation: offlinePulse 2s ease-in-out infinite;
+}
+
+/* ========================================
+PERFORMANCE OPTIMIZED ANIMATIONS
+======================================= */
+
+/* Hardware Acceleration */
+.gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .respect-motion {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Battery Saving Mode */
+@media (prefers-reduced-data: reduce) {
+    .data-saver {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ========================================
+UTILITY ANIMATIONS
+======================================= */
+
+/* Shake Animation for Errors */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+    20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+.animate-shake {
+    animation: shake 0.5s ease;
+}
+
+/* Heartbeat Animation */
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    10%, 30% { transform: scale(1.1); }
+    20% { transform: scale(1.2); }
+}
+
+.animate-heartbeat {
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+/* Loading Dots */
+@keyframes loadingDots {
+    0%, 80%, 100% { 
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    40% { 
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.loading-dots span {
+    animation: loadingDots 1.4s ease-in-out infinite;
+}
+
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+/* ========================================
+SCROLL ANIMATIONS
+======================================= */
+
+/* Smooth Scroll Behavior */
+.smooth-scroll {
+    scroll-behavior: smooth;
+}
+
+/* Scroll Reveal Animation */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Parallax Effect */
+.parallax-slow {
+    will-change: transform;
+    transition: transform 0.5s ease-out;
+}
+
+.parallax-medium {
+    will-change: transform;
+    transition: transform 0.3s ease-out;
+}
+
+.parallax-fast {
+    will-change: transform;
+    transition: transform 0.1s ease-out;
+}

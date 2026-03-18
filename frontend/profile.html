@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+
+<html lang="en" data-theme="light">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profile Settings - KrishyaSetu</title>
+
+    <link rel="manifest" href="pwa/manifest.json">
+
+    <meta name="theme-color" content="#16a34a">
+
+    <link rel="stylesheet" href="css/krishyasetu.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="js/common.js"></script>
+
+    <style>
+        .profile-grid {
+
+            display: grid;
+
+            grid-template-columns: 1fr 2fr;
+
+            gap: 24px;
+
+            margin-bottom: 32px;
+
+        }
+
+
+
+        .profile-card {
+
+            background: var(--bg-card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            padding: 32px;
+
+            text-align: center;
+
+            box-shadow: 0 4px 12px var(--shadow);
+
+            transition: all 0.3s ease;
+
+        }
+
+        .profile-card:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 8px 24px var(--shadow);
+
+        }
+
+        .btn {
+
+            padding: 12px 24px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: all 0.3s ease;
+
+            text-decoration: none;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+        .btn-primary {
+
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+
+            color: white;
+
+            box-shadow: 0 2px 8px rgba(22, 163, 74, 0.2);
+
+        }
+
+        .btn-primary:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 4px 16px rgba(22, 163, 74, 0.3);
+
+        }
+
+        .btn-secondary {
+
+            background: var(--bg-input);
+
+            color: var(--text-primary);
+
+            border: 1px solid var(--border);
+
+        }
+
+        .btn-secondary:hover {
+
+            background: var(--accent-light-bg);
+
+            border-color: var(--accent);
+
+        }
+
+
+
+        .profile-avatar-section {
+
+            margin-bottom: 24px;
+
+        }
+
+
+
+        .profile-avatar {
+
+            width: 120px;
+
+            height: 120px;
+
+            background: var(--accent);
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 48px;
+
+            color: white;
+
+            margin: 0 auto 16px;
+
+            position: relative;
+
+        }
+
+
+
+        .avatar-edit-btn {
+
+            position: absolute;
+
+            bottom: 0;
+
+            right: 0;
+
+            width: 36px;
+
+            height: 36px;
+
+            background: var(--accent);
+
+            color: white;
+
+            border: 3px solid var(--bg-card);
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            cursor: pointer;
+
+            transition: all 0.2s ease;
+
+        }
+
+
+
+        .avatar-edit-btn:hover {
+
+            background: var(--accent-hover);
+
+            transform: scale(1.1);
+
+        }
+
+
+
+        .profile-name {
+
+            font-size: 24px;
+
+            font-weight: 700;
+
+            color: var(--text-primary);
+
+            margin-bottom: 4px;
+
+        }
+
+
+
+        .profile-email {
+
+            font-size: 14px;
+
+            color: var(--text-secondary);
+
+            margin-bottom: 16px;
+
+        }
+
+
+
+        .profile-stats {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 16px;
+
+            margin-top: 24px;
+
+        }
+
+
+
+        .stat-item {
+
+            text-align: center;
+
+        }
+
+
+
+        .stat-value {
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            color: var(--text-primary);
+
+            margin-bottom: 4px;
+
+        }
+
+
+
+        .stat-label {
+
+            font-size: 12px;
+
+            color: var(--text-muted);
+
+        }
+
+
+
+        .settings-section {
+
+            background: var(--bg-card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            padding: 24px;
+
+            margin-bottom: 24px;
+
+        }
+
+
+
+        .settings-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 24px;
+
+            padding-bottom: 16px;
+
+            border-bottom: 1px solid var(--border);
+
+        }
+
+
+
+        .settings-title {
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            color: var(--text-primary);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+
+
+        .settings-icon {
+
+            width: 40px;
+
+            height: 40px;
+
+            background: var(--accent-light-bg);
+
+            border-radius: 10px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 18px;
+
+        }
+
+
+
+        .form-row {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 16px;
+
+        }
+
+
+
+        .notification-item {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 16px;
+
+            background: var(--bg-input);
+
+            border-radius: 8px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+
+        .notification-info {
+
+            flex: 1;
+
+        }
+
+
+
+        .notification-title {
+
+            font-weight: 600;
+
+            color: var(--text-primary);
+
+            margin-bottom: 4px;
+
+        }
+
+
+
+        .notification-description {
+
+            font-size: 13px;
+
+            color: var(--text-secondary);
+
+        }
+
+
+
+        .toggle-switch {
+
+            position: relative;
+
+            width: 48px;
+
+            height: 24px;
+
+            background: var(--border);
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            transition: all 0.3s ease;
+
+        }
+
+
+
+        .toggle-switch.active {
+
+            background: var(--accent);
+
+        }
+
+
+
+        .toggle-switch::after {
+
+            content: '';
+
+            position: absolute;
+
+            top: 2px;
+
+            left: 2px;
+
+            width: 20px;
+
+            height: 20px;
+
+            background: white;
+
+            border-radius: 50%;
+
+            transition: all 0.3s ease;
+
+        }
+
+
+
+        .toggle-switch.active::after {
+
+            transform: translateX(24px);
+
+        }
+
+
+
+        .danger-zone {
+
+            border: 2px solid #ef4444;
+
+            background: rgba(239, 68, 68, 0.05);
+
+        }
+
+
+
+        .danger-zone .settings-title {
+
+            color: #ef4444;
+
+        }
+
+
+
+        .danger-zone .settings-icon {
+
+            background: rgba(239, 68, 68, 0.1);
+
+            color: #ef4444;
+
+        }
+
+
+
+        .crop-tag {
+
+            display: inline-block;
+
+            padding: 4px 12px;
+
+            background: var(--accent-light-bg);
+
+            color: var(--accent);
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            margin: 4px;
+
+        }
+
+
+
+        .crop-tags-container {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-top: 8px;
+
+        }
+
+
+
+        .add-crop-btn {
+
+            padding: 4px 12px;
+
+            background: transparent;
+
+            color: var(--accent);
+
+            border: 1px dashed var(--accent);
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: all 0.2s ease;
+
+        }
+
+
+
+        .add-crop-btn:hover {
+
+            background: var(--accent);
+
+            color: white;
+
+            border-style: solid;
+
+        }
+
+
+
+        @media (max-width: 768px) {
+
+            .profile-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+
+            .form-row {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+
+            .profile-stats {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+    </style>
+
+</head>
+
+
+
+<body>
+    <!-- Navbar will be loaded here -->
+
+
+
+    <!-- Mobile Sidebar -->
+
+    <div class="mobile-sidebar" id="mobileSidebar">
+
+        <ul class="mobile-sidebar-links">
+
+            <li><a href="dashboard.html" class="mobile-sidebar-link">Dashboard</a></li>
+
+            <li><a href="chatbot.html" class="mobile-sidebar-link">Chatbot</a></li>
+
+            <li><a href="arscan.html" class="mobile-sidebar-link">AR Scan</a></li>
+
+            <li><a href="soil.html" class="mobile-sidebar-link">Soil Analysis</a></li>
+
+            <li><a href="pest.html" class="mobile-sidebar-link">Pest Detection</a></li>
+
+            <li><a href="calendar.html" class="mobile-sidebar-link">Calendar</a></li>
+
+            <li><a href="market.html" class="mobile-sidebar-link">Market</a></li>
+
+            <li><a href="reports.html" class="mobile-sidebar-link">Reports</a></li>
+
+            <li><a href="profile.html" class="mobile-sidebar-link active">Profile</a></li>
+
+        </ul>
+
+    </div>
+
+
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+        <div class="container">
+
+            <!-- Header -->
+
+            <div class="welcome-section">
+
+                <h1 class="welcome-title">Profile Settings 👤</h1>
+
+                <p class="welcome-subtitle">Manage your account and preferences</p>
+
+            </div>
+
+
+
+            <div class="profile-grid">
+
+                <!-- Profile Card -->
+
+                <div class="profile-card">
+
+                    <div class="profile-avatar-section">
+
+                        <div class="profile-avatar" style="overflow: hidden;">
+                            <div id="profileImage"
+                                style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 48px;">
+                                👨‍🌾</div>
+                            <div class="avatar-edit-btn" id="avatarEditBtn">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                        </div>
+                        <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
+
+                        <h2 class="profile-name">Farmer Name</h2>
+
+                        <p class="profile-email">farmer@krishisetu.com</p>
+
+                        <button class="btn btn-primary">
+
+                            <i class="fas fa-edit"></i>
+
+                            Edit Profile
+
+                        </button>
+
+                        <button class="btn btn-secondary" id="logoutBtn" style="margin-top: 8px;">
+
+                            <i class="fas fa-sign-out-alt"></i>
+
+                            Logout
+
+                        </button>
+
+                    </div>
+
+
+
+                    <div class="profile-stats">
+
+                        <div class="stat-item">
+
+                            <div class="stat-value">12</div>
+
+                            <div class="stat-label">Crops</div>
+
+                        </div>
+
+                        <div class="stat-item">
+
+                            <div class="stat-value">5</div>
+
+                            <div class="stat-label">Years</div>
+
+                        </div>
+
+                        <div class="stat-item">
+
+                            <div class="stat-value">85%</div>
+
+                            <div class="stat-label">Success</div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Personal Information -->
+
+                <div class="settings-section">
+
+                    <div class="settings-header">
+
+                        <div class="settings-title">
+
+                            <div class="settings-icon">👤</div>
+
+                            Personal Information
+
+                        </div>
+
+                        <button class="btn btn-primary" id="savePersonalBtn">Save Changes</button>
+
+                    </div>
+
+
+
+                    <form id="personalForm">
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label class="form-label">First Name</label>
+
+                                <input type="text" class="form-input" value="Farmer" id="firstName">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label class="form-label">Last Name</label>
+
+                                <input type="text" class="form-input" value="Name" id="lastName">
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">Email Address</label>
+
+                            <input type="email" class="form-input" value="farmer@krishyasetu.com" id="email">
+
+                        </div>
+
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">Phone Number</label>
+
+                            <input type="tel" class="form-input" value="+91 98765 43210" id="phone">
+
+                        </div>
+
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">Farm Location</label>
+
+                            <div style="display:flex; gap:8px; align-items:center;">
+
+                                <input type="text" class="form-input" value="Village Name, District, State"
+                                    id="farmLocation" style="flex:1;">
+
+                                <button type="button" class="btn btn-secondary" id="profileLocationBtn" title="Use My Location" style="white-space:nowrap; flex-shrink:0;">
+                                    <i class="fas fa-location-arrow"></i> Use My Location
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="form-group">
+
+                            <label class="form-label">Farm Size (Acres)</label>
+
+                            <input type="number" class="form-input" value="15" id="farmSize">
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Farming Preferences -->
+
+            <div class="settings-section">
+
+                <div class="settings-header">
+
+                    <div class="settings-title">
+
+                        <div class="settings-icon">🌾</div>
+
+                        Farming Preferences
+
+                    </div>
+
+                    <button class="btn btn-primary" id="savePreferencesBtn">Save Changes</button>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label class="form-label">Primary Crops</label>
+
+                    <div class="crop-tags-container">
+
+                        <span class="crop-tag">Wheat</span>
+
+                        <span class="crop-tag">Rice</span>
+
+                        <span class="crop-tag">Maize</span>
+
+                        <button class="add-crop-btn">
+
+                            <i class="fas fa-plus"></i> Add Crop
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label class="form-label">Farming Method</label>
+
+                        <select class="form-select" id="farmingMethod">
+
+                            <option value="organic">Organic Farming</option>
+
+                            <option value="conventional" selected>Conventional Farming</option>
+
+                            <option value="mixed">Mixed Farming</option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">Irrigation Source</label>
+
+                        <select class="form-select" id="irrigationSource">
+
+                            <option value="canal">Canal</option>
+
+                            <option value="tubewell" selected>Tubewell</option>
+
+                            <option value="well">Well</option>
+
+                            <option value="rainfall">Rainfall</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label class="form-label">Experience Level</label>
+
+                    <select class="form-select" id="experienceLevel">
+
+                        <option value="beginner">Beginner (0-2 years)</option>
+
+                        <option value="intermediate">Intermediate (2-5 years)</option>
+
+                        <option value="experienced" selected>Experienced (5+ years)</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Notification Settings -->
+
+            <div class="settings-section">
+
+                <div class="settings-header">
+
+                    <div class="settings-title">
+
+                        <div class="settings-icon">🔔</div>
+
+                        Notification Settings
+
+                    </div>
+
+                    <button class="btn btn-primary" id="saveNotificationsBtn">Save Changes</button>
+
+                </div>
+
+
+
+                <div class="notification-item">
+
+                    <div class="notification-info">
+
+                        <div class="notification-title">Weather Alerts</div>
+
+                        <div class="notification-description">Get notified about weather changes and advisories</div>
+
+                    </div>
+
+                    <div class="toggle-switch active" data-setting="weather"></div>
+
+                </div>
+
+
+
+                <div class="notification-item">
+
+                    <div class="notification-info">
+
+                        <div class="notification-title">Market Price Updates</div>
+
+                        <div class="notification-description">Daily updates on commodity prices</div>
+
+                    </div>
+
+                    <div class="toggle-switch active" data-setting="market"></div>
+
+                </div>
+
+
+
+                <div class="notification-item">
+
+                    <div class="notification-info">
+
+                        <div class="notification-title">Pest & Disease Alerts</div>
+
+                        <div class="notification-description">Warnings about pest outbreaks in your area</div>
+
+                    </div>
+
+                    <div class="toggle-switch active" data-setting="pest"></div>
+
+                </div>
+
+
+
+                <div class="notification-item">
+
+                    <div class="notification-info">
+
+                        <div class="notification-title">Farming Reminders</div>
+
+                        <div class="notification-description">Reminders for irrigation, fertilization, and other tasks
+                        </div>
+
+                    </div>
+
+                    <div class="toggle-switch" data-setting="reminders"></div>
+
+                </div>
+
+
+
+                <div class="notification-item">
+
+                    <div class="notification-info">
+
+                        <div class="notification-title">Government Schemes</div>
+
+                        <div class="notification-description">Updates on new agricultural schemes and benefits</div>
+
+                    </div>
+
+                    <div class="toggle-switch active" data-setting="schemes"></div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- App Settings -->
+
+            <div class="settings-section">
+
+                <div class="settings-header">
+
+                    <div class="settings-title">
+
+                        <div class="settings-icon">⚙️</div>
+
+                        App Settings
+
+                    </div>
+
+                    <button class="btn btn-primary" id="saveAppBtn">Save Changes</button>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label class="form-label">Language</label>
+
+                    <select class="form-select" id="language">
+
+                        <option value="en" selected>English</option>
+
+                        <option value="hi">Hindi</option>
+
+                        <option value="mr">Marathi</option>
+
+                        <option value="pa">Punjabi</option>
+
+                        <option value="ch">Chhattisgarhi</option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label class="form-label">Currency</label>
+
+                    <select class="form-select" id="currency">
+
+                        <option value="inr" selected>Indian Rupee (₹)</option>
+
+                        <option value="usd">US Dollar ($)</option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label class="form-label">Distance Unit</label>
+
+                    <select class="form-select" id="distanceUnit">
+
+                        <option value="km" selected>Kilometers</option>
+
+                        <option value="miles">Miles</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Danger Zone -->
+
+            <div class="settings-section danger-zone">
+
+                <div class="settings-header">
+
+                    <div class="settings-title">
+
+                        <div class="settings-icon">⚠️</div>
+
+                        Danger Zone
+
+                    </div>
+
+                </div>
+
+
+
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+
+                    <button class="btn btn-secondary" style="color: #ef4444; border-color: #ef4444;">
+
+                        <i class="fas fa-download"></i>
+
+                        Export Data
+
+                    </button>
+
+                    <button class="btn btn-secondary" style="color: #ef4444; border-color: #ef4444;">
+
+                        <i class="fas fa-pause"></i>
+
+                        Deactivate Account
+
+                    </button>
+
+                    <button class="btn btn-secondary" style="color: #ef4444; border-color: #ef4444;">
+
+                        <i class="fas fa-trash"></i>
+
+                        Delete Account
+
+                    </button>
+
+                    <button class="btn btn-primary" id="dangerZoneLogoutBtn" style="background: #ef4444;">
+
+                        <i class="fas fa-sign-out-alt"></i>
+
+                        Logout
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <script>
+
+        // Check if user is logged in, if not redirect to login
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+        if (isLoggedIn !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        // Load saved language preference
+        const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+        const languageSelector = document.getElementById('language');
+        if (languageSelector) {
+            languageSelector.value = savedLanguage;
+        }
+
+        // Check if onboarding is complete, if not redirect to splash
+
+        const onboardingCompleted = localStorage.getItem('onboardingCompleted');
+
+        if (!onboardingCompleted) {
+
+            window.location.href = 'splash.html';
+
+        }
+
+
+
+        // BUG 04 Fix: themeToggle and hamburger live inside the navbar injected by common.js.
+        // Apply saved theme directly; listen for themeChanged event for sync.
+        const html = document.documentElement;
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+
+        window.addEventListener('themeChanged', (e) => {
+            html.setAttribute('data-theme', e.detail.theme);
+        });
+
+        // Logout button
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                if (window.logout) {
+                    window.logout();
+                } else {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('userType');
+                    localStorage.removeItem('userMode');
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+
+        // Danger Zone Logout button (separate button with id)
+        const dangerZoneLogoutBtn = document.getElementById('dangerZoneLogoutBtn');
+        if (dangerZoneLogoutBtn) {
+            dangerZoneLogoutBtn.addEventListener('click', () => {
+                if (window.logout) {
+                    window.logout();
+                } else {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('userType');
+                    localStorage.removeItem('userMode');
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+
+        // Hamburger menu is handled by common.js initNavbar()
+
+
+
+        // Toggle Switches
+
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+
+            toggle.addEventListener('click', function () {
+
+                this.classList.toggle('active');
+
+                const setting = this.getAttribute('data-setting');
+
+                const isActive = this.classList.contains('active');
+
+                console.log(`Setting ${setting} is now ${isActive ? 'enabled' : 'disabled'}`);
+
+            });
+
+        });
+
+
+
+        // Save buttons
+        document.getElementById('savePersonalBtn').addEventListener('click', () => {
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                farmLocation: document.getElementById('farmLocation').value,
+                farmSize: document.getElementById('farmSize').value
+            };
+
+            // SAVE TO LOCAL STORAGE
+            localStorage.setItem('personalInfo', JSON.stringify(formData));
+
+            // Update profile card Name & Email
+            const profileNameEl = document.querySelector('.profile-name');
+            const profileEmailEl = document.querySelector('.profile-email');
+            const newName = `${formData.firstName} ${formData.lastName}`.trim();
+            if (profileNameEl) profileNameEl.textContent = newName;
+            if (profileEmailEl) profileEmailEl.textContent = formData.email;
+
+            // Update Navbar UserName
+            const navbarUserName = document.getElementById('navbarUserName');
+            if (navbarUserName) navbarUserName.textContent = newName;
+
+            // Dispatch custom event for other pages to update
+            window.dispatchEvent(new CustomEvent('profileUpdated', { detail: formData }));
+
+            // Update session storage for cross-page communication
+            sessionStorage.setItem('pendingProfileUpdate', JSON.stringify(formData));
+
+            console.log('Saving personal information:', formData);
+            if (window.toast) {
+                window.toast.success('✅ Personal information saved successfully! Changes applied to the application.');
+            } else {
+                alert('Personal information saved successfully! Changes applied to the application.');
+            }
+        });
+
+        // Use My Location on Farm Location field
+        const profileLocationBtn = document.getElementById('profileLocationBtn');
+        if (profileLocationBtn) {
+            profileLocationBtn.addEventListener('click', () => {
+                if (!navigator.geolocation) { alert('Geolocation not supported.'); return; }
+                profileLocationBtn.disabled = true;
+                profileLocationBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                navigator.geolocation.getCurrentPosition(
+                    async (pos) => {
+                        try {
+                            const { latitude, longitude } = pos.coords;
+                            const resp = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`, {
+                                headers: { 'User-Agent': 'KrishyaSetuApp/1.0 (https://krishyasetu.app)' }
+                            });
+                            const geo = await resp.json();
+                            const addr = geo.address || {};
+                            const parts = [addr.village || addr.town || addr.city, addr.county || addr.state_district, addr.state].filter(Boolean);
+                            const locationStr = parts.join(', ');
+                            const farmLocationInput = document.getElementById('farmLocation');
+                            if (farmLocationInput && locationStr) farmLocationInput.value = locationStr;
+                        } catch (e) {
+                            console.warn('Geocoding error:', e);
+                            alert('Could not detect farm location accurately.');
+                        }
+                        finally {
+                            profileLocationBtn.disabled = false;
+                            profileLocationBtn.innerHTML = '<i class="fas fa-location-arrow"></i> Use My Location';
+                        }
+                    },
+                    () => {
+                        alert('Location access denied.');
+                        profileLocationBtn.disabled = false;
+                        profileLocationBtn.innerHTML = '<i class="fas fa-location-arrow"></i> Use My Location';
+                    }
+                );
+            });
+        }
+
+        document.getElementById('savePreferencesBtn').addEventListener('click', () => {
+            const cropTags = [];
+            document.querySelectorAll('.crop-tag').forEach(tag => {
+                cropTags.push(tag.textContent.trim());
+            });
+
+            const preferences = {
+                primaryCrops: cropTags,
+                farmingMethod: document.getElementById('farmingMethod').value,
+                irrigationSource: document.getElementById('irrigationSource').value,
+                experienceLevel: document.getElementById('experienceLevel').value
+            };
+            localStorage.setItem('farmingPreferences', JSON.stringify(preferences));
+            
+            // Dispatch custom event for preferences update
+            window.dispatchEvent(new CustomEvent('preferencesUpdated', { detail: preferences }));
+            
+            console.log('Saving farming preferences:', preferences);
+            if (window.toast) {
+                window.toast.success('✅ Farming preferences saved successfully! Changes applied to the application.');
+            } else {
+                alert('Farming preferences saved successfully! Changes applied to the application.');
+            }
+        });
+
+        document.getElementById('saveNotificationsBtn').addEventListener('click', () => {
+            const notifications = {};
+            document.querySelectorAll('.toggle-switch[data-setting]').forEach(toggle => {
+                const setting = toggle.getAttribute('data-setting');
+                notifications[setting] = toggle.classList.contains('active');
+            });
+            localStorage.setItem('notificationSettings', JSON.stringify(notifications));
+            
+            // Dispatch custom event for notification settings update
+            window.dispatchEvent(new CustomEvent('notificationsUpdated', { detail: notifications }));
+            
+            console.log('Saving notification settings:', notifications);
+            if (window.toast) {
+                window.toast.success('✅ Notification settings saved successfully! Changes applied to the application.');
+            } else {
+                alert('Notification settings saved successfully! Changes applied to the application.');
+            }
+        });
+
+        document.getElementById('saveAppBtn').addEventListener('click', () => {
+            const appSettings = {
+                language: document.getElementById('language').value,
+                currency: document.getElementById('currency').value,
+                distanceUnit: document.getElementById('distanceUnit').value
+            };
+
+            localStorage.setItem('appSettings', JSON.stringify(appSettings));
+            // Save language to localStorage for navbar
+            localStorage.setItem('selectedLanguage', appSettings.language);
+
+            // Update navbar language selector if it exists
+            const navbarLangSelector = document.getElementById('langSelector');
+            if (navbarLangSelector) {
+                navbarLangSelector.value = appSettings.language;
+            }
+
+            // Dispatch custom event for app settings update
+            window.dispatchEvent(new CustomEvent('appSettingsUpdated', { detail: appSettings }));
+
+            console.log('Saving app settings:', appSettings);
+            if (window.toast) {
+                window.toast.success('✅ App settings saved successfully! Reloading to apply changes...');
+            } else {
+                alert('App settings saved successfully! Reloading to apply changes...');
+            }
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 800);
+        });
+
+        // Initialize Form Data
+        function loadSavedProfileData() {
+            try {
+                // Personal Info
+                const savedPersonalInfo = localStorage.getItem('personalInfo');
+                if (savedPersonalInfo) {
+                    const data = JSON.parse(savedPersonalInfo);
+                    if (data.firstName) document.getElementById('firstName').value = data.firstName;
+                    if (data.lastName) document.getElementById('lastName').value = data.lastName;
+                    if (data.email) document.getElementById('email').value = data.email;
+                    if (data.phone) document.getElementById('phone').value = data.phone;
+                    if (data.farmLocation) document.getElementById('farmLocation').value = data.farmLocation;
+                    if (data.farmSize) document.getElementById('farmSize').value = data.farmSize;
+
+                    const profileNameEl = document.querySelector('.profile-name');
+                    const profileEmailEl = document.querySelector('.profile-email');
+                    if (profileNameEl && (data.firstName || data.lastName)) {
+                        profileNameEl.textContent = `${data.firstName || ''} ${data.lastName || ''}`.trim();
+                    }
+                    if (profileEmailEl && data.email) {
+                        profileEmailEl.textContent = data.email;
+                    }
+                }
+
+                // Avatar
+                const savedAvatar = localStorage.getItem('userAvatar');
+                if (savedAvatar) {
+                    const profileImageContainer = document.getElementById('profileImage');
+                    if (profileImageContainer) {
+                        profileImageContainer.innerHTML = `<img src="${savedAvatar}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                    }
+                }
+
+                // Preferences
+                const savedPreferences = localStorage.getItem('farmingPreferences');
+                if (savedPreferences) {
+                    const data = JSON.parse(savedPreferences);
+                    if (data.farmingMethod) document.getElementById('farmingMethod').value = data.farmingMethod;
+                    if (data.irrigationSource) document.getElementById('irrigationSource').value = data.irrigationSource;
+                    if (data.experienceLevel) document.getElementById('experienceLevel').value = data.experienceLevel;
+
+                    if (data.primaryCrops && Array.isArray(data.primaryCrops)) {
+                        document.querySelectorAll('.crop-tag').forEach(tag => tag.remove());
+                        const container = document.querySelector('.crop-tags-container');
+                        const addBtn = document.querySelector('.add-crop-btn');
+                        
+                        if (container && addBtn) {
+                            data.primaryCrops.forEach(cropName => {
+                                const cropTag = document.createElement('span');
+                                cropTag.className = 'crop-tag';
+                                cropTag.textContent = cropName;
+                                cropTag.style.cursor = 'pointer';
+                                cropTag.title = 'Click to remove';
+                                cropTag.addEventListener('click', () => {
+                                    if (confirm(`Remove ${cropName} from your crops?`)) {
+                                        cropTag.remove();
+                                    }
+                                });
+                                container.insertBefore(cropTag, addBtn);
+                            });
+                        }
+                    }
+                }
+
+                // Notifications
+                const savedNotifications = localStorage.getItem('notificationSettings');
+                if (savedNotifications) {
+                    const data = JSON.parse(savedNotifications);
+                    document.querySelectorAll('.toggle-switch[data-setting]').forEach(toggle => {
+                        const setting = toggle.getAttribute('data-setting');
+                        if (data[setting]) {
+                            toggle.classList.add('active');
+                        } else if (data[setting] === false) {
+                            toggle.classList.remove('active');
+                        }
+                    });
+                }
+
+                // App Settings
+                const savedApp = localStorage.getItem('appSettings');
+                if (savedApp) {
+                    const data = JSON.parse(savedApp);
+                    if (data.language) document.getElementById('language').value = data.language;
+                    if (data.currency) document.getElementById('currency').value = data.currency;
+                    if (data.distanceUnit) document.getElementById('distanceUnit').value = data.distanceUnit;
+                }
+            } catch (e) {
+                console.warn("Error loading profile data", e);
+            }
+        }
+
+        // Call initialization
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadSavedProfileData);
+        } else {
+            loadSavedProfileData();
+        }
+
+
+
+        // Add Crop functionality
+
+        document.querySelector('.add-crop-btn').addEventListener('click', () => {
+
+            const cropName = prompt('Enter crop name:');
+
+            if (cropName) {
+
+                const cropTag = document.createElement('span');
+
+                cropTag.className = 'crop-tag';
+
+                cropTag.textContent = cropName;
+
+                cropTag.style.cursor = 'pointer';
+
+                cropTag.title = 'Click to remove';
+
+
+
+                cropTag.addEventListener('click', () => {
+
+                    if (confirm(`Remove ${cropName} from your crops?`)) {
+
+                        cropTag.remove();
+
+                    }
+
+                });
+
+
+
+                document.querySelector('.crop-tags-container').insertBefore(cropTag, document.querySelector('.add-crop-btn'));
+
+            }
+
+        });
+
+
+
+        // Remove existing crop tags
+
+        document.querySelectorAll('.crop-tag').forEach(tag => {
+
+            tag.style.cursor = 'pointer';
+
+            tag.title = 'Click to remove';
+
+            tag.addEventListener('click', () => {
+
+                if (confirm(`Remove ${tag.textContent} from your crops?`)) {
+
+                    tag.remove();
+
+                }
+
+            });
+
+        });
+
+
+
+        // Avatar edit
+        const avatarUpload = document.getElementById('avatarUpload');
+        const profileImageContainer = document.getElementById('profileImage');
+
+        if (document.getElementById('avatarEditBtn')) {
+            document.getElementById('avatarEditBtn').addEventListener('click', () => {
+                if (avatarUpload) avatarUpload.click();
+            });
+        }
+
+        if (avatarUpload) {
+            avatarUpload.addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        const base64Str = event.target.result;
+                        localStorage.setItem('userAvatar', base64Str);
+                        if (profileImageContainer) {
+                            profileImageContainer.innerHTML = `<img src="${base64Str}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                        }
+
+                        // Also update navbar if exists
+                        const navbarAvatar = document.getElementById('navbarAvatar');
+                        if (navbarAvatar) {
+                            navbarAvatar.innerHTML = `<img src="${base64Str}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                        }
+
+                        // Dispatch custom event for avatar update
+                        window.dispatchEvent(new CustomEvent('avatarUpdated', { detail: { avatar: base64Str } }));
+
+                        if (window.toast) {
+                            window.toast.success('✅ Profile picture updated successfully! Changes applied to the application.');
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+
+
+        // Edit Profile button
+
+        document.querySelector('.profile-card .btn-primary').addEventListener('click', () => {
+
+            document.getElementById('firstName').focus();
+
+            window.scrollTo({
+
+                top: document.querySelector('.settings-section').offsetTop - 100,
+
+                behavior: 'smooth'
+
+            });
+
+        });
+
+
+
+        // Danger zone buttons
+
+        document.querySelectorAll('.danger-zone .btn').forEach(btn => {
+
+            btn.addEventListener('click', function () {
+
+                const action = this.textContent.trim();
+
+                if (confirm(`Are you sure you want to ${action.toLowerCase()}? This action cannot be undone.`)) {
+
+                    alert(`${action} functionality would be implemented here.`);
+
+                }
+
+            });
+
+        });
+
+
+
+        // Set active navigation link
+
+        const currentPath = window.location.pathname;
+
+        const navLinks = document.querySelectorAll('.navbar-link, .mobile-sidebar-link');
+
+
+
+        navLinks.forEach(link => {
+
+            if (link.getAttribute('href') === currentPath.split('/').pop()) {
+
+                link.classList.add('active');
+
+            } else {
+
+                link.classList.remove('active');
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>

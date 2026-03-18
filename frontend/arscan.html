@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Scan - KrishyaSetu</title>
+    <link rel="manifest" href="pwa/manifest.json">
+    <meta name="theme-color" content="#16a34a">
+    <link rel="stylesheet" href="css/krishyasetu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="js/common.js"></script>
+    <style>
+        .ar-container {
+            height: calc(100vh - 70px);
+            position: relative;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .camera-preview {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #1a1a1a, #2d2d2d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .camera-placeholder {
+            text-align: center;
+            color: white;
+        }
+
+        .camera-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.7;
+        }
+
+        .detection-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 280px;
+            height: 280px;
+            border: 3px solid #00ff00;
+            border-radius: 16px;
+            background: rgba(0, 255, 0, 0.1);
+            display: none;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+        }
+
+        .detection-info {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 300px;
+            display: none;
+        }
+
+        .detection-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #00ff00;
+        }
+
+        .detection-confidence {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .detection-treatment {
+            font-size: 13px;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .ar-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .ar-btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .ar-btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .ar-btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .ar-btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .ar-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .ar-back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 44px;
+            height: 44px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+            z-index: 100;
+        }
+
+        .ar-back-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.1);
+        }
+
+        .scan-tips {
+            position: absolute;
+            top: 80px;
+            left: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.5;
+            backdrop-filter: blur(10px);
+        }
+
+        .scan-tips h4 {
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .scan-tips ul {
+            margin: 0;
+            padding-left: 16px;
+        }
+
+        .scan-tips li {
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .ar-controls {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .ar-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .detection-overlay {
+                width: 200px;
+                height: 200px;
+            }
+
+            .scan-tips {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar will be loaded here -->
+
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <ul class="mobile-sidebar-links">
+            <li><a href="dashboard.html" class="mobile-sidebar-link">Dashboard</a></li>
+            <li><a href="chatbot.html" class="mobile-sidebar-link">Chatbot</a></li>
+            <li><a href="arscan.html" class="mobile-sidebar-link active">AR Scan</a></li>
+            <li><a href="soil.html" class="mobile-sidebar-link">Soil Analysis</a></li>
+            <li><a href="pest.html" class="mobile-sidebar-link">Pest Detection</a></li>
+            <li><a href="calendar.html" class="mobile-sidebar-link">Calendar</a></li>
+            <li><a href="market.html" class="mobile-sidebar-link">Market</a></li>
+            <li><a href="reports.html" class="mobile-sidebar-link">Reports</a></li>
+            <li><a href="profile.html" class="mobile-sidebar-link">Profile</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="ar-container">
+        <button class="ar-back-btn" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+
+        <div class="scan-tips">
+            <h4>📸 Scanning Tips:</h4>
+            <ul>
+                <li>Ensure good lighting conditions</li>
+                <li>Focus on the affected area</li>
+                <li>Keep camera steady</li>
+                <li>Scan from multiple angles</li>
+            </ul>
+        </div>
+
+        <div class="camera-preview" id="cameraPreview">
+            <div class="camera-placeholder">
+                <div class="camera-icon">📷</div>
+                <h2>Camera Preview</h2>
+                <p>Click "Start Scan" to begin AR detection</p>
+            </div>
+        </div>
+
+        <div class="detection-overlay" id="detectionOverlay"></div>
+
+        <div class="detection-info" id="detectionInfo">
+            <div class="detection-title" id="detectionTitle">Wheat Leaf Rust</div>
+            <div class="detection-confidence" id="detectionConfidence">Confidence: 92%</div>
+            <div class="detection-treatment" id="detectionTreatment">
+                Apply fungicide spray containing propiconazole. Ensure proper coverage and repeat after 14 days if
+                needed.
+            </div>
+        </div>
+
+        <div class="ar-controls">
+            <button class="ar-btn ar-btn-primary" id="startScanBtn">
+                <i class="fas fa-camera"></i>
+                Start Scan
+            </button>
+
+            <button class="ar-btn ar-btn-secondary" id="switchCameraBtn" style="display: none;">
+                <i class="fas fa-sync"></i>
+                Switch Camera
+            </button>
+        </div>
+
+        <!-- Hidden file input -->
+        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+    </main>
+
+    <script>
+        // Theme toggle and hamburger menu are handled by common.js initNavbar()
+
+        // AR Scan Functionality
+        const startScanBtn = document.getElementById('startScanBtn');
+        const switchCameraBtn = document.getElementById('switchCameraBtn');
+        const cameraPreview = document.getElementById('cameraPreview');
+        const detectionOverlay = document.getElementById('detectionOverlay');
+        const detectionInfo = document.getElementById('detectionInfo');
+
+        let isScanning = false;
+        let stream = null;
+        let currentFacingMode = 'environment';
+
+        startScanBtn.addEventListener('click', async () => {
+            try {
+                if (!isScanning) {
+                    await startCameraScan();
+                } else {
+                    stopCameraScan();
+                }
+            } catch (error) {
+                console.error('Camera scan error:', error);
+                alert('Camera access denied or not available. Please check permissions.');
+            }
+        });
+
+        switchCameraBtn.addEventListener('click', async () => {
+            if (isScanning) {
+                currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
+                await startCameraScan();
+            }
+        });
+
+        async function startCameraScan() {
+            try {
+                // Stop existing stream if any
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
+
+                // Request camera permission with current facing mode
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: currentFacingMode }
+                });
+
+                // Create video element
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                video.autoplay = true;
+                video.style.width = '100%';
+                video.style.height = '100%';
+                video.style.objectFit = 'cover';
+
+                // Replace placeholder with video
+                cameraPreview.innerHTML = '';
+                cameraPreview.appendChild(video);
+
+                // Update UI
+                isScanning = true;
+                startScanBtn.innerHTML = '<i class="fas fa-stop"></i> Stop Scan';
+                startScanBtn.style.background = '#ef4444';
+                switchCameraBtn.style.display = 'flex';
+
+                // Show detection overlay after 2 seconds (simulate detection)
+                setTimeout(() => {
+                    if (isScanning) {
+                        showDetectionResult();
+                    }
+                }, 2000);
+
+            } catch (error) {
+                console.warn('Camera access denied:', error);
+                if (window.location.protocol === 'file:') {
+                    alert('Camera access denied. \n\nNote: Web browsers block camera access for local "file://" URLs for security reasons. To use the AR Scan camera, you must serve this application using a local web server (e.g. VS Code Live Server, or http://localhost).');
+                } else {
+                    alert('Camera access denied. Please allow camera permissions or ensure you are on a secure HTTPS connection.');
+                }
+            }
+        }
+
+        function stopCameraScan() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+
+            // Reset UI
+            isScanning = false;
+            startScanBtn.innerHTML = '<i class="fas fa-camera"></i> Start Scan';
+            startScanBtn.style.background = '';
+            switchCameraBtn.style.display = 'none';
+
+            // Reset camera preview
+            cameraPreview.innerHTML = `
+                <div class="camera-placeholder">
+                    <div class="camera-icon">📷</div>
+                    <h2>Camera Preview</h2>
+                    <p>Click "Start Scan" to begin AR detection</p>
+                </div>
+            `;
+
+            // Hide detection elements
+            detectionOverlay.style.display = 'none';
+            detectionInfo.style.display = 'none';
+        }
+
+        function showDetectionResult() {
+            // Show detection overlay
+            detectionOverlay.style.display = 'block';
+
+            // Show detection info after animation
+            setTimeout(() => {
+                detectionInfo.style.display = 'block';
+
+                // Simulate different diseases
+                const diseases = [
+                    {
+                        name: 'Wheat Leaf Rust',
+                        confidence: 92,
+                        treatment: 'Apply fungicide spray containing propiconazole. Ensure proper coverage and repeat after 14 days if needed.'
+                    },
+                    {
+                        name: 'Paddy Blast Disease',
+                        confidence: 87,
+                        treatment: 'Use systemic fungicides like tricyclazole. Maintain proper water management and avoid excessive nitrogen fertilization.'
+                    },
+                    {
+                        name: 'Tomato Early Blight',
+                        confidence: 78,
+                        treatment: 'Apply copper-based fungicides. Remove affected leaves and ensure proper air circulation.'
+                    }
+                ];
+
+                const randomDisease = diseases[Math.floor(Math.random() * diseases.length)];
+
+                document.getElementById('detectionTitle').textContent = randomDisease.name;
+                document.getElementById('detectionConfidence').textContent = `Confidence: ${randomDisease.confidence}%`;
+                document.getElementById('detectionTreatment').textContent = randomDisease.treatment;
+            }, 500);
+        }
+
+        // Removed Upload Image and Voice Advice listeners as per request
+
+        // Set active navigation link
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.navbar-link, .mobile-sidebar-link');
+
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath.split('/').pop()) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+        });
+    </script>
+</body>
+
+</html>

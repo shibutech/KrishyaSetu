@@ -1,0 +1,492 @@
+/*
+===========================================
+KRISHYASETU RESPONSIVE UTILITIES
+===========================================
+Complete responsive system for mobile-first development
+=======================================
+*/
+
+/* ========================================
+BREAKPOINT SYSTEM
+======================================= */
+
+/* Mobile First Breakpoints */
+:root {
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
+}
+
+/* ========================================
+HIDE/SHOW CLASSES (RESPONSIVE DISPLAY)
+======================================= */
+
+/* Mobile First - Default Visible */
+.mobile-only { display: block; }
+.tablet-only { display: none; }
+.desktop-only { display: none; }
+.large-desktop-only { display: none; }
+
+/* Small Devices (640px and up) */
+@media (min-width: 640px) {
+    .sm\:block { display: block; }
+    .sm\:inline-block { display: inline-block; }
+    .sm\:flex { display: flex; }
+    .sm\:inline-flex { display: inline-flex; }
+    .sm\:grid { display: grid; }
+    .sm\:hidden { display: none; }
+    .sm\:visible { visibility: visible; }
+    .sm\:invisible { visibility: hidden; }
+    
+    .sm\:mobile-only { display: none; }
+    .sm\:tablet-only { display: block; }
+    .sm\:desktop-only { display: none; }
+}
+
+/* Medium Devices (768px and up) */
+@media (min-width: 768px) {
+    .md\:block { display: block; }
+    .md\:inline-block { display: inline-block; }
+    .md\:flex { display: flex; }
+    .md\:inline-flex { display: inline-flex; }
+    .md\:grid { display: grid; }
+    .md\:hidden { display: none; }
+    .md\:visible { visibility: visible; }
+    .md\:invisible { visibility: hidden; }
+    
+    .md\:mobile-only { display: none; }
+    .md\:tablet-only { display: block; }
+    .md\:desktop-only { display: block; }
+}
+
+/* Large Devices (1024px and up) */
+@media (min-width: 1024px) {
+    .lg\:block { display: block; }
+    .lg\:inline-block { display: inline-block; }
+    .lg\:flex { display: flex; }
+    .lg\:inline-flex { display: inline-flex; }
+    .lg\:grid { display: grid; }
+    .lg\:hidden { display: none; }
+    .lg\:visible { visibility: visible; }
+    .lg\:invisible { visibility: hidden; }
+    
+    .lg\:mobile-only { display: none; }
+    .lg\:tablet-only { display: none; }
+    .lg\:desktop-only { display: block; }
+}
+
+/* Extra Large Devices (1280px and up) */
+@media (min-width: 1280px) {
+    .xl\:block { display: block; }
+    .xl\:inline-block { display: inline-block; }
+    .xl\:flex { display: flex; }
+    .xl\:inline-flex { display: inline-flex; }
+    .xl\:grid { display: grid; }
+    .xl\:hidden { display: none; }
+    .xl\:visible { visibility: visible; }
+    .xl\:invisible { visibility: hidden; }
+    
+    .xl\:mobile-only { display: none; }
+    .xl\:tablet-only { display: none; }
+    .xl\:desktop-only { display: block; }
+    .xl\:large-desktop-only { display: block; }
+}
+
+/* ========================================
+TEXT UTILITIES (RESPONSIVE)
+======================================= */
+
+/* Text Alignment - Responsive */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+@media (min-width: 640px) {
+    .sm\:text-left { text-align: left; }
+    .sm\:text-center { text-align: center; }
+    .sm\:text-right { text-align: right; }
+}
+
+@media (min-width: 768px) {
+    .md\:text-left { text-align: left; }
+    .md\:text-center { text-align: center; }
+    .md\:text-right { text-align: right; }
+}
+
+@media (min-width: 1024px) {
+    .lg\:text-left { text-align: left; }
+    .lg\:text-center { text-align: center; }
+    .lg\:text-right { text-align: right; }
+}
+
+/* Text Transformation - Responsive */
+.text-uppercase { text-transform: uppercase; }
+.text-lowercase { text-transform: lowercase; }
+.text-capitalize { text-transform: capitalize; }
+.normal-case { text-transform: none; }
+
+@media (min-width: 768px) {
+    .md\:text-uppercase { text-transform: uppercase; }
+    .md\:text-lowercase { text-transform: lowercase; }
+    .md\:text-capitalize { text-transform: capitalize; }
+}
+
+/* Font Sizes - Responsive */
+.text-xs { font-size: 12px; }
+.text-sm { font-size: 14px; }
+.text-base { font-size: 16px; }
+.text-lg { font-size: 18px; }
+.text-xl { font-size: 20px; }
+.text-2xl { font-size: 24px; }
+.text-3xl { font-size: 30px; }
+.text-4xl { font-size: 36px; }
+.text-5xl { font-size: 48px; }
+
+@media (min-width: 768px) {
+    .md\:text-xs { font-size: 12px; }
+    .md\:text-sm { font-size: 14px; }
+    .md\:text-base { font-size: 16px; }
+    .md\:text-lg { font-size: 18px; }
+    .md\:text-xl { font-size: 20px; }
+    .md\:text-2xl { font-size: 24px; }
+    .md\:text-3xl { font-size: 30px; }
+}
+
+@media (min-width: 1024px) {
+    .lg\:text-xs { font-size: 12px; }
+    .lg\:text-sm { font-size: 14px; }
+    .lg\:text-base { font-size: 16px; }
+    .lg\:text-lg { font-size: 18px; }
+    .lg\:text-xl { font-size: 20px; }
+    .lg\:text-2xl { font-size: 24px; }
+    .lg\:text-3xl { font-size: 30px; }
+}
+
+/* ========================================
+GRID UTILITIES (ADVANCED)
+======================================= */
+
+/* Grid Template Areas */
+.grid-areas-hero {
+    grid-template-areas: 
+        "header header header"
+        "sidebar main main"
+        "footer footer footer";
+}
+
+.grid-areas-sidebar {
+    grid-template-areas: 
+        "header"
+        "sidebar"
+        "main"
+        "footer";
+}
+
+.grid-areas-cards {
+    grid-template-areas: 
+        "card1 card2 card3"
+        "card4 card5 card6";
+}
+
+/* Grid Auto Fit with Min/Max */
+.grid-auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.grid-auto-fit-sm {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.grid-auto-fit-md {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-auto-fit-lg {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+}
+
+/* Grid Auto Fill */
+.grid-auto-fill {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.grid-auto-fill-sm {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.grid-auto-fill-md {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.grid-auto-fill-lg {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}
+
+/* Responsive Grid Templates */
+@media (max-width: 639px) {
+    .grid-responsive-sm {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+    .grid-responsive-sm-md {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .grid-responsive-md-lg {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .grid-responsive-lg {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ========================================
+FLEX UTILITIES (ADVANCED)
+======================================= */
+
+/* Flex Direction - Responsive */
+@media (min-width: 640px) {
+    .sm\:flex-row { flex-direction: row; }
+    .sm\:flex-col { flex-direction: column; }
+    .sm\:flex-row-reverse { flex-direction: row-reverse; }
+    .sm\:flex-col-reverse { flex-direction: column-reverse; }
+}
+
+@media (min-width: 768px) {
+    .md\:flex-row { flex-direction: row; }
+    .md\:flex-col { flex-direction: column; }
+    .md\:flex-row-reverse { flex-direction: row-reverse; }
+    .md\:flex-col-reverse { flex-direction: column-reverse; }
+}
+
+@media (min-width: 1024px) {
+    .lg\:flex-row { flex-direction: row; }
+    .lg\:flex-col { flex-direction: column; }
+    .lg\:flex-row-reverse { flex-direction: row-reverse; }
+    .lg\:flex-col-reverse { flex-direction: column-reverse; }
+}
+
+/* Flex Wrap - Responsive */
+@media (min-width: 640px) {
+    .sm\:flex-wrap { flex-wrap: wrap; }
+    .sm\:flex-wrap-reverse { flex-wrap: wrap-reverse; }
+    .sm\:flex-nowrap { flex-wrap: nowrap; }
+}
+
+@media (min-width: 768px) {
+    .md\:flex-wrap { flex-wrap: wrap; }
+    .md\:flex-wrap-reverse { flex-wrap: wrap-reverse; }
+    .md\:flex-nowrap { flex-wrap: nowrap; }
+}
+
+/* Flex Alignment - Responsive */
+@media (min-width: 640px) {
+    .sm\:justify-start { justify-content: flex-start; }
+    .sm\:justify-end { justify-content: flex-end; }
+    .sm\:justify-center { justify-content: center; }
+    .sm\:justify-between { justify-content: space-between; }
+    .sm\:justify-around { justify-content: space-around; }
+    .sm\:justify-evenly { justify-content: space-evenly; }
+    
+    .sm\:items-start { align-items: flex-start; }
+    .sm\:items-end { align-items: flex-end; }
+    .sm\:items-center { align-items: center; }
+    .sm\:items-stretch { align-items: stretch; }
+    .sm\:items-baseline { align-items: baseline; }
+}
+
+@media (min-width: 768px) {
+    .md\:justify-start { justify-content: flex-start; }
+    .md\:justify-end { justify-content: flex-end; }
+    .md\:justify-center { justify-content: center; }
+    .md\:justify-between { justify-content: space-between; }
+    .md\:justify-around { justify-content: space-around; }
+    .md\:justify-evenly { justify-content: space-evenly; }
+    
+    .md\:items-start { align-items: flex-start; }
+    .md\:items-end { align-items: flex-end; }
+    .md\:items-center { align-items: center; }
+    .md\:items-stretch { align-items: stretch; }
+    .md\:items-baseline { align-items: baseline; }
+}
+
+/* ========================================
+SPACING UTILITIES (RESPONSIVE)
+======================================= */
+
+/* Responsive Margins */
+@media (min-width: 640px) {
+    .sm\:m-0 { margin: 0; }
+    .sm\:m-1 { margin: 4px; }
+    .sm\:m-2 { margin: 8px; }
+    .sm\:m-3 { margin: 12px; }
+    .sm\:m-4 { margin: 16px; }
+    .sm\:m-5 { margin: 20px; }
+    .sm\:m-6 { margin: 24px; }
+    .sm\:m-8 { margin: 32px; }
+    
+    .sm\:mx-0 { margin-left: 0; margin-right: 0; }
+    .sm\:mx-1 { margin-left: 4px; margin-right: 4px; }
+    .sm\:mx-2 { margin-left: 8px; margin-right: 8px; }
+    .sm\:mx-3 { margin-left: 12px; margin-right: 12px; }
+    .sm\:mx-4 { margin-left: 16px; margin-right: 16px; }
+    
+    .sm\:my-0 { margin-top: 0; margin-bottom: 0; }
+    .sm\:my-1 { margin-top: 4px; margin-bottom: 4px; }
+    .sm\:my-2 { margin-top: 8px; margin-bottom: 8px; }
+    .sm\:my-3 { margin-top: 12px; margin-bottom: 12px; }
+    .sm\:my-4 { margin-top: 16px; margin-bottom: 16px; }
+}
+
+@media (min-width: 768px) {
+    .md\:m-0 { margin: 0; }
+    .md\:m-1 { margin: 4px; }
+    .md\:m-2 { margin: 8px; }
+    .md\:m-3 { margin: 12px; }
+    .md\:m-4 { margin: 16px; }
+    .md\:m-5 { margin: 20px; }
+    .md\:m-6 { margin: 24px; }
+    .md\:m-8 { margin: 32px; }
+    
+    .md\:mx-0 { margin-left: 0; margin-right: 0; }
+    .md\:mx-1 { margin-left: 4px; margin-right: 4px; }
+    .md\:mx-2 { margin-left: 8px; margin-right: 8px; }
+    .md\:mx-3 { margin-left: 12px; margin-right: 12px; }
+    .md\:mx-4 { margin-left: 16px; margin-right: 16px; }
+}
+
+/* Responsive Padding */
+@media (min-width: 640px) {
+    .sm\:p-0 { padding: 0; }
+    .sm\:p-1 { padding: 4px; }
+    .sm\:p-2 { padding: 8px; }
+    .sm\:p-3 { padding: 12px; }
+    .sm\:p-4 { padding: 16px; }
+    .sm\:p-5 { padding: 20px; }
+    .sm\:p-6 { padding: 24px; }
+    .sm\:p-8 { padding: 32px; }
+    
+    .sm\:px-0 { padding-left: 0; padding-right: 0; }
+    .sm\:px-1 { padding-left: 4px; padding-right: 4px; }
+    .sm\:px-2 { padding-left: 8px; padding-right: 8px; }
+    .sm\:px-3 { padding-left: 12px; padding-right: 12px; }
+    .sm\:px-4 { padding-left: 16px; padding-right: 16px; }
+}
+
+@media (min-width: 768px) {
+    .md\:p-0 { padding: 0; }
+    .md\:p-1 { padding: 4px; }
+    .md\:p-2 { padding: 8px; }
+    .md\:p-3 { padding: 12px; }
+    .md\:p-4 { padding: 16px; }
+    .md\:p-5 { padding: 20px; }
+    .md\:p-6 { padding: 24px; }
+    .md\:p-8 { padding: 32px; }
+    
+    .md\:px-0 { padding-left: 0; padding-right: 0; }
+    .md\:px-1 { padding-left: 4px; padding-right: 4px; }
+    .md\:px-2 { padding-left: 8px; padding-right: 8px; }
+    .md\:px-3 { padding-left: 12px; padding-right: 12px; }
+    .md\:px-4 { padding-left: 16px; padding-right: 16px; }
+}
+
+/* ========================================
+ORIENTATION UTILITIES
+======================================= */
+
+/* Landscape/Portrait Detection */
+@media (orientation: landscape) {
+    .landscape\:flex-row { flex-direction: row; }
+    .landscape\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .landscape\:text-lg { font-size: 18px; }
+}
+
+@media (orientation: portrait) {
+    .portrait\:flex-col { flex-direction: column; }
+    .portrait\:grid-cols-1 { grid-template-columns: 1fr; }
+    .portrait\:text-base { font-size: 16px; }
+}
+
+/* ========================================
+DEVICE SPECIFIC UTILITIES
+======================================= */
+
+/* iPhone Specific */
+@supports (-webkit-touch-callout: none) {
+    .iphone\:no-callout {
+        -webkit-touch-callout: none;
+    }
+    
+    .iphone\:no-select {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+}
+
+/* iPad Specific */
+@media only screen 
+and (min-device-width: 768px) 
+and (max-device-width: 1024px) 
+and (-webkit-min-device-pixel-ratio: 1) {
+    .ipad\:optimized {
+        font-size: 16px;
+        line-height: 1.4;
+    }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .high-dpi\:border {
+        border-width: 0.5px;
+    }
+    
+    .high-dpi\:shadow {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* ========================================
+CONTAINER QUERIES (FUTURE READY)
+======================================= */
+
+/* Container Query Support */
+@container (min-width: 300px) {
+    .container-small\:block { display: block; }
+    .container-small\:flex { display: flex; }
+    .container-small\:grid { display: grid; }
+}
+
+@container (min-width: 500px) {
+    .container-medium\:block { display: block; }
+    .container-medium\:flex { display: flex; }
+    .container-medium\:grid { display: grid; }
+}
+
+@container (min-width: 700px) {
+    .container-large\:block { display: block; }
+    .container-large\:flex { display: flex; }
+    .container-large\:grid { display: grid; }
+}
+
+/* ========================================
+PRINT RESPONSIVE UTILITIES
+======================================= */
+
+@media print {
+    .print\:block { display: block !important; }
+    .print\:hidden { display: none !important; }
+    .print\:text-black { color: black !important; }
+    .print\:bg-white { background: white !important; }
+    .print\:no-border { border: none !important; }
+    .print\:no-shadow { box-shadow: none !important; }
+}

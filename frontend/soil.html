@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Analysis - KrishyaSetu</title>
+    <link rel="manifest" href="pwa/manifest.json">
+    <meta name="theme-color" content="#16a34a">
+    <link rel="stylesheet" href="css/krishyasetu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="js/common.js"></script>
+</head>
+
+<body>
+    <!-- Navbar will be loaded here -->
+
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <ul class="mobile-sidebar-links">
+            <li><a href="dashboard.html" class="mobile-sidebar-link">Dashboard</a></li>
+            <li><a href="chatbot.html" class="mobile-sidebar-link">Chatbot</a></li>
+            <li><a href="arscan.html" class="mobile-sidebar-link">AR Scan</a></li>
+            <li><a href="soil.html" class="mobile-sidebar-link active">Soil Analysis</a></li>
+            <li><a href="pest.html" class="mobile-sidebar-link">Pest Detection</a></li>
+            <li><a href="calendar.html" class="mobile-sidebar-link">Calendar</a></li>
+            <li><a href="market.html" class="mobile-sidebar-link">Market</a></li>
+            <li><a href="reports.html" class="mobile-sidebar-link">Reports</a></li>
+            <li><a href="profile.html" class="mobile-sidebar-link">Profile</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Header -->
+            <div class="welcome-section">
+                <h1 class="welcome-title">Soil Analysis 🌍</h1>
+                <p class="welcome-subtitle">Get personalized recommendations for your soil health</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Left Column - Input Form -->
+                <div class="dashboard-left">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Soil Information</h3>
+                            <div class="card-icon">🧪</div>
+                        </div>
+
+                        <form id="soilForm">
+                            <div class="form-group">
+                                <label class="form-label">Soil Type</label>
+                                <select class="form-select" id="soilType">
+                                    <option value="">Select soil type</option>
+                                    <option value="clay">Clay Soil</option>
+                                    <option value="sandy">Sandy Soil</option>
+                                    <option value="loamy">Loamy Soil</option>
+                                    <option value="silt">Silt Soil</option>
+                                    <option value="peaty">Peaty Soil</option>
+                                    <option value="chalky">Chalky Soil</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">pH Level</label>
+                                <div style="display: flex; gap: 12px; align-items: center;">
+                                    <input type="range" class="form-input" id="phRange" min="3" max="10" step="0.1"
+                                        value="6.5" style="flex: 1;">
+                                    <div style="min-width: 50px; text-align: center; font-weight: 600; color: var(--accent);"
+                                        id="phValue">6.5</div>
+                                </div>
+                                <div
+                                    style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+                                    <span>Very Acidic</span>
+                                    <span>Neutral</span>
+                                    <span>Very Alkaline</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Crop Type</label>
+                                <select class="form-select" id="cropType">
+                                    <option value="">Select crop type</option>
+                                    <option value="wheat">Wheat</option>
+                                    <option value="rice">Rice</option>
+                                    <option value="maize">Maize</option>
+                                    <option value="cotton">Cotton</option>
+                                    <option value="pulses">Pulses</option>
+                                    <option value="vegetables">Vegetables</option>
+                                    <option value="fruits">Fruits</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Farm Location</label>
+                                <div style="display: flex; gap: 8px;">
+                                    <input type="text" class="form-input" id="farmLocation" placeholder="Enter your village/district" style="flex: 1;">
+                                    <button type="button" class="btn btn-secondary btn-sm" id="useCurrentLocationBtn" style="white-space: nowrap;">
+                                        <i class="fas fa-map-marker-alt" style="margin-right: 4px;"></i>
+                                        Use Current Location
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Previous Crop (Optional)</label>
+                                <select class="form-select" id="previousCrop">
+                                    <option value="">Select previous crop</option>
+                                    <option value="wheat">Wheat</option>
+                                    <option value="rice">Rice</option>
+                                    <option value="maize">Maize</option>
+                                    <option value="cotton">Cotton</option>
+                                    <option value="pulses">Pulses</option>
+                                    <option value="fallow">Fallow</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Irrigation Source</label>
+                                <select class="form-select" id="irrigationSource">
+                                    <option value="">Select irrigation source</option>
+                                    <option value="canal">Canal</option>
+                                    <option value="tubewell">Tubewell</option>
+                                    <option value="well">Well</option>
+                                    <option value="rainfall">Rainfall</option>
+                                    <option value="drip">Drip Irrigation</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-full">
+                                <i class="fas fa-flask"></i>
+                                Analyze Soil
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right Column - Results -->
+                <div class="dashboard-right">
+                    <!-- Soil Health Status -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Soil Health Status</h3>
+                            <div class="card-icon">📊</div>
+                        </div>
+
+                        <div id="soilHealthResult" style="text-align: center; padding: 40px 20px;">
+                            <i class="fas fa-seedling"
+                                style="font-size: 48px; margin-bottom: 16px; opacity: 0.5; color: var(--text-muted);"></i>
+                            <p style="color: var(--text-secondary);">Complete the form to see your soil health analysis
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Fertilizer Recommendations -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Fertilizer Recommendations</h3>
+                            <div class="card-icon">🌾</div>
+                        </div>
+
+                        <div id="fertilizerResult" style="text-align: center; padding: 40px 20px;">
+                            <i class="fas fa-vial"
+                                style="font-size: 48px; margin-bottom: 16px; opacity: 0.5; color: var(--text-muted);"></i>
+                            <p style="color: var(--text-secondary);">Personalized fertilizer recommendations will appear
+                                here</p>
+                        </div>
+                    </div>
+
+                    <!-- Quick Tips -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Soil Improvement Tips</h3>
+                            <div class="card-icon">💡</div>
+                        </div>
+
+                        <div style="padding: 8px 0;">
+                            <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                                <div
+                                    style="width: 32px; height: 32px; background: var(--accent-light-bg); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    💧
+                                </div>
+                                <div>
+                                    <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Water
+                                        Management</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">Maintain proper moisture
+                                        levels to prevent soil erosion</div>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                                <div
+                                    style="width: 32px; height: 32px; background: var(--accent-light-bg); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    🌿
+                                </div>
+                                <div>
+                                    <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Crop
+                                        Rotation</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">Rotate crops to maintain
+                                        soil fertility naturally</div>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 12px;">
+                                <div
+                                    style="width: 32px; height: 32px; background: var(--accent-light-bg); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    🍂
+                                </div>
+                                <div>
+                                    <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">
+                                        Organic Matter</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">Add compost and organic
+                                        waste to improve soil structure</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Theme Toggle (can run immediately)
+        const html = document.documentElement;
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme toggle and hamburger menu are handled by common.js initNavbar()
+
+            // pH Range Slider
+            const phRange = document.getElementById('phRange');
+            const phValue = document.getElementById('phValue');
+
+            if (phRange && phValue) {
+                phRange.addEventListener('input', (e) => {
+                    phValue.textContent = e.target.value;
+
+                    // Update color based on pH value
+                    const value = parseFloat(e.target.value);
+                    if (value < 5.5) {
+                        phValue.style.color = '#ef4444'; // Red for acidic
+                    } else if (value < 7.5) {
+                        phValue.style.color = '#22c55e'; // Green for optimal
+                    } else {
+                        phValue.style.color = '#f59e0b'; // Orange for alkaline
+                    }
+                });
+            }
+
+            // Current Location Button
+            const useCurrentLocationBtn = document.getElementById('useCurrentLocationBtn');
+            if (useCurrentLocationBtn) {
+                useCurrentLocationBtn.addEventListener('click', () => {
+                    if (navigator.geolocation) {
+                        useCurrentLocationBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Getting Location...';
+                        useCurrentLocationBtn.disabled = true;
+                        
+                        navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                                // Reverse geocoding to get location name
+                                fetch(`https://nominatim.openstreetmap.org/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json`, {
+                                    headers: { 'User-Agent': 'KrishyaSetuApp/1.0 (https://krishyasetu.app)' }
+                                })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        const locationInput = document.getElementById('farmLocation');
+                                        if (locationInput) {
+                                            locationInput.value = data.display_name || data.address?.village || data.address?.city || 'Current Location';
+                                        }
+                                        useCurrentLocationBtn.innerHTML = '<i class="fas fa-map-marker-alt"></i> Use Current Location';
+                                        useCurrentLocationBtn.disabled = false;
+                                    })
+                                    .catch(error => {
+                                        console.error('Geocoding error:', error);
+                                        const locationInput = document.getElementById('farmLocation');
+                                        if (locationInput) {
+                                            locationInput.value = 'Current Location';
+                                        }
+                                        useCurrentLocationBtn.innerHTML = '<i class="fas fa-map-marker-alt"></i> Use Current Location';
+                                        useCurrentLocationBtn.disabled = false;
+                                    });
+                            },
+                            (error) => {
+                                console.error('Location error:', error);
+                                alert('Unable to get location. Please enter manually.');
+                                useCurrentLocationBtn.innerHTML = '<i class="fas fa-map-marker-alt"></i> Use Current Location';
+                                useCurrentLocationBtn.disabled = false;
+                            },
+                            {
+                                enableHighAccuracy: true,
+                                timeout: 10000,
+                                maximumAge: 300000
+                            }
+                        );
+                    } else {
+                        alert('Geolocation is not supported by your browser');
+                    }
+                });
+            }
+
+            const soilForm = document.getElementById('soilForm');
+            if (soilForm) {
+                soilForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    analyzeSoil();
+                });
+            }
+
+            function analyzeSoil() {
+                const soilType = document.getElementById('soilType').value;
+                const phLevel = document.getElementById('phRange').value;
+                const cropType = document.getElementById('cropType').value;
+                const farmLocation = document.getElementById('farmLocation').value;
+                const previousCrop = document.getElementById('previousCrop').value;
+                
+                if (!soilType || !cropType || !farmLocation) {
+                    if (window.toast) {
+                        window.toast.error('Please fill in all required fields');
+                    } else {
+                        alert('Please fill in all required fields');
+                    }
+                    return;
+                }
+
+                try {
+                    // Generate soil health analysis
+                    generateSoilHealth(soilType, phLevel, cropType);
+
+                    // Generate fertilizer recommendations
+                    generateFertilizerRecommendations(soilType, phLevel, cropType, previousCrop);
+                    
+                    // Show success message
+                    if (window.toast) {
+                        window.toast.success('Soil analysis completed successfully!');
+                    }
+                } catch (error) {
+                    console.error('Soil analysis error:', error);
+                    if (window.toast) {
+                        window.toast.error('Analysis failed. Please try again.');
+                    }
+                }
+            }
+
+            function generateSoilHealth(soilType, phLevel, cropType) {
+                const healthResult = document.getElementById('soilHealthResult');
+                if (!healthResult) return;
+
+                let healthScore = 75; // Base score
+                let healthStatus = 'Good';
+                let healthColor = '#22c55e';
+
+                // Adjust score based on pH
+                if (phLevel >= 6.0 && phLevel <= 7.5) {
+                    healthScore += 10;
+                } else if (phLevel < 5.5 || phLevel > 8.5) {
+                    healthScore -= 15;
+                    healthStatus = 'Needs Improvement';
+                    healthColor = '#f59e0b';
+                }
+
+                // Adjust score based on soil type
+                if (soilType === 'loamy') {
+                    healthScore += 10;
+                } else if (soilType === 'sandy') {
+                    healthScore -= 5;
+                }
+
+                // Cap the score
+                healthScore = Math.min(100, Math.max(0, healthScore));
+
+                if (healthScore >= 80) {
+                    healthStatus = 'Excellent';
+                    healthColor = '#22c55e';
+                } else if (healthScore >= 60) {
+                    healthStatus = 'Good';
+                    healthColor = '#22c55e';
+                } else if (healthScore >= 40) {
+                    healthStatus = 'Fair';
+                    healthColor = '#f59e0b';
+                } else {
+                    healthStatus = 'Poor';
+                    healthColor = '#ef4444';
+                }
+
+                healthResult.innerHTML = `
+                    <div style="margin-bottom: 24px;">
+                        <div style="font-size: 48px; font-weight: 800; color: ${healthColor}; margin-bottom: 8px;">
+                            ${healthScore}%
+                        </div>
+                        <div style="font-size: 18px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">
+                            ${healthStatus}
+                        </div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">
+                            Overall soil health score
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: left;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                            <span style="color: var(--text-secondary);">pH Level</span>
+                            <span style="font-weight: 600; color: ${phLevel >= 6.0 && phLevel <= 7.5 ? '#22c55e' : '#f59e0b'};">${phLevel}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                            <span style="color: var(--text-secondary);">Soil Type</span>
+                            <span style="font-weight: 600;">${soilType.charAt(0).toUpperCase() + soilType.slice(1)}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: var(--text-secondary);">Suitability for ${cropType}</span>
+                            <span style="font-weight: 600; color: #22c55e;">High</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function generateFertilizerRecommendations(soilType, phLevel, cropType, previousCrop) {
+                const fertilizerResult = document.getElementById('fertilizerResult');
+                if (!fertilizerResult) return;
+
+                let recommendations = [];
+
+                // Basic recommendations based on soil type
+                if (soilType === 'sandy') {
+                    recommendations.push({
+                        name: 'Organic Compost',
+                        amount: '2-3 tons/hectare',
+                        purpose: 'Improve water retention'
+                    });
+                }
+
+                if (soilType === 'clay') {
+                    recommendations.push({
+                        name: 'Gypsum',
+                        amount: '1-2 tons/hectare',
+                        purpose: 'Improve soil structure'
+                    });
+                }
+
+                // pH-based recommendations
+                if (phLevel < 6.0) {
+                    recommendations.push({
+                        name: 'Lime',
+                        amount: '2-4 tons/hectare',
+                        purpose: 'Raise pH level'
+                    });
+                } else if (phLevel > 7.5) {
+                    recommendations.push({
+                        name: 'Elemental Sulfur',
+                        amount: '100-200 kg/hectare',
+                        purpose: 'Lower pH level'
+                    });
+                }
+
+                // Crop-specific recommendations
+                if (cropType === 'wheat') {
+                    recommendations.push({
+                        name: 'NPK Fertilizer',
+                        amount: '120-60-40 kg/hectare',
+                        purpose: 'Balanced nutrition'
+                    });
+                } else if (cropType === 'rice') {
+                    recommendations.push({
+                        name: 'Urea',
+                        amount: '80-100 kg/hectare',
+                        purpose: 'Nitrogen supplement'
+                    });
+                }
+
+                // Generate HTML
+                let html = '<div style="text-align: left;">';
+
+                recommendations.forEach(rec => {
+                    html += `
+                        <div style="background: var(--bg-input); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+                            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">${rec.name}</div>
+                            <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                                <span style="color: var(--text-secondary);">Amount: ${rec.amount}</span>
+                                <span style="color: var(--accent);">${rec.purpose}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += '</div>';
+
+                fertilizerResult.innerHTML = html;
+            }
+
+            // Set active navigation link
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.navbar-link, .mobile-sidebar-link');
+
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath.split('/').pop()) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

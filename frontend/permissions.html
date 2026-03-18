@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permissions - KrishyaSetu</title>
+    <link rel="manifest" href="pwa/manifest.json">
+    <meta name="theme-color" content="#16a34a">
+    <link rel="stylesheet" href="css/krishyasetu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .onboarding-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: var(--bg-page);
+            padding: 20px;
+        }
+
+        .onboarding-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 32px 24px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 8px 32px var(--shadow);
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 16px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-btn:hover {
+            background: var(--accent-light-bg);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .onboarding-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .onboarding-logo {
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 24px;
+            color: white;
+        }
+
+        .onboarding-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .onboarding-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .permissions-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        @media (min-width: 768px) {
+            .permissions-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 0 auto 32px;
+            }
+        }
+
+        .permission-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.3s ease;
+            min-height: 80px;
+        }
+
+        .permission-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .permission-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-light-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .permission-content {
+            flex: 1;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .permission-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .permission-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .permission-action {
+            margin-left: 12px;
+        }
+
+        .allow-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .allow-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .allow-btn.allowed {
+            background: var(--success);
+            cursor: default;
+        }
+
+        .allow-btn.allowed:hover {
+            transform: none;
+        }
+
+        .allow-btn.denied {
+            background: var(--error);
+            color: white;
+            border-color: var(--error);
+        }
+
+        .allow-btn.denied:hover {
+            background: var(--error);
+            transform: none;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background: var(--success);
+            transform: translateY(-2px);
+        }
+
+        .permission-icon:nth-child(3) {
+            color: var(--accent);
+            font-size: 20px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-input);
+            color: var(--text-secondary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-dot.active {
+            background: var(--accent);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 480px) {
+            .onboarding-card {
+                padding: 24px 20px;
+                max-width: 350px;
+            }
+
+            .permission-card {
+                padding: 16px;
+            }
+
+            .permission-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="onboarding-container">
+        <div class="onboarding-card">
+            <a href="signup.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back
+            </a>
+
+            <div class="progress-indicator">
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot active"></div>
+            </div>
+
+            <div class="onboarding-header">
+                <div class="onboarding-logo" style="background: transparent;">
+                    <img src="pwa/icons/krishyasetu.png" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
+                </div>
+                <h1 class="onboarding-title">Enable Smart Farming Features</h1>
+                <p class="onboarding-subtitle">Allow permissions to get the best experience</p>
+            </div>
+
+            <div class="permissions-grid">
+                <div class="permission-card">
+                    <div class="permission-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                            <circle cx="12" cy="13" r="4" />
+                        </svg>
+                    </div>
+                    <div class="permission-content">
+                        <h3 class="permission-title">Camera Access</h3>
+                        <p class="permission-description">For identifying crop diseases via photos and using live AR
+                            scanner.</p>
+                    </div>
+                    <div class="permission-action">
+                        <button class="allow-btn" data-permission="camera">Allow</button>
+                    </div>
+                </div>
+
+                <div class="permission-card">
+                    <div class="permission-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                            <line x1="12" y1="19" x2="12" y2="23" />
+                            <line x1="8" y1="23" x2="16" y2="23" />
+                        </svg>
+                    </div>
+                    <div class="permission-content">
+                        <h3 class="permission-title">Microphone Access</h3>
+                        <p class="permission-description">To enable voice commands and questions in ChatBot.</p>
+                    </div>
+                    <div class="permission-action">
+                        <button class="allow-btn" data-permission="microphone">Allow</button>
+                    </div>
+                </div>
+
+                <div class="permission-card">
+                    <div class="permission-icon">
+                        🗺️
+                    </div>
+                    <div class="permission-content">
+                        <h3 class="permission-title">Location Access</h3>
+                        <p class="permission-description">For accurate local weather forecasts and nearby market prices.
+                        </p>
+                    </div>
+                    <div class="permission-action">
+                        <button class="allow-btn" data-permission="location">Allow</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="skipBtn">Skip</button>
+                <button type="button" class="btn btn-primary" id="allowAllBtn">Allow All</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if onboarding is already completed
+        const onboardingCompleted = localStorage.getItem('onboardingCompleted');
+        if (onboardingCompleted === 'true') {
+            window.location.href = 'dashboard.html';
+        }
+
+        // Permission management
+        const PERMISSIONS = {
+            camera: 'camera',
+            microphone: 'microphone',
+            location: 'location'
+        };
+
+        // Check if permission is already granted
+        async function checkPermissionStatus(permission) {
+            try {
+                if (navigator.permissions && navigator.permissions.query) {
+                    const permissionName = permission === 'location' ? 'geolocation' : permission;
+                    const result = await navigator.permissions.query({ name: permissionName });
+                    if (result.state === 'granted') {
+                        return 'granted';
+                    } else if (result.state === 'denied') {
+                        return 'denied';
+                    }
+                    return 'prompt';
+                }
+                return 'prompt';
+            } catch (error) {
+                return 'prompt';
+            }
+        }
+
+        // Request specific permission
+        async function requestPermission(type, buttonElement) {
+            try {
+                // First check if already granted
+                const status = await checkPermissionStatus(type);
+                if (status === 'granted') {
+                    updatePermissionButton(buttonElement, true);
+                    return true;
+                }
+
+                let granted = false;
+
+                switch (type) {
+                    case 'camera':
+                        await navigator.mediaDevices.getUserMedia({ video: true });
+                        granted = true;
+                        console.log('Camera permission granted');
+                        break;
+                    case 'microphone':
+                        await navigator.mediaDevices.getUserMedia({ audio: true });
+                        granted = true;
+                        console.log('Microphone permission granted');
+                        break;
+                    case 'location':
+                        await new Promise((resolve, reject) => {
+                            navigator.geolocation.getCurrentPosition(resolve, reject);
+                        });
+                        granted = true;
+                        console.log('Location permission granted');
+                        break;
+                }
+
+                updatePermissionButton(buttonElement, granted);
+                return granted;
+            } catch (error) {
+                console.log(`${type} permission denied or not available`);
+                updatePermissionButton(buttonElement, false);
+                return false;
+            }
+        }
+
+        // Update permission button state
+        function updatePermissionButton(buttonElement, granted) {
+            if (granted) {
+                buttonElement.textContent = 'Allowed';
+                buttonElement.classList.add('allowed');
+                buttonElement.disabled = true;
+                buttonElement.dataset.granted = 'true';
+            } else {
+                buttonElement.textContent = 'Denied';
+                buttonElement.classList.add('denied');
+                buttonElement.disabled = true;
+                buttonElement.dataset.granted = 'false';
+            }
+
+            updateContinueButton();
+        }
+
+        // Update continue button based on all permissions
+        function updateContinueButton() {
+            const allButtons = document.querySelectorAll('.allow-btn');
+            const allowAllBtn = document.getElementById('allowAllBtn');
+            const skipBtn = document.getElementById('skipBtn');
+
+            const allGranted = Array.from(allButtons).every(btn => btn.dataset.granted === 'true');
+            const anyGranted = Array.from(allButtons).some(btn => btn.dataset.granted === 'true');
+
+            if (allGranted) {
+                // All permissions granted - show Continue button
+                allowAllBtn.textContent = 'Continue';
+                allowAllBtn.classList.remove('btn-primary');
+                allowAllBtn.classList.add('btn-success');
+                skipBtn.style.display = 'none';
+            } else if (anyGranted) {
+                // Some permissions granted - keep Allow All button
+                allowAllBtn.textContent = 'Allow All';
+                allowAllBtn.classList.remove('btn-success');
+                allowAllBtn.classList.add('btn-primary');
+                skipBtn.style.display = 'inline-block';
+            } else {
+                // No permissions granted - keep Allow All button
+                allowAllBtn.textContent = 'Allow All';
+                allowAllBtn.classList.remove('btn-success');
+                allowAllBtn.classList.add('btn-primary');
+                skipBtn.style.display = 'inline-block';
+            }
+        }
+
+        // Check permissions on page load
+        async function initializePermissions() {
+            const buttons = document.querySelectorAll('.allow-btn');
+
+            for (const button of buttons) {
+                const permission = button.dataset.permission;
+                const status = await checkPermissionStatus(permission);
+
+                if (status === 'granted') {
+                    updatePermissionButton(button, true);
+                }
+            }
+        }
+
+        // Handle individual Allow button clicks
+        document.querySelectorAll('.allow-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const permission = e.target.dataset.permission;
+                await requestPermission(permission, e.target);
+            });
+        });
+
+        // Allow All/Continue button
+        document.getElementById('allowAllBtn').addEventListener('click', async () => {
+            const allButtons = document.querySelectorAll('.allow-btn');
+            const allGranted = Array.from(allButtons).every(btn => btn.dataset.granted === 'true');
+
+            if (allGranted) {
+                // All permissions already granted - continue to dashboard
+                localStorage.setItem('permissionsGranted', 'true');
+                localStorage.setItem('onboardingCompleted', 'true');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            // Request remaining permissions (only those not yet decided)
+            for (const button of allButtons) {
+                const permission = button.dataset.permission;
+                if (!button.disabled) {
+                    await requestPermission(permission, button);
+                }
+            }
+
+            // After attempting all, check again
+            const nowAllGranted = Array.from(allButtons).every(btn => btn.dataset.granted === 'true');
+            if (nowAllGranted) {
+                localStorage.setItem('permissionsGranted', 'true');
+                localStorage.setItem('onboardingCompleted', 'true');
+                window.location.href = 'dashboard.html';
+            } else {
+                // Some permissions were denied — let the user continue anyway
+                const allowAllBtn = document.getElementById('allowAllBtn');
+                allowAllBtn.textContent = 'Continue Anyway';
+                allowAllBtn.classList.remove('btn-primary');
+                allowAllBtn.classList.add('btn-success');
+                // Next click will proceed
+                allowAllBtn.onclick = () => {
+                    localStorage.setItem('permissionsGranted', 'partial');
+                    localStorage.setItem('onboardingCompleted', 'true');
+                    window.location.href = 'dashboard.html';
+                };
+            }
+        });
+
+        // Skip button
+        document.getElementById('skipBtn').addEventListener('click', () => {
+            localStorage.setItem('permissionsGranted', 'false');
+            localStorage.setItem('onboardingCompleted', 'true');
+            window.location.href = 'dashboard.html';
+        });
+
+        // Initialize on page load
+        initializePermissions();
+    </script>
+</body>
+
+</html>

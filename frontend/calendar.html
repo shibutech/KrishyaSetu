@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar - KrishyaSetu</title>
+    <link rel="manifest" href="pwa/manifest.json">
+    <meta name="theme-color" content="#16a34a">
+    <link rel="stylesheet" href="css/krishyasetu.css">
+    <link rel="stylesheet" href="css/framework/components.css">
+    <link rel="stylesheet" href="css/framework/layout.css">
+    <link rel="stylesheet" href="css/components/calendar-components.css">
+    <link rel="stylesheet" href="css/components/task-components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="js/common.js"></script>
+    <script src="js/framework/components.js"></script>
+    <script src="js/components/calendar-components.js"></script>
+    <script src="js/components/task-components.js"></script>
+    <style>
+        .main-content {
+            padding-top: 20px;
+            background: linear-gradient(135deg, #f0fdf4 0%, #e6f7e6 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+        }
+        
+        .welcome-section {
+            margin-bottom: 24px !important;
+            background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+            border-radius: 20px;
+            padding: 24px !important;
+            box-shadow: 0 10px 40px rgba(22, 163, 74, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .welcome-title {
+            font-size: 32px !important;
+            font-weight: 800 !important;
+            color: white !important;
+            margin-bottom: 8px !important;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .welcome-subtitle {
+            font-size: 16px !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+        }
+        
+        .dashboard-grid {
+            gap: 24px !important;
+            grid-template-columns: 1fr 380px;
+        }
+        
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            padding: 20px !important;
+            border-radius: 16px !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+            border: 1px solid rgba(22, 163, 74, 0.1) !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+        }
+        
+        .calendar {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .calendar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .calendar::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #16a34a, #22c55e, #84cc16);
+            border-radius: 20px;
+            opacity: 0.05;
+            z-index: -1;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { opacity: 0.05; }
+            50% { opacity: 0.1; }
+        }
+        
+        .task-stats {
+            gap: 12px !important;
+            margin-bottom: 20px !important;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .task-stat-card {
+            padding: 16px !important;
+            border-radius: 12px !important;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease !important;
+            cursor: pointer;
+        }
+        
+        .task-stat-card:hover {
+            transform: translateY(-2px) scale(1.02) !important;
+        }
+        
+        .task-stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #22c55e);
+        }
+        
+        .task-stat-card.total::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        .task-stat-card.completed::before { background: linear-gradient(90deg, #10b981, #34d399); }
+        .task-stat-card.pending::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .task-stat-card.overdue::before { background: linear-gradient(90deg, #ef4444, #f87171); }
+        
+        .task-stat-number {
+            font-size: 24px !important;
+            font-weight: 700 !important;
+            margin-bottom: 4px !important;
+        }
+        
+        .task-stat-label {
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .task-filter {
+            margin-bottom: 20px !important;
+            padding: 16px !important;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: 12px !important;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .task-filter-title {
+            font-weight: 700 !important;
+            color: #1e293b !important;
+            margin-bottom: 12px !important;
+        }
+        
+        .task-filter-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .task-filter-option {
+            padding: 8px 16px !important;
+            font-size: 13px !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            transition: all 0.2s ease !important;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .task-filter-option:hover {
+            background: #e2e8f0;
+            transform: translateY(-1px);
+        }
+        
+        .task-filter-option.active {
+            background: linear-gradient(135deg, #16a34a, #22c55e) !important;
+            color: white !important;
+            border-color: #16a34a;
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+        }
+        
+        .task-quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 16px;
+        }
+        
+        .task-quick-action {
+            padding: 12px !important;
+            font-size: 13px !important;
+            border-radius: 10px !important;
+            font-weight: 600 !important;
+            transition: all 0.2s ease !important;
+            border: 2px solid #e2e8f0;
+            background: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        .task-quick-action:hover {
+            background: linear-gradient(135deg, #16a34a, #22c55e) !important;
+            color: white !important;
+            border-color: #16a34a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+        }
+        
+        .task-quick-action-icon {
+            font-size: 14px;
+        }
+        
+        /* Enhanced buttons */
+        .btn {
+            transition: all 0.2s ease !important;
+            font-weight: 600 !important;
+            border-radius: 10px !important;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #16a34a, #22c55e) !important;
+            border: none !important;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #15803d, #16a34a) !important;
+        }
+        
+        /* Enhanced task list */
+        .task-list {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+        
+        .task-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .task-list::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 3px;
+        }
+        
+        .task-list::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        
+        .task-list::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        /* Calendar view enhancements */
+        .calendar-view {
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Empty state improvements */
+        .calendar-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: #64748b;
+        }
+        
+        .calendar-empty-icon {
+            font-size: 48px;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+        }
+        
+        .calendar-empty-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+        
+        .calendar-empty-description {
+            font-size: 14px;
+            color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar will be loaded here -->
+
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <ul class="mobile-sidebar-links">
+            <li><a href="dashboard.html" class="mobile-sidebar-link">Dashboard</a></li>
+            <li><a href="chatbot.html" class="mobile-sidebar-link">Chatbot</a></li>
+            <li><a href="arscan.html" class="mobile-sidebar-link">AR Scan</a></li>
+            <li><a href="soil.html" class="mobile-sidebar-link">Soil Analysis</a></li>
+            <li><a href="pest.html" class="mobile-sidebar-link">Pest Detection</a></li>
+            <li><a href="calendar.html" class="mobile-sidebar-link active">Calendar</a></li>
+            <li><a href="market.html" class="mobile-sidebar-link">Market</a></li>
+            <li><a href="reports.html" class="mobile-sidebar-link">Reports</a></li>
+            <li><a href="profile.html" class="mobile-sidebar-link">Profile</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Header -->
+            <div class="welcome-section" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px;">
+                <div>
+                    <h1 class="welcome-title" style="font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 4px;">Farming Calendar 📅</h1>
+                    <p class="welcome-subtitle" style="font-size: 15px; color: var(--text-secondary);">Plan and track your agricultural activities</p>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <button id="syncCalendarTopBtn" class="btn" style="background: white; color: #3b82f6; border: 1px solid #bfdbfe; font-weight: 600; padding: 8px 16px; border-radius: 8px; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s;">
+                        <i class="fas fa-sync-alt"></i> Sync Calendar
+                    </button>
+                    <button id="addNewTaskTopBtn" class="btn btn-primary" style="background: #16a34a; font-weight: 600; padding: 8px 16px; border-radius: 8px; border: none; color: white; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s;">
+                        <i class="fas fa-plus"></i> Add New Task
+                    </button>
+                </div>
+            </div>
+
+            <!-- Calendar View Toggle -->
+            <div class="task-filter">
+                <div class="task-filter-header">
+                    <h4 class="task-filter-title">Calendar View</h4>
+                </div>
+                <div class="task-filter-options">
+                    <div class="task-filter-option active" data-view="month">
+                        <i class="fas fa-calendar"></i>
+                        <span>Month</span>
+                    </div>
+                    <div class="task-filter-option" data-view="timeline">
+                        <i class="fas fa-stream"></i>
+                        <span>Timeline</span>
+                    </div>
+                    <div class="task-filter-option" data-view="events">
+                        <i class="fas fa-list"></i>
+                        <span>Events</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Left Column - Calendar -->
+                <div class="dashboard-left">
+                    <!-- Month Calendar View -->
+                    <div id="month-view" class="calendar-view">
+                        <div class="calendar" id="main-calendar">
+                            <!-- Calendar will be generated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Timeline View -->
+                    <div id="timeline-view" class="calendar-view" style="display: none;">
+                        <div class="farming-calendar" id="farming-calendar-timeline">
+                            <div class="farming-calendar-header">
+                                <h4 class="farming-calendar-title">Crop Timeline</h4>
+                                <p class="farming-calendar-subtitle">All farming activities</p>
+                            </div>
+
+                            <div class="farming-calendar-body">
+                                <div class="crop-calendar">
+                                    <!-- Timeline will be generated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Events View -->
+                    <div id="events-view" class="calendar-view" style="display: none;">
+                        <div class="event-calendar" id="event-calendar">
+                            <div class="event-calendar-header">
+                                <h3 class="event-calendar-title">Farming Events</h3>
+                                <div class="calendar-navigation">
+                                    <button class="calendar-nav-btn" id="prev-event">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button class="calendar-nav-btn" id="today-event">Today</button>
+                                    <button class="calendar-nav-btn" id="next-event">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="event-calendar-body">
+                                <div class="event-list" id="event-list">
+                                    <!-- Events will be generated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Tasks & Stats -->
+                <div class="dashboard-right">
+                    <!-- Task Statistics -->
+                    <div class="task-stats">
+                        <div class="task-stat-card total">
+                            <div class="task-stat-number" id="total-tasks">0</div>
+                            <div class="task-stat-label">Total Tasks</div>
+                        </div>
+                        <div class="task-stat-card completed">
+                            <div class="task-stat-number" id="completed-tasks">0</div>
+                            <div class="task-stat-label">Completed</div>
+                        </div>
+                        <div class="task-stat-card pending">
+                            <div class="task-stat-number" id="pending-tasks">0</div>
+                            <div class="task-stat-label">Pending</div>
+                        </div>
+                        <div class="task-stat-card overdue">
+                            <div class="task-stat-number" id="overdue-tasks">0</div>
+                            <div class="task-stat-label">Overdue</div>
+                        </div>
+                    </div>
+
+                    <!-- Task Filter -->
+                    <div class="task-filter">
+                        <div class="task-filter-header">
+                            <h4 class="task-filter-title">Filter Tasks</h4>
+                            <button class="task-filter-clear" id="clear-filters">Clear</button>
+                        </div>
+
+                        <div class="task-filter-group">
+                            <div class="task-filter-label">Type</div>
+                            <div class="task-filter-options">
+                                <div class="task-filter-option active" data-filter-type="all">
+                                    All
+                                </div>
+                                <div class="task-filter-option" data-filter-type="planting">
+                                    🌱 Planting
+                                </div>
+                                <div class="task-filter-option" data-filter-type="watering">
+                                    💧 Watering
+                                </div>
+                                <div class="task-filter-option" data-filter-type="fertilizing">
+                                    🧪 Fertilizing
+                                </div>
+                                <div class="task-filter-option" data-filter-type="harvesting">
+                                    🌾 Harvesting
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="task-quick-actions">
+                            <button class="task-quick-action" data-quick-task data-task-type="watering"
+                                data-task-title="Water Crops">
+                                <i class="fas fa-tint task-quick-action-icon"></i>
+                                Water Crops
+                            </button>
+                            <button class="task-quick-action" data-quick-task data-task-type="fertilizing"
+                                data-task-title="Apply Fertilizer">
+                                <i class="fas fa-flask task-quick-action-icon"></i>
+                                Fertilize
+                            </button>
+                            <button class="task-quick-action" data-quick-task data-task-type="pest-control"
+                                data-task-title="Check for Pests">
+                                <i class="fas fa-bug task-quick-action-icon"></i>
+                                Pest Check
+                            </button>
+                            <button class="task-quick-action" data-quick-task data-task-type="harvesting"
+                                data-task-title="Harvest Ready Crops">
+                                <i class="fas fa-wheat task-quick-action-icon"></i>
+                                Harvest
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Task List -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Upcoming Tasks</h3>
+                            <div class="card-icon">📋</div>
+                        </div>
+
+                        <div class="task-list" id="task-list" data-task-list>
+                            <div class="calendar-empty">
+                                <div class="calendar-empty-icon">
+                                    <i class="fas fa-tasks"></i>
+                                </div>
+                                <h4 class="calendar-empty-title">No Tasks Yet</h4>
+                                <p class="calendar-empty-description">Add your first farming task to get started!</p>
+                            </div>
+                        </div>
+                        
+                        <div id="seeAllTasksBtnContainer" style="margin-top: 16px; text-align: center; display: none;">
+                            <button id="seeAllTasksBtn" class="btn btn-secondary" style="width: 100%; border-radius: 8px; font-size: 13px; font-weight: 600;">
+                                See All Upcoming Tasks
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Check if user is logged in
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        const userType = localStorage.getItem('userType');
+
+        if (isLoggedIn !== 'true' && userType !== 'guest') {
+            window.location.href = 'login.html';
+        }
+
+        // Theme toggle and hamburger menu are handled by common.js initNavbar()
+
+        // Initialize Calendar Components
+        let mainCalendar, farmingCalendar, eventCalendar, taskManager;
+
+        // Sample crops data
+        const sampleCrops = [
+            {
+                id: 'wheat-1',
+                name: 'Wheat',
+                plantingDate: '2024-02-15',
+                harvestDays: 90,
+                area: 5
+            },
+            {
+                id: 'tomato-1',
+                name: 'Tomato',
+                plantingDate: '2024-03-01',
+                harvestDays: 60,
+                area: 2
+            },
+            {
+                id: 'cotton-1',
+                name: 'Cotton',
+                plantingDate: '2024-02-20',
+                harvestDays: 120,
+                area: 3
+            }
+        ];
+
+        // Initialize main calendar
+        mainCalendar = new window.KrishyaSetu.Calendar(document.getElementById('main-calendar'), {
+            events: [],
+            onDateSelect: (date) => {
+                // Show task form for selected date
+                showTaskFormForDate(date);
+            }
+        });
+
+        // Initialize farming calendar
+        farmingCalendar = new window.KrishyaSetu.FarmingCalendar(document.getElementById('farming-calendar-timeline'), {
+            crops: sampleCrops,
+            onEventClick: (event) => {
+                showEventDetails(event);
+            }
+        });
+
+        // Initialize event calendar
+        eventCalendar = new window.KrishyaSetu.EventCalendar(document.getElementById('event-calendar'), {
+            events: [],
+            onEventClick: (event) => {
+                showEventDetails(event);
+            }
+        });
+
+        // Initialize task manager
+        taskManager = new window.KrishyaSetu.TaskManager({
+            limit: 2,
+            showAll: false,
+            onTaskAdd: (task) => {
+                updateTaskStats();
+                updateAllCalendars();
+                updateSeeAllButton();
+                window.toast.success(`Task "${task.title}" added successfully!`);
+            },
+            onTaskUpdate: (task) => {
+                updateTaskStats();
+                updateAllCalendars();
+                updateSeeAllButton();
+            },
+            onTaskDelete: (task) => {
+                updateTaskStats();
+                updateAllCalendars();
+                updateSeeAllButton();
+                window.toast.info(`Task "${task.title}" deleted`);
+            },
+            onTaskComplete: (task) => {
+                updateTaskStats();
+                updateAllCalendars();
+                updateSeeAllButton();
+                window.toast.success(`Task "${task.title}" completed!`);
+            }
+        });
+
+        // Add sample tasks
+        const sampleTasks = [
+            {
+                title: 'Irrigate wheat field',
+                description: 'Apply 2 inches of water to main wheat field',
+                type: 'watering',
+                priority: 'high',
+                date: new Date().toISOString().split('T')[0],
+                time: '06:00'
+            },
+            {
+                title: 'Apply NPK fertilizer',
+                description: 'Fertilizer for tomato plants',
+                type: 'fertilizing',
+                priority: 'medium',
+                date: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                time: '08:00'
+            },
+            {
+                title: 'Pest monitoring',
+                description: 'Check for aphids in cotton field',
+                type: 'pest-control',
+                priority: 'low',
+                date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                time: '17:00'
+            },
+            {
+                title: 'Prepare maize seeds',
+                description: 'Get seeds ready for next season',
+                type: 'planting',
+                priority: 'low',
+                date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                time: '10:00'
+            }
+        ];
+
+        // BUG 14 Fix: Use a persistent flag so sample tasks are only added ONCE.
+        if (!localStorage.getItem('calendarSampleTasksAdded')) {
+            sampleTasks.forEach(task => taskManager.addTask(task));
+            localStorage.setItem('calendarSampleTasksAdded', 'true');
+        }
+
+        // Sync Calendar
+        const syncBtn = document.getElementById('syncCalendarTopBtn');
+        if (syncBtn) {
+            syncBtn.addEventListener('click', () => {
+                if (window.toast) {
+                    window.toast.success('Calendar synced successfully!');
+                } else {
+                    alert('Calendar synced successfully!');
+                }
+            });
+        }
+
+        // Add New Task
+        const addBtn = document.getElementById('addNewTaskTopBtn');
+        if (addBtn) {
+            addBtn.addEventListener('click', () => {
+                taskManager.showTaskForm();
+            });
+        }
+
+        // Calendar view switching
+        document.querySelectorAll('[data-view]').forEach(option => {
+            option.addEventListener('click', () => {
+                // Update active state
+                document.querySelectorAll('[data-view]').forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+
+                // Switch views
+                const view = option.dataset.view;
+                document.querySelectorAll('.calendar-view').forEach(viewEl => {
+                    viewEl.style.display = 'none';
+                });
+                document.getElementById(`${view}-view`).style.display = 'block';
+            });
+        });
+
+        // Task filtering
+        document.querySelectorAll('[data-filter-type]').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('[data-filter-type]').forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+
+                const filterType = option.dataset.filterType;
+                taskManager.filterTasks({ type: filterType });
+            });
+        });
+
+        // Clear filters
+        document.getElementById('clear-filters').addEventListener('click', () => {
+            document.querySelectorAll('[data-filter-type]').forEach(opt => opt.classList.remove('active'));
+            document.querySelector('[data-filter-type="all"]').classList.add('active');
+
+            taskManager.filterTasks({ type: 'all' });
+        });
+
+        // Quick task actions
+        document.querySelectorAll('[data-quick-task]').forEach(button => {
+            button.addEventListener('click', () => {
+                const taskType = button.dataset.taskType;
+                const taskTitle = button.dataset.taskTitle;
+
+                taskManager.showTaskForm({
+                    title: taskTitle,
+                    type: taskType
+                });
+            });
+        });
+
+        // See All Tasks Logic
+        let seeAllTasksBtn = null;
+        let seeAllTasksBtnContainer = null;
+        
+        // Initialize variables after DOM is ready
+        function initializeSeeAllTasks() {
+            seeAllTasksBtn = document.getElementById('seeAllTasksBtn');
+            seeAllTasksBtnContainer = document.getElementById('seeAllTasksBtnContainer');
+            
+            if (seeAllTasksBtn) {
+                seeAllTasksBtn.addEventListener('click', () => {
+                    taskManager.showAll = !taskManager.showAll;
+                    taskManager.renderTasks();
+                    
+                    if (taskManager.showAll) {
+                        seeAllTasksBtn.innerHTML = 'Show Less';
+                    } else {
+                        seeAllTasksBtn.innerHTML = 'See All Upcoming Tasks';
+                    }
+                });
+            }
+        }
+
+        function updateSeeAllButton() {
+            if (!seeAllTasksBtnContainer) return;
+
+            const filteredCount = taskManager.getFilteredTasks().length;
+            if (filteredCount > 2) {
+                seeAllTasksBtnContainer.style.display = 'block';
+            } else {
+                seeAllTasksBtnContainer.style.display = 'none';
+                taskManager.showAll = false; // Reset if tasks are few
+            }
+        }
+
+        // Helper functions
+        function updateTaskStats() {
+            const stats = taskManager.getTaskStats();
+            document.getElementById('total-tasks').textContent = stats.total;
+            document.getElementById('completed-tasks').textContent = stats.completed;
+            document.getElementById('pending-tasks').textContent = stats.pending;
+            document.getElementById('overdue-tasks').textContent = stats.overdue;
+        }
+
+        function updateAllCalendars() {
+            // Update main calendar events
+            const events = taskManager.tasks.map(task => ({
+                id: task.id,
+                title: task.title,
+                date: task.date,
+                type: task.type,
+                description: task.description
+            }));
+
+            mainCalendar.setEvents(events);
+            eventCalendar.setEvents(events);
+        }
+
+        function showEventDetails(event) {
+            const modal = new window.KrishyaSetu.Modal({
+                title: event.title,
+                content: `
+                    <div class="event-details">
+                        <p><strong>Date:</strong> ${new Date(event.date).toLocaleDateString()}</p>
+                        <p><strong>Type:</strong> ${event.type}</p>
+                        <p><strong>Description:</strong> ${event.description || 'No description'}</p>
+                        ${event.crop ? `<p><strong>Crop:</strong> ${event.crop.name}</p>` : ''}
+                    </div>
+                `
+            });
+            modal.open();
+        }
+
+        function showTaskFormForDate(date) {
+            taskManager.showTaskForm({
+                date: date.toISOString().split('T')[0]
+            });
+        }
+
+        // Initialize stats
+        updateTaskStats();
+        updateAllCalendars();
+        initializeSeeAllTasks();
+        updateSeeAllButton();
+
+        // Set active navigation link
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.navbar-link, .mobile-sidebar-link');
+
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath.split('/').pop()) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+
+        // Make components globally accessible
+        window.taskManager = taskManager;
+        window.mainCalendar = mainCalendar;
+        window.farmingCalendar = farmingCalendar;
+        window.eventCalendar = eventCalendar;
+    </script>
+</body>
+
+</html>

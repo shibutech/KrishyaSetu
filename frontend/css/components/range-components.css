@@ -1,0 +1,621 @@
+/*
+===========================================
+KRISHYASETU RANGE SLIDER COMPONENTS
+===========================================
+Components for range selection and numeric inputs
+===========================================
+*/
+
+/* ========================================
+RANGE SLIDER COMPONENT
+======================================= */
+
+/* Base Range Slider */
+.range-slider {
+    position: relative;
+    width: 100%;
+    padding: 8px 0;
+}
+
+.range-slider-container {
+    position: relative;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+/* Range Input */
+.range-input {
+    position: absolute;
+    width: 100%;
+    height: 6px;
+    background: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Webkit Browsers */
+.range-input::-webkit-slider-track {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-input);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--accent);
+    border: 3px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    margin-top: -7px;
+}
+
+.range-input::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4);
+}
+
+.range-input::-webkit-slider-thumb:active {
+    transform: scale(1.1);
+}
+
+/* Firefox */
+.range-input::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-input);
+    border-radius: 3px;
+    cursor: pointer;
+    border: none;
+}
+
+.range-input::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--accent);
+    border: 3px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.range-input::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4);
+}
+
+.range-input::-moz-range-thumb:active {
+    transform: scale(1.1);
+}
+
+/* Range Track Background */
+.range-track {
+    position: absolute;
+    width: 100%;
+    height: 6px;
+    background: var(--bg-input);
+    border-radius: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Range Progress */
+.range-progress {
+    position: absolute;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: width 0.3s ease;
+}
+
+/* Range Labels */
+.range-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.range-label {
+    padding: 4px 8px;
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.range-label.min {
+    color: var(--text-muted);
+}
+
+.range-label.max {
+    color: var(--text-muted);
+}
+
+.range-label.current {
+    background: var(--accent);
+    color: white;
+    font-weight: 600;
+}
+
+/* Range Value Display */
+.range-value {
+    position: absolute;
+    top: -30px;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 3;
+}
+
+.range-value::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: var(--accent);
+}
+
+.range-slider:hover .range-value,
+.range-input:focus + .range-value {
+    opacity: 1;
+}
+
+/* ========================================
+RANGE SLIDER VARIANTS
+======================================= */
+
+/* Small Range Slider */
+.range-slider-sm .range-input::-webkit-slider-thumb {
+    width: 16px;
+    height: 16px;
+    margin-top: -5px;
+}
+
+.range-slider-sm .range-input::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+}
+
+.range-slider-sm .range-input::-webkit-slider-track,
+.range-slider-sm .range-input::-moz-range-track {
+    height: 4px;
+}
+
+.range-slider-sm .range-track,
+.range-slider-sm .range-progress {
+    height: 4px;
+}
+
+/* Large Range Slider */
+.range-slider-lg .range-input::-webkit-slider-thumb {
+    width: 24px;
+    height: 24px;
+    margin-top: -9px;
+}
+
+.range-slider-lg .range-input::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+}
+
+.range-slider-lg .range-input::-webkit-slider-track,
+.range-slider-lg .range-input::-moz-range-track {
+    height: 8px;
+}
+
+.range-slider-lg .range-track,
+.range-slider-lg .range-progress {
+    height: 8px;
+}
+
+/* Color Variants */
+.range-slider-success .range-input::-webkit-slider-thumb,
+.range-slider-success .range-input::-moz-range-thumb {
+    background: var(--success);
+}
+
+.range-slider-success .range-progress {
+    background: var(--success);
+}
+
+.range-slider-success .range-value {
+    background: var(--success);
+}
+
+.range-slider-success .range-value::after {
+    border-top-color: var(--success);
+}
+
+.range-slider-warning .range-input::-webkit-slider-thumb,
+.range-slider-warning .range-input::-moz-range-thumb {
+    background: var(--warning);
+}
+
+.range-slider-warning .range-progress {
+    background: var(--warning);
+}
+
+.range-slider-warning .range-value {
+    background: var(--warning);
+}
+
+.range-slider-warning .range-value::after {
+    border-top-color: var(--warning);
+}
+
+.range-slider-error .range-input::-webkit-slider-thumb,
+.range-slider-error .range-input::-moz-range-thumb {
+    background: var(--error);
+}
+
+.range-slider-error .range-progress {
+    background: var(--error);
+}
+
+.range-slider-error .range-value {
+    background: var(--error);
+}
+
+.range-slider-error .range-value::after {
+    border-top-color: var(--error);
+}
+
+/* ========================================
+DUAL RANGE SLIDER
+======================================= */
+
+/* Dual Range Container */
+.dual-range-slider {
+    position: relative;
+    width: 100%;
+    padding: 8px 0;
+}
+
+.dual-range-container {
+    position: relative;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+/* Dual Range Inputs */
+.dual-range-input {
+    position: absolute;
+    width: 100%;
+    height: 6px;
+    background: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    -webkit-appearance: none;
+    appearance: none;
+    pointer-events: none;
+}
+
+.dual-range-input.lower {
+    z-index: 3;
+}
+
+.dual-range-input.upper {
+    z-index: 2;
+}
+
+.dual-range-input::-webkit-slider-track {
+    background: transparent;
+}
+
+.dual-range-input::-moz-range-track {
+    background: transparent;
+}
+
+/* Dual Range Progress */
+.dual-range-progress {
+    position: absolute;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Dual Range Values */
+.dual-range-values {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    gap: 12px;
+}
+
+.dual-range-value-group {
+    flex: 1;
+    text-align: center;
+}
+
+.dual-range-value-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.dual-range-value-display {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+/* ========================================
+RANGE SLIDER WITH STEPS
+======================================= */
+
+/* Stepped Range Slider */
+.range-stepped .range-track {
+    background: linear-gradient(
+        to right,
+        var(--accent) 0%,
+        var(--accent) var(--step-progress, 0%),
+        var(--bg-input) var(--step-progress, 0%),
+        var(--bg-input) 100%
+    );
+}
+
+.range-stepped .range-progress {
+    background: transparent;
+}
+
+/* Step Markers */
+.range-steps {
+    position: absolute;
+    width: 100%;
+    height: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.range-step {
+    position: absolute;
+    width: 2px;
+    height: 12px;
+    background: var(--border);
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 1px;
+}
+
+.range-step.active {
+    background: var(--accent);
+    width: 3px;
+    height: 16px;
+}
+
+/* ========================================
+RANGE SLIDER STATES
+======================================= */
+
+/* Disabled State */
+.range-slider.disabled .range-input {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.range-slider.disabled .range-input::-webkit-slider-thumb,
+.range-slider.disabled .range-input::-moz-range-thumb {
+    background: var(--text-muted);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.range-slider.disabled .range-progress {
+    background: var(--text-muted);
+    opacity: 0.6;
+}
+
+/* Error State */
+.range-slider.error .range-input::-webkit-slider-thumb,
+.range-slider.error .range-input::-moz-range-thumb {
+    background: var(--error);
+}
+
+.range-slider.error .range-progress {
+    background: var(--error);
+}
+
+/* Success State */
+.range-slider.success .range-input::-webkit-slider-thumb,
+.range-slider.success .range-input::-moz-range-thumb {
+    background: var(--success);
+}
+
+.range-slider.success .range-progress {
+    background: var(--success);
+}
+
+/* ========================================
+RANGE SLIDER WITH INPUT
+======================================= */
+
+/* Range with Input Container */
+.range-with-input {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.range-with-input .range-slider {
+    flex: 1;
+}
+
+.range-with-input .range-input-field {
+    width: 80px;
+    padding: 8px 12px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    background: var(--bg-input);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.range-with-input .range-input-field:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--bg-card);
+}
+
+/* ========================================
+RANGE SLIDER GROUP
+======================================= */
+
+/* Range Group Container */
+.range-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.range-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.range-group-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.range-group-description {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.range-group-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+/* ========================================
+RESPONSIVE DESIGN
+======================================= */
+
+@media (max-width: 768px) {
+    .range-value {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+    
+    .range-labels {
+        font-size: 11px;
+    }
+    
+    .range-label {
+        padding: 3px 6px;
+        font-size: 11px;
+    }
+    
+    .dual-range-values {
+        gap: 8px;
+    }
+    
+    .dual-range-value-display {
+        font-size: 14px;
+        padding: 6px 8px;
+    }
+    
+    .range-with-input .range-input-field {
+        width: 70px;
+        font-size: 13px;
+        padding: 6px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .range-slider {
+        padding: 6px 0;
+    }
+    
+    .range-input::-webkit-slider-thumb,
+    .range-input::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .range-input::-webkit-slider-thumb {
+        margin-top: -6px;
+    }
+    
+    .range-value {
+        font-size: 10px;
+        padding: 2px 4px;
+        top: -25px;
+    }
+    
+    .range-labels {
+        font-size: 10px;
+        margin-top: 6px;
+    }
+    
+    .range-label {
+        padding: 2px 4px;
+        font-size: 10px;
+    }
+    
+    .dual-range-values {
+        gap: 6px;
+        margin-top: 8px;
+    }
+    
+    .dual-range-value-display {
+        font-size: 12px;
+        padding: 4px 6px;
+    }
+    
+    .range-with-input {
+        gap: 8px;
+    }
+    
+    .range-with-input .range-input-field {
+        width: 60px;
+        font-size: 12px;
+        padding: 4px 6px;
+    }
+}

@@ -1,0 +1,609 @@
+/*
+===========================================
+KRISHYASETU RADIO GROUP COMPONENTS
+===========================================
+Components for radio button groups and single selection
+===========================================
+*/
+
+/* ========================================
+RADIO GROUP COMPONENT
+======================================= */
+
+/* Base Radio Group */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.radio-group.horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.radio-group.inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Radio Item */
+.radio-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.radio-item:hover {
+    transform: translateX(2px);
+}
+
+.radio-item.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Radio Input */
+.radio-input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Radio Button */
+.radio-button {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    background: var(--bg-card);
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.radio-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Radio States */
+.radio-input:checked + .radio-button {
+    border-color: var(--accent);
+    background: var(--accent-light-bg);
+}
+
+.radio-input:checked + .radio-button::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.radio-input:focus + .radio-button {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.radio-input:disabled + .radio-button {
+    opacity: 0.6;
+    cursor: not-allowed;
+    border-color: var(--border);
+}
+
+.radio-input:disabled + .radio-button::after {
+    background: var(--text-muted);
+}
+
+/* Radio Content */
+.radio-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.radio-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.radio-input:checked ~ .radio-content .radio-label {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.radio-description {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    cursor: pointer;
+}
+
+/* ========================================
+RADIO GROUP VARIANTS
+======================================= */
+
+/* Small Radio Group */
+.radio-group-sm .radio-button {
+    width: 16px;
+    height: 16px;
+}
+
+.radio-group-sm .radio-button::after {
+    width: 6px;
+    height: 6px;
+}
+
+.radio-group-sm .radio-label {
+    font-size: 12px;
+}
+
+.radio-group-sm .radio-description {
+    font-size: 11px;
+}
+
+.radio-group-sm .radio-item {
+    gap: 8px;
+}
+
+/* Large Radio Group */
+.radio-group-lg .radio-button {
+    width: 24px;
+    height: 24px;
+}
+
+.radio-group-lg .radio-button::after {
+    width: 10px;
+    height: 10px;
+}
+
+.radio-group-lg .radio-label {
+    font-size: 16px;
+}
+
+.radio-group-lg .radio-description {
+    font-size: 14px;
+}
+
+.radio-group-lg .radio-item {
+    gap: 12px;
+}
+
+/* Card Style Radio Group */
+.radio-group.card .radio-item {
+    padding: 16px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-card);
+    transition: all 0.3s ease;
+    gap: 12px;
+}
+
+.radio-group.card .radio-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.15);
+}
+
+.radio-group.card .radio-input:checked ~ .radio-item {
+    border-color: var(--accent);
+    background: var(--accent-light-bg);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.15);
+}
+
+/* Button Style Radio Group */
+.radio-group.button .radio-item {
+    padding: 10px 16px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-card);
+    transition: all 0.3s ease;
+    gap: 8px;
+}
+
+.radio-group.button .radio-item:hover {
+    border-color: var(--accent);
+    background: var(--bg-hover);
+}
+
+.radio-group.button .radio-input:checked ~ .radio-item {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: white;
+}
+
+.radio-group.button .radio-input:checked ~ .radio-item .radio-label {
+    color: white;
+}
+
+.radio-group.button .radio-input:checked ~ .radio-item .radio-description {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.radio-group.button .radio-input:checked ~ .radio-item .radio-button {
+    border-color: white;
+    background: white;
+}
+
+.radio-group.button .radio-input:checked ~ .radio-item .radio-button::after {
+    background: var(--accent);
+}
+
+/* ========================================
+RADIO GROUP WITH ICONS
+======================================= */
+
+/* Radio with Icon */
+.radio-with-icon .radio-item {
+    align-items: center;
+}
+
+.radio-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.radio-input:checked ~ .radio-content .radio-icon {
+    color: var(--accent);
+}
+
+/* Radio with Image */
+.radio-with-image .radio-item {
+    align-items: center;
+    padding: 12px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-card);
+    transition: all 0.3s ease;
+}
+
+.radio-with-image .radio-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+}
+
+.radio-with-image .radio-input:checked ~ .radio-item {
+    border-color: var(--accent);
+    background: var(--accent-light-bg);
+}
+
+.radio-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.radio-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ========================================
+RADIO GROUP COLORS
+======================================= */
+
+/* Success Radio Group */
+.radio-group.success .radio-input:checked + .radio-button {
+    border-color: var(--success);
+    background: var(--success-light-bg);
+}
+
+.radio-group.success .radio-input:checked + .radio-button::after {
+    background: var(--success);
+}
+
+.radio-group.success .radio-input:checked ~ .radio-content .radio-label {
+    color: var(--success);
+}
+
+.radio-group.success .radio-input:focus + .radio-button {
+    outline-color: var(--success);
+}
+
+/* Warning Radio Group */
+.radio-group.warning .radio-input:checked + .radio-button {
+    border-color: var(--warning);
+    background: var(--warning-light-bg);
+}
+
+.radio-group.warning .radio-input:checked + .radio-button::after {
+    background: var(--warning);
+}
+
+.radio-group.warning .radio-input:checked ~ .radio-content .radio-label {
+    color: var(--warning);
+}
+
+.radio-group.warning .radio-input:focus + .radio-button {
+    outline-color: var(--warning);
+}
+
+/* Error Radio Group */
+.radio-group.error .radio-input:checked + .radio-button {
+    border-color: var(--error);
+    background: var(--error-light-bg);
+}
+
+.radio-group.error .radio-input:checked + .radio-button::after {
+    background: var(--error);
+}
+
+.radio-group.error .radio-input:checked ~ .radio-content .radio-label {
+    color: var(--error);
+}
+
+.radio-group.error .radio-input:focus + .radio-button {
+    outline-color: var(--error);
+}
+
+/* ========================================
+RADIO GROUP STATES
+======================================= */
+
+/* Error State */
+.radio-group.has-error .radio-item {
+    border-color: var(--error);
+}
+
+.radio-group.has-error .radio-label {
+    color: var(--error);
+}
+
+/* Required State */
+.radio-group.required .radio-label::after {
+    content: ' *';
+    color: var(--error);
+}
+
+/* ========================================
+RADIO GROUP VALIDATION
+======================================= */
+
+/* Radio Error Message */
+.radio-error {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: var(--error-light-bg);
+    color: var(--error);
+    border: 1px solid var(--error);
+    border-radius: 6px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.radio-error-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.radio-error-message {
+    flex: 1;
+}
+
+/* Radio Help Text */
+.radio-help {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* ========================================
+RADIO GROUP ACCESSIBILITY
+======================================= */
+
+/* Focus Visible */
+.radio-input:focus-visible + .radio-button {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .radio-button {
+        border-width: 3px;
+    }
+    
+    .radio-button::after {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .radio-button,
+    .radio-button::after,
+    .radio-item,
+    .radio-label {
+        transition: none;
+    }
+}
+
+/* ========================================
+RADIO GROUP LAYOUTS
+======================================= */
+
+/* Grid Layout */
+.radio-group.grid {
+    display: grid;
+    gap: 12px;
+}
+
+.radio-group.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.radio-group.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.radio-group.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* Segment Control Style */
+.radio-group.segment {
+    display: flex;
+    background: var(--bg-input);
+    border-radius: 8px;
+    padding: 4px;
+    gap: 2px;
+}
+
+.radio-group.segment .radio-item {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: transparent;
+    border: none;
+    margin: 0;
+    transition: all 0.3s ease;
+    text-align: center;
+    justify-content: center;
+}
+
+.radio-group.segment .radio-item:hover {
+    background: var(--bg-hover);
+}
+
+.radio-group.segment .radio-input:checked ~ .radio-item {
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 2px 4px rgba(22, 163, 74, 0.3);
+}
+
+.radio-group.segment .radio-button {
+    display: none;
+}
+
+.radio-group.segment .radio-label {
+    margin: 0;
+    font-weight: 500;
+}
+
+/* ========================================
+RESPONSIVE DESIGN
+======================================= */
+
+@media (max-width: 768px) {
+    .radio-group.horizontal {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .radio-group.grid-2,
+    .radio-group.grid-3,
+    .radio-group.grid-4 {
+        grid-template-columns: 1fr;
+    }
+    
+    .radio-group.inline {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .radio-group.card .radio-item {
+        padding: 12px;
+        gap: 10px;
+    }
+    
+    .radio-group.button .radio-item {
+        padding: 8px 12px;
+        gap: 6px;
+    }
+    
+    .radio-with-image .radio-item {
+        padding: 8px;
+        gap: 8px;
+    }
+    
+    .radio-image {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .radio-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .radio-item {
+        gap: 8px;
+    }
+    
+    .radio-label {
+        font-size: 13px;
+    }
+    
+    .radio-description {
+        font-size: 11px;
+    }
+    
+    .radio-group.card .radio-item {
+        padding: 10px;
+        gap: 8px;
+    }
+    
+    .radio-group.button .radio-item {
+        padding: 6px 10px;
+        gap: 4px;
+    }
+    
+    .radio-group.segment {
+        padding: 2px;
+        gap: 1px;
+    }
+    
+    .radio-group.segment .radio-item {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+    
+    .radio-with-image .radio-item {
+        padding: 6px;
+        gap: 6px;
+    }
+    
+    .radio-image {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .radio-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 12px;
+    }
+}

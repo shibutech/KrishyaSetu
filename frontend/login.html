@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - KrishyaSetu</title>
+    <link rel="manifest" href="pwa/manifest.json">
+    <meta name="theme-color" content="#16a34a">
+    <link rel="stylesheet" href="css/krishyasetu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="js/common.js"></script>
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--bg-page);
+            padding: 20px;
+        }
+        
+        .login-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 32px 24px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 8px 32px var(--shadow);
+            text-align: center;
+        }
+        
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 24px;
+            color: white;
+        }
+        
+        .login-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .login-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 16px;
+            background: var(--bg-input);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-light-bg);
+        }
+        
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .remember-me input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--accent);
+        }
+        
+        .remember-me label {
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        
+        .forgot-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .login-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+        
+        .signup-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .signup-link a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+        
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .progress-dot.active {
+            background: var(--accent);
+            width: 24px;
+            border-radius: 4px;
+        }
+        
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 24px 20px;
+                max-width: 350px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="progress-indicator">
+                <div class="progress-dot"></div>
+                <div class="progress-dot active"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+            </div>
+            
+            <div class="login-logo" style="background: transparent;">
+                <img src="pwa/icons/krishyasetu.png" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
+            </div>
+            <h1 class="login-title" id="loginTitle">Welcome Back</h1>
+            <p class="login-subtitle" id="loginSubtitle">Login to your KrishyaSetu account</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" id="mobileLabel" for="mobileNumber">Mobile Number</label>
+                    <input type="tel" class="form-input" id="mobileNumber" placeholder="Enter your mobile number" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" id="passwordLabel" for="password">Password</label>
+                    <input type="password" class="form-input" id="password" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe" id="rememberLabel">Remember me</label>
+                    </div>
+                    <a href="javascript:void(0)" class="forgot-link" id="forgotLink">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </button>
+                
+                <button type="button" class="btn btn-secondary" id="skipLoginBtn" style="margin-top: 12px;">
+                    <i class="fas fa-arrow-right"></i>
+                    <span id="skipContinueText">Skip and Continue</span>
+                </button>
+            </form>
+            
+            <div class="signup-link" id="noAccount">
+                Don't have an account? <a href="#" id="createAccountLink">Create Account</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Clear localStorage for fresh start testing (remove this in production)
+        // localStorage.clear();
+        
+        // Update progress indicator to 3rd step when coming from signup
+        function updateProgressIndicator() {
+            const dots = document.querySelectorAll('.progress-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === 2) {
+                    dot.classList.add('active');
+                }
+            });
+        }
+        
+        // Update progress indicator on page load
+        updateProgressIndicator();
+        
+        // Check if user is already logged in
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        const userProfile = localStorage.getItem('userProfile');
+        
+        if (isLoggedIn === 'true' && userProfile) {
+            // User is already logged in, redirect to dashboard
+            window.location.href = 'dashboard.html';
+        }
+        
+        // Login form submission
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const mobileNumber = document.getElementById('mobileNumber').value;
+            
+            // Simple validation
+            if (!mobileNumber || mobileNumber.length !== 10) {
+                if (window.toast) {
+                    window.toast.error('Please enter a valid 10-digit mobile number');
+                } else {
+                    alert('Please enter a valid 10-digit mobile number');
+                }
+                return;
+            }
+            
+            // Save login state
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userMobile', mobileNumber);
+            localStorage.setItem('userType', 'registered');
+            
+            // Show success message
+            if (window.toast) {
+                window.toast.success('Login successful! Redirecting to dashboard...');
+            } else {
+                alert('Login successful! Redirecting to dashboard...');
+            }
+            
+            // Redirect to dashboard
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1500);
+        });
+
+        
+        // Skip login button
+        const skipLoginBtn = document.getElementById('skipLoginBtn');
+        if (skipLoginBtn) {
+            skipLoginBtn.addEventListener('click', () => {
+                if (window.skipLogin) {
+                    window.skipLogin();
+                } else {
+                    // Fallback skip login functionality
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userMode', 'guest');
+                    localStorage.setItem('userType', 'guest');
+                    localStorage.setItem('onboardingCompleted', 'false');
+                    window.location.href = 'permissions.html';
+                }
+            });
+        }
+
+
+        
+        // Create account link
+        const createAccountLink = document.getElementById('createAccountLink');
+        if (createAccountLink) {
+            createAccountLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (window.goToProfile) {
+                    window.goToProfile();
+                } else {
+                    window.location.href = 'signup.html';
+                }
+            });
+        }
+        
+        // Auto-login if remember me was checked
+        const rememberLogin = localStorage.getItem('rememberLogin');
+        if (rememberLogin === 'true' && localStorage.getItem('userMobile')) {
+            // Auto-login user
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userMode', 'registered');
+            localStorage.setItem('userType', 'registered');
+            
+            // Check if permissions have been granted
+            const permissionsGranted = localStorage.getItem('permissionsGranted');
+            
+            if (permissionsGranted === null) {
+                // Permissions not yet requested, redirect to permissions page
+                window.location.href = 'permissions.html';
+            } else {
+                // Permissions already handled, complete onboarding and go to dashboard
+                localStorage.setItem('onboardingCompleted', 'true');
+                window.location.href = 'dashboard.html';
+            }
+        }
+
+        // Forgot password link
+        const forgotLink = document.getElementById('forgotLink');
+        if (forgotLink) {
+            forgotLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('Forgot password link clicked');
+                if (window.toast) {
+                    console.log('Using window.toast');
+                    window.toast.info('Password reset feature is coming soon. Please contact support.');
+                } else {
+                    console.log('window.toast not found, using alert');
+                    alert('Password reset feature is coming soon. Please contact support.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

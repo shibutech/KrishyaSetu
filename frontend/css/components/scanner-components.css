@@ -1,0 +1,853 @@
+/*
+===========================================
+KRISHYASETU SCANNER COMPONENTS
+===========================================
+Components for AR scanner and disease detection
+===========================================
+*/
+
+/* ========================================
+CAMERA VIEW COMPONENTS
+======================================= */
+
+/* Camera Container */
+.camera-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.camera-view {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.camera-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-secondary);
+}
+
+.camera-placeholder-icon {
+    font-size: 48px;
+    color: var(--text-muted);
+}
+
+.camera-placeholder-text {
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Camera Controls */
+.camera-controls {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 12px;
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+}
+
+.camera-btn {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.camera-capture {
+    background: var(--accent);
+    color: white;
+    font-size: 20px;
+}
+
+.camera-capture:hover {
+    background: var(--accent-hover);
+    transform: scale(1.1);
+}
+
+.camera-switch {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 16px;
+}
+
+.camera-switch:hover {
+    background: var(--bg-hover);
+}
+
+.camera-flash {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 16px;
+}
+
+.camera-flash:hover {
+    background: var(--bg-hover);
+}
+
+.camera-flash.on {
+    background: var(--warning);
+    color: white;
+}
+
+/* ========================================
+IMAGE UPLOAD COMPONENTS
+======================================= */
+
+/* Upload Area */
+.upload-area {
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-area:hover {
+    border-color: var(--accent);
+    background: var(--accent-light-bg);
+}
+
+.upload-area.dragover {
+    border-color: var(--accent);
+    background: var(--accent-light-bg);
+    transform: scale(1.02);
+}
+
+.upload-icon {
+    font-size: 48px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.upload-text {
+    font-size: 14px;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.upload-subtext {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.upload-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Upload Preview */
+.upload-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.preview-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+}
+
+.preview-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+}
+
+.preview-name {
+    font-size: 12px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.preview-size {
+    font-size: 10px;
+    color: var(--text-secondary);
+}
+
+.preview-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.preview-remove {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: var(--error);
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    transition: all 0.2s ease;
+}
+
+.preview-remove:hover {
+    background: var(--error-hover);
+    transform: scale(1.1);
+}
+
+/* ========================================
+SCAN RESULT COMPONENTS
+======================================= */
+
+/* Scan Result Card */
+.scan-result {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 16px 0;
+}
+
+.scan-result-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.scan-result-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.scan-result-icon.healthy {
+    background: var(--success);
+    color: white;
+}
+
+.scan-result-icon.warning {
+    background: var(--warning);
+    color: white;
+}
+
+.scan-result-icon.danger {
+    background: var(--error);
+    color: white;
+}
+
+.scan-result-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.scan-result-subtitle {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.scan-result-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Disease Detection */
+.detection-result {
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.detection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.disease-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.confidence-score {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.confidence-score.high {
+    color: var(--success);
+}
+
+.confidence-score.medium {
+    color: var(--warning);
+}
+
+.confidence-score.low {
+    color: var(--error);
+}
+
+.confidence-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--bg-primary);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.confidence-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.confidence-fill.high {
+    background: var(--success);
+}
+
+.confidence-fill.medium {
+    background: var(--warning);
+}
+
+.confidence-fill.low {
+    background: var(--error);
+}
+
+.detection-description {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin-top: 8px;
+}
+
+/* Symptoms List */
+.symptoms-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.symptom-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.symptom-bullet {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.symptom-text {
+    font-size: 12px;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+/* ========================================
+AR OVERLAY COMPONENTS
+======================================= */
+
+/* AR Overlay Container */
+.ar-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.ar-marker {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    background: rgba(22, 163, 74, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: ar-pulse 2s infinite;
+}
+
+.ar-marker::before {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    animation: ar-pulse 2s infinite 0.5s;
+}
+
+.ar-marker::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--accent);
+    border-radius: 50%;
+}
+
+@keyframes ar-pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+    }
+}
+
+/* AR Label */
+.ar-label {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    max-width: 200px;
+    word-wrap: break-word;
+}
+
+.ar-label::before {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid rgba(0, 0, 0, 0.8);
+}
+
+/* AR Scan Line */
+.ar-scan-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    animation: ar-scan 2s linear infinite;
+}
+
+@keyframes ar-scan {
+    0% {
+        top: 0;
+    }
+    100% {
+        top: 100%;
+    }
+}
+
+/* ========================================
+SCAN HISTORY COMPONENTS
+======================================= */
+
+/* Scan History List */
+.scan-history {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.scan-history-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.scan-history-item:hover {
+    background: var(--bg-hover);
+    transform: translateX(4px);
+}
+
+.scan-history-thumbnail {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+}
+
+.scan-history-info {
+    flex: 1;
+}
+
+.scan-history-date {
+    font-size: 10px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.scan-history-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.scan-history-result {
+    font-size: 10px;
+    color: var(--text-secondary);
+}
+
+.scan-history-status {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.scan-history-status.healthy {
+    color: var(--success);
+}
+
+.scan-history-status.warning {
+    color: var(--warning);
+}
+
+.scan-history-status.danger {
+    color: var(--error);
+}
+
+/* ========================================
+SCANNING STATES
+======================================= */
+
+/* Scanning Animation */
+.scanning-state {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 32px;
+}
+
+.scanning-spinner {
+    width: 64px;
+    height: 64px;
+    border: 3px solid var(--border);
+    border-top: 3px solid var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.scanning-text {
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.scanning-subtext {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+/* Processing State */
+.processing-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 32px;
+}
+
+.processing-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    max-width: 200px;
+}
+
+.processing-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.processing-step.active {
+    color: var(--accent);
+}
+
+.processing-step.completed {
+    color: var(--success);
+}
+
+.step-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+}
+
+.processing-step.active .step-icon {
+    background: var(--accent);
+    color: white;
+}
+
+.processing-step.completed .step-icon {
+    background: var(--success);
+    color: white;
+}
+
+/* ========================================
+ERROR STATES
+======================================= */
+
+/* Error State */
+.error-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 32px;
+    text-align: center;
+}
+
+.error-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--error-light-bg);
+    color: var(--error);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+}
+
+.error-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--error);
+    margin: 0;
+}
+
+.error-description {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.error-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+/* ========================================
+RESPONSIVE DESIGN
+======================================= */
+
+@media (max-width: 768px) {
+    .camera-container {
+        height: 250px;
+    }
+    
+    .camera-controls {
+        bottom: 12px;
+        padding: 8px;
+        gap: 8px;
+    }
+    
+    .camera-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .camera-capture {
+        font-size: 18px;
+    }
+    
+    .camera-switch,
+    .camera-flash {
+        font-size: 14px;
+    }
+    
+    .upload-area {
+        padding: 24px;
+    }
+    
+    .upload-icon {
+        font-size: 36px;
+    }
+    
+    .upload-text {
+        font-size: 13px;
+    }
+    
+    .upload-subtext {
+        font-size: 11px;
+    }
+    
+    .scan-result {
+        padding: 16px;
+    }
+    
+    .scan-result-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    .ar-marker {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .ar-label {
+        font-size: 11px;
+        padding: 6px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .camera-container {
+        height: 200px;
+    }
+    
+    .camera-controls {
+        bottom: 8px;
+        padding: 6px;
+        gap: 6px;
+    }
+    
+    .camera-btn {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .camera-capture {
+        font-size: 16px;
+    }
+    
+    .camera-switch,
+    .camera-flash {
+        font-size: 12px;
+    }
+    
+    .upload-area {
+        padding: 16px;
+    }
+    
+    .upload-icon {
+        font-size: 32px;
+    }
+    
+    .upload-text {
+        font-size: 12px;
+    }
+    
+    .upload-subtext {
+        font-size: 10px;
+    }
+    
+    .scan-result {
+        padding: 12px;
+    }
+    
+    .scan-result-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+    }
+    
+    .ar-marker {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .ar-label {
+        font-size: 10px;
+        padding: 4px 8px;
+        max-width: 150px;
+    }
+    
+    .scan-history-item {
+        padding: 8px;
+    }
+    
+    .scan-history-thumbnail {
+        width: 40px;
+        height: 40px;
+    }
+}

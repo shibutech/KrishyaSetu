@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - KrishyaSetu</title>
+    <link rel="manifest" href="pwa/manifest.json">
+    <meta name="theme-color" content="#16a34a">
+    <link rel="stylesheet" href="css/krishyasetu.css">
+    <link rel="stylesheet" href="css/framework/components.css">
+    <link rel="stylesheet" href="css/framework/layout.css">
+    <link rel="stylesheet" href="css/components/calendar-components.css">
+    <link rel="stylesheet" href="css/components/task-components.css">
+    <link rel="stylesheet" href="css/functional.css">
+    <link rel="stylesheet" href="css/functional-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/framework/components.js"></script>
+    <script src="js/components/calendar-components.js"></script>
+    <script src="js/components/task-components.js"></script>
+    <script src="js/functional/file-manager.js"></script>
+    <script src="js/functional/camera-functional.js"></script>
+    <script src="js/functional/gallery-functional.js"></script>
+    <script src="js/functional/notification-functional.js"></script>
+    <script src="js/functional/main-functional.js"></script>
+    <script src="js/functional/dashboard-functional.js"></script>
+    <script src="js/functional/chatbot-functional.js"></script>
+    <style>
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-icon {
+            font-size: 24px;
+            opacity: 0.8;
+        }
+
+        .quick-action-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .quick-action-btn:hover {
+            background: var(--accent-light-bg);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .quick-action-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-light-bg);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar will be loaded here -->
+
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <ul class="mobile-sidebar-links">
+            <li><a href="dashboard.html" class="mobile-sidebar-link">Dashboard</a></li>
+            <li><a href="chatbot.html" class="mobile-sidebar-link">Chatbot</a></li>
+            <li><a href="arscan.html" class="mobile-sidebar-link">AR Scan</a></li>
+            <li><a href="soil.html" class="mobile-sidebar-link">Soil Analysis</a></li>
+            <li><a href="pest.html" class="mobile-sidebar-link">Pest Detection</a></li>
+            <li><a href="calendar.html" class="mobile-sidebar-link">Calendar</a></li>
+            <li><a href="market.html" class="mobile-sidebar-link">Market</a></li>
+            <li><a href="reports.html" class="mobile-sidebar-link">Reports</a></li>
+            <li><a href="profile.html" class="mobile-sidebar-link">Profile</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Welcome Section -->
+            <section class="welcome-section" style="margin-bottom: 24px;">
+                <h1 class="welcome-title" style="font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 4px;">Welcome, Farmer! 👋</h1>
+                <p class="welcome-subtitle" style="font-size: 15px; color: var(--text-secondary);">Here's your farm's overview for today.</p>
+            </section>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Left Column -->
+                <div class="dashboard-left">
+                    <!-- Today's Farming Tip -->
+                    <div class="card tip-card" style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #16a34a; border-radius: 12px; padding: 20px; position: relative; overflow: hidden; margin-bottom: 24px;">
+                        <div style="display: flex; gap: 12px;">
+                            <div style="font-size: 24px;">💡</div>
+                            <div>
+                                <h3 class="tip-title" style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 8px;">Today's Farming Tip</h3>
+                                <p class="tip-content" style="font-size: 14px; color: #166534; line-height: 1.5; opacity: 0.9;">
+                                    Focus on soil moisture retention during this mid-season phase. Applying a light layer of mulch can help conserve water and suppress weed growth.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Crop Health Summary -->
+                    <div class="card" id="cropHealthCard" style="margin-bottom: 24px; padding: 20px 24px;">
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3 class="card-title" style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin: 0;">Crop Health Summary</h3>
+                            <a href="#" style="color: #16a34a; font-size: 14px; font-weight: 600; text-decoration: none;">View All Details ></a>
+                        </div>
+                        <div class="crop-health-list" style="display: flex; flex-direction: column; gap: 16px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 40px; height: 40px; background: #fef3c7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">🌾</div>
+                                    <div>
+                                        <div style="font-weight: 600; color: var(--text-primary);">Wheat</div>
+                                        <div style="font-size: 12px; color: var(--text-secondary);">Stage: Heading</div>
+                                    </div>
+                                </div>
+                                <span style="background: #dcfce7; color: #166534; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 12px;">Healthy</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 40px; height: 40px; background: #e0f2fe; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">🍚</div>
+                                    <div>
+                                        <div style="font-weight: 600; color: var(--text-primary);">Rice</div>
+                                        <div style="font-size: 12px; color: var(--text-secondary);">Stage: Tillering</div>
+                                    </div>
+                                </div>
+                                <span style="background: #fef08a; color: #a16207; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 12px;">Needs Attention</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 40px; height: 40px; background: #fef08a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">🌽</div>
+                                    <div>
+                                        <div style="font-weight: 600; color: var(--text-primary);">Corn</div>
+                                        <div style="font-size: 12px; color: var(--text-secondary);">Stage: Maturation</div>
+                                    </div>
+                                </div>
+                                <span style="background: #dcfce7; color: #166534; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 12px;">Excellent</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Government Schemes -->
+                    <div class="card" style="margin-bottom: 24px; padding: 20px 24px;">
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3 class="card-title" style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin: 0;">Government Schemes</h3>
+                            <a href="#" id="viewAllSchemesBtn" style="color: var(--accent); font-size: 14px; font-weight: 600; text-decoration: none;">View All Schemes ›</a>
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <!-- Scheme 1 -->
+                            <div class="scheme-card" style="border: 1px solid var(--border); border-radius: 12px; padding: 16px; transition: all 0.2s;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+                                    <div style="flex: 1;">
+                                        <h4 style="font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">PM Kisan Samman Nidhi</h4>
+                                        <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin: 0;">Financial support of ₹6,000 per year for small and marginal farmers.</p>
+                                    </div>
+                                    <button class="btn btn-secondary btn-sm ask-verdant-btn" data-scheme="PM Kisan Samman Nidhi" style="font-size: 11px; padding: 5px 10px; border-radius: 6px; border-color: var(--accent); color: var(--accent); background: transparent; white-space: nowrap; flex-shrink: 0;">Ask Verdant 🤖</button>
+                                </div>
+                                <div style="margin-top: 12px;">
+                                    <a href="https://pmkisan.gov.in" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--accent); font-weight: 600; text-decoration: none; border: 1px solid var(--accent); border-radius: 6px; padding: 5px 12px; transition: all 0.2s;"><i class="fas fa-external-link-alt" style="font-size: 10px;"></i> Official Link</a>
+                                </div>
+                            </div>
+
+                            <!-- Scheme 2 -->
+                            <div class="scheme-card" style="border: 1px solid var(--border); border-radius: 12px; padding: 16px; transition: all 0.2s;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+                                    <div style="flex: 1;">
+                                        <h4 style="font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">PM Fasal Bima Yojana</h4>
+                                        <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin: 0;">Insurance coverage against crop failure helping stabilize farmer income.</p>
+                                    </div>
+                                    <button class="btn btn-secondary btn-sm ask-verdant-btn" data-scheme="Pradhan Mantri Fasal Bima Yojana" style="font-size: 11px; padding: 5px 10px; border-radius: 6px; border-color: var(--accent); color: var(--accent); background: transparent; white-space: nowrap; flex-shrink: 0;">Ask Verdant 🤖</button>
+                                </div>
+                                <div style="margin-top: 12px;">
+                                    <a href="https://pmfby.gov.in" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--accent); font-weight: 600; text-decoration: none; border: 1px solid var(--accent); border-radius: 6px; padding: 5px 12px; transition: all 0.2s;"><i class="fas fa-external-link-alt" style="font-size: 10px;"></i> Official Link</a>
+                                </div>
+                            </div>
+
+                            <!-- Scheme 3 -->
+                            <div class="scheme-card" style="border: 1px solid var(--border); border-radius: 12px; padding: 16px; transition: all 0.2s;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+                                    <div style="flex: 1;">
+                                        <h4 style="font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">Kisan Credit Card (KCC)</h4>
+                                        <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin: 0;">Provides credit support at low interest for crop production, post-harvest & allied activities.</p>
+                                    </div>
+                                    <button class="btn btn-secondary btn-sm ask-verdant-btn" data-scheme="Kisan Credit Card" style="font-size: 11px; padding: 5px 10px; border-radius: 6px; border-color: var(--accent); color: var(--accent); background: transparent; white-space: nowrap; flex-shrink: 0;">Ask Verdant 🤖</button>
+                                </div>
+                                <div style="margin-top: 12px;">
+                                    <a href="https://www.myscheme.gov.in/schemes/kcc" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--accent); font-weight: 600; text-decoration: none; border: 1px solid var(--accent); border-radius: 6px; padding: 5px 12px; transition: all 0.2s;"><i class="fas fa-external-link-alt" style="font-size: 10px;"></i> Official Link</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- By-Product Income Maximizer -->
+                    <div class="card" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px;">
+                        <div style="display: flex; align-items: flex-start; gap: 16px;">
+                            <div style="width: 44px; height: 44px; background: #9333ea; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: white; flex-shrink: 0;">💰</div>
+                            <div>
+                                <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">By-Product Income Maximizer</h3>
+                                <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+                                    Convert crop residues into valuable by-products like bio-briquettes and vermicompost for extra income.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="dashboard-right">
+                    <!-- Weather Forecast -->
+                    <div class="card weather-card-new" style="padding: 24px; margin-bottom: 24px;" id="weatherCard">
+                        <h3 class="card-title" style="margin-bottom: 12px; font-size: 16px; font-weight: 700;">Weather Forecast</h3>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <div style="font-size: 12px; color: var(--text-secondary);">
+                                <i class="fas fa-map-marker-alt" style="color: var(--accent); margin-right: 4px;"></i>
+                                <span id="weatherLocationText">Default Location</span>
+                            </div>
+                            <button id="weatherLocationBtn" style="background: transparent; border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--accent); cursor: pointer; display: flex; align-items: center; gap: 4px;">
+                                <i class="fas fa-crosshairs" style="font-size: 10px;"></i> Update
+                            </button>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
+                            <i class="fas fa-cloud-sun" id="weatherIcon" style="font-size: 42px; color: #f59e0b;"></i>
+                            <div class="weather-temp" id="currentTemp" style="font-size: 44px; font-weight: 800; line-height: 1; color: var(--text-primary);">30°</div>
+                        </div>
+                        <div class="weather-desc" id="currentDesc" style="color: var(--text-secondary); font-size: 13px; margin-bottom: 16px;">Partly Cloudy</div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; font-size: 11px; margin-bottom: 16px;">
+                            <div style="display: flex; align-items: center; gap: 5px;"><i class="fas fa-tint" style="color: #60a5fa; width: 12px;"></i> <span style="color: var(--text-secondary);">Humidity: <span id="wd-humidity">33%</span></span></div>
+                            <div style="display: flex; align-items: center; gap: 5px;"><i class="fas fa-wind" style="color: #94a3b8; width: 12px;"></i> <span style="color: var(--text-secondary);">Wind: <span id="wd-wind">3 km/h</span></span></div>
+                            <div style="display: flex; align-items: center; gap: 5px;"><i class="fas fa-sun" style="color: #eab308; width: 12px;"></i> <span style="color: var(--text-secondary);">Sunrise: <span id="wd-sunrise">06:13 AM</span></span></div>
+                            <div style="display: flex; align-items: center; gap: 5px;"><i class="fas fa-moon" style="color: #64748b; width: 12px;"></i> <span style="color: var(--text-secondary);">Sunset: <span id="wd-sunset">06:12 PM</span></span></div>
+                            <div style="display: flex; align-items: center; gap: 5px;"><i class="fas fa-cloud-rain" style="color: #93c5fd; width: 12px;"></i> <span style="color: var(--text-secondary);">Rain: <span id="wd-rain">0%</span></span></div>
+                            <div style="display: flex; align-items: center; gap: 5px;"><i class="fas fa-sun" style="color: #f87171; width: 12px;"></i> <span style="color: var(--text-secondary);">UV: <span id="wd-uv" style="color: #ef4444; font-weight: bold;">8</span></span></div>
+                        </div>
+
+                        <!-- Weather Tabs -->
+                        <div class="weather-tabs" style="display: flex; background: var(--bg-input); border-radius: 20px; padding: 4px; margin-bottom: 16px; gap: 2px;">
+                            <div class="w-tab" id="tab24h" data-tab="24h" onclick="switchWeatherTab(this)" style="flex: 1; text-align: center; padding: 6px 0; font-size: 12px; font-weight: 500; cursor: pointer; border-radius: 16px; color: var(--text-secondary); transition: all 0.2s;">24-Hour</div>
+                            <div class="w-tab active" id="tab7d" data-tab="7d" onclick="switchWeatherTab(this)" style="flex: 1; text-align: center; padding: 6px 0; font-size: 12px; font-weight: 600; cursor: pointer; border-radius: 16px; background: var(--bg-card); box-shadow: 0 1px 2px rgba(0,0,0,0.1); color: var(--text-primary); transition: all 0.2s;">7-Day</div>
+                        </div>
+
+                        <!-- 24-Hour View -->
+                        <div id="weather24hView" style="display: none; overflow-x: auto; padding-bottom: 8px; margin-bottom: 16px;">
+                            <div style="display: flex; gap: 8px; min-width: max-content;" id="hourlyForecastContainer">
+                                <!-- hourly items injected by JS -->
+                                <div style="text-align: center; min-width: 52px; padding: 8px 4px; background: var(--bg-input); border-radius: 10px;">
+                                    <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">Now</div>
+                                    <div style="font-size: 18px; margin-bottom: 4px;">☀️</div>
+                                    <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">30°</div>
+                                </div>
+                                <div style="text-align: center; min-width: 52px; padding: 8px 4px; background: var(--bg-input); border-radius: 10px;">
+                                    <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">1 PM</div>
+                                    <div style="font-size: 18px; margin-bottom: 4px;">⛅</div>
+                                    <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">32°</div>
+                                </div>
+                                <div style="text-align: center; min-width: 52px; padding: 8px 4px; background: var(--bg-input); border-radius: 10px;">
+                                    <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">2 PM</div>
+                                    <div style="font-size: 18px; margin-bottom: 4px;">⛅</div>
+                                    <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">33°</div>
+                                </div>
+                                <div style="text-align: center; min-width: 52px; padding: 8px 4px; background: var(--bg-input); border-radius: 10px;">
+                                    <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">3 PM</div>
+                                    <div style="font-size: 18px; margin-bottom: 4px;">☀️</div>
+                                    <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">34°</div>
+                                </div>
+                                <div style="text-align: center; min-width: 52px; padding: 8px 4px; background: var(--bg-input); border-radius: 10px;">
+                                    <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">4 PM</div>
+                                    <div style="font-size: 18px; margin-bottom: 4px;">🌤️</div>
+                                    <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">33°</div>
+                                </div>
+                                <div style="text-align: center; min-width: 52px; padding: 8px 4px; background: var(--bg-input); border-radius: 10px;">
+                                    <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">5 PM</div>
+                                    <div style="font-size: 18px; margin-bottom: 4px;">🌤️</div>
+                                    <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">31°</div>
+                                </div>
+                                <div style="text-align: center; min-width: 52px; padding: 8px 4px; background: var(--bg-input); border-radius: 10px;">
+                                    <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">6 PM</div>
+                                    <div style="font-size: 18px; margin-bottom: 4px;">🌙</div>
+                                    <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">29°</div>
+                                </div>
+                                <div style="text-align: center; min-width: 52px; padding: 8px 4px; background: var(--bg-input); border-radius: 10px;">
+                                    <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">7 PM</div>
+                                    <div style="font-size: 18px; margin-bottom: 4px;">🌙</div>
+                                    <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">27°</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 7-Day View -->
+                        <div id="weather7dView" style="margin-bottom: 16px;">
+                            <div id="weather7dayList" style="display: flex; flex-direction: column; gap: 4px;">
+                                <!-- Day rows generated by JS or defined here -->
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" class="form-input" id="weatherSearchInput" placeholder="Search city..." style="flex:1; background: var(--bg-input); border-color: var(--border); font-size: 12px; border-radius: 20px; padding: 8px 14px;">
+                            <button class="btn btn-primary" id="weatherSearchBtn" style="background: var(--accent); border-radius: 20px; padding: 8px 16px; font-size: 12px;">Search</button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="card" style="margin-bottom: 24px;">
+                        <h3 class="card-title" style="margin-bottom: 16px; font-size: 16px;">Quick Actions</h3>
+                        
+                        <div class="quick-actions-grid">
+                            <div class="quick-action-new" style="background: #f0fdf4; border-radius: 8px; padding: 24px 12px; text-align: center; cursor: pointer; transition: all 0.2s;" id="addCropBtn">
+                                <i class="fas fa-plus" style="font-size: 24px; color: #16a34a; margin-bottom: 12px; font-weight: 300;"></i>
+                                <div style="font-size: 12px; font-weight: 600; color: #166534;">Add Crop</div>
+                            </div>
+                            <div class="quick-action-new" style="background: #f0fdf4; border-radius: 8px; padding: 24px 12px; text-align: center; cursor: pointer; transition: all 0.2s;" onclick="window.location.href='calendar.html'">
+                                <i class="far fa-calendar-alt" style="font-size: 24px; color: #16a34a; margin-bottom: 12px;"></i>
+                                <div style="font-size: 12px; font-weight: 600; color: #166534;">Schedule Task</div>
+                            </div>
+                            <div class="quick-action-new" style="background: #f0fdf4; border-radius: 8px; padding: 24px 12px; text-align: center; cursor: pointer; transition: all 0.2s;" onclick="window.location.href='reports.html'">
+                                <i class="fas fa-chart-bar" style="font-size: 24px; color: #16a34a; margin-bottom: 12px;"></i>
+                                <div style="font-size: 12px; font-weight: 600; color: #166534;">View Reports</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="card">
+                        <h3 class="card-title" style="margin-bottom: 16px; font-size: 16px;">Recent Activity</h3>
+                        <div style="text-align: center; padding: 24px 0; color: var(--text-secondary); font-size: 13px;">
+                            No recent activity.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- All Schemes Modal -->
+    <div class="modal-overlay" id="allSchemesModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">🏛️ All Government Schemes</h3>
+                <button class="modal-close" id="closeAllSchemesModal">×</button>
+            </div>
+
+            <div class="modal-content">
+                <div class="schemes-container">
+                    <!-- Central Government Schemes -->
+                    <div class="scheme-category">
+                        <h4 class="category-title">🇮🇳 Central Government Schemes</h4>
+
+                        <div class="scheme-item">
+                            <h5 class="scheme-title">PM Kisan Samman Nidhi</h5>
+                            <p class="scheme-description">Financial support of ₹6,000 per year for small and marginal farmers</p>
+                            <div class="scheme-actions">
+                                <a href="https://pmkisan.gov.in/" target="_blank" class="scheme-link">Official Link →</a>
+                                <button class="ask-verdant-btn">Ask Verdant</button>
+                            </div>
+                        </div>
+
+                        <div class="scheme-item">
+                            <h5 class="scheme-title">Pradhan Mantri Fasal Bima Yojana</h5>
+                            <p class="scheme-description">Insurance coverage for crop failure due to natural calamities, pests & diseases</p>
+                            <div class="scheme-actions">
+                                <a href="https://pmfby.gov.in/" target="_blank" class="scheme-link">Official Link →</a>
+                                <button class="ask-verdant-btn">Ask Verdant</button>
+                            </div>
+                        </div>
+
+                        <div class="scheme-item">
+                            <h5 class="scheme-title">Soil Health Card Scheme</h5>
+                            <p class="scheme-description">Provides soil health cards to farmers with nutrient recommendations</p>
+                            <div class="scheme-actions">
+                                <a href="https://soilhealth.dac.gov.in/" target="_blank" class="scheme-link">Official Link →</a>
+                                <button class="ask-verdant-btn">Ask Verdant</button>
+                            </div>
+                        </div>
+
+                        <div class="scheme-item">
+                            <h5 class="scheme-title">Paramparagat Krishi Vikas Yojana (PKVY)</h5>
+                            <p class="scheme-description">Promotes organic farming and traditional agricultural
+                                practices</p>
+                            <div class="scheme-actions">
+                                <a href="https://pgsindia.gov.in/" target="_blank" class="scheme-link">Official Link
+                                    →</a>
+                                <button class="ask-verdant-btn">Ask Verdant</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- State Government Schemes -->
+                    <div class="scheme-category">
+                        <h4 class="category-title">🏛️ State Government Schemes</h4>
+
+                        <div class="scheme-item">
+                            <h5 class="scheme-title">Maharashtra Farm Loan Waiver</h5>
+                            <p class="scheme-description">Loan waiver scheme for small and marginal farmers in
+                                Maharashtra</p>
+                            <div class="scheme-actions">
+                                <a href="https://maharashtra.gov.in/" target="_blank" class="scheme-link">Official Link
+                                    →</a>
+                                <button class="ask-verdant-btn">Ask Verdant</button>
+                            </div>
+                        </div>
+
+                        <div class="scheme-item">
+                            <h5 class="scheme-title">Punjab Agriculture Diversification Scheme</h5>
+                            <p class="scheme-description">Encourages farmers to diversify from traditional crops</p>
+                            <div class="scheme-actions">
+                                <a href="https://punjab.gov.in/" target="_blank" class="scheme-link">Official Link →</a>
+                                <button class="ask-verdant-btn">Ask Verdant</button>
+                            </div>
+                        </div>
+
+                        <div class="scheme-item">
+                            <h5 class="scheme-title">Uttar Pradesh Krishi Rin Mochan Yojana</h5>
+                            <p class="scheme-description">Loan waiver scheme for farmers in Uttar Pradesh</p>
+                            <div class="scheme-actions">
+                                <a href="https://up.gov.in/" target="_blank" class="scheme-link">Official Link →</a>
+                                <button class="ask-verdant-btn">Ask Verdant</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in, if not redirect to login
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        const userType = localStorage.getItem('userType');
+
+        // Only redirect to login if user is not guest and not logged in
+        if (isLoggedIn !== 'true' && userType !== 'guest') {
+            window.location.href = 'login.html';
+        }
+
+        // Check if onboarding is complete, if not redirect to splash
+        const onboardingCompleted = localStorage.getItem('onboardingCompleted');
+        if (!onboardingCompleted) {
+            window.location.href = 'splash.html';
+        }
+
+        // Initialize functional components
+        if (window.MainFunctional) {
+            window.mainFunctional = new MainFunctional();
+            window.mainFunctional.init();
+        }
+
+        // Initialize dashboard functional
+        if (window.DashboardFunctional) {
+            window.dashboardFunctional = new DashboardFunctional();
+            window.dashboardFunctional.init();
+        }
+
+        // Initialize weather location on page load
+        function initializeWeatherLocation() {
+            const savedLocation = localStorage.getItem('weatherLocation');
+            const locationTextEl = document.getElementById('weatherLocationText');
+            
+            if (savedLocation && locationTextEl) {
+                locationTextEl.textContent = savedLocation;
+            } else if (locationTextEl) {
+                locationTextEl.textContent = 'Click Update to set location';
+            }
+        }
+
+        // Weather search functionality
+        const weatherSearchBtn = document.getElementById('weatherSearchBtn');
+        const weatherSearchInput = document.getElementById('weatherSearchInput');
+        
+        function searchWeatherLocation() {
+            const searchTerm = weatherSearchInput.value.trim();
+            if (searchTerm) {
+                // Update weather location with search term
+                updateWeatherLocation(searchTerm);
+                weatherSearchInput.value = '';
+            }
+        }
+        
+        if (weatherSearchBtn) {
+            weatherSearchBtn.addEventListener('click', searchWeatherLocation);
+        }
+        
+        if (weatherSearchInput) {
+            weatherSearchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchWeatherLocation();
+                }
+            });
+        }
+
+        // Location button
+        const locBtn = document.getElementById('weatherLocationBtn');
+        if (locBtn) {
+            locBtn.addEventListener('click', () => {
+                const locEl = document.getElementById('weatherLocationText');
+                if (locEl) locEl.textContent = 'Detecting location...';
+
+                if (navigator.geolocation) {
+                    // Request permission first
+                    navigator.permissions.query({ name: 'geolocation' })
+                        .then((permissionStatus) => {
+                            if (permissionStatus.state === 'granted') {
+                                getLocation();
+                            } else if (permissionStatus.state === 'prompt') {
+                                getLocation();
+                            } else {
+                                showLocationDenied();
+                            }
+                        })
+                        .catch(() => {
+                            // Fallback for browsers that don't support permissions API
+                            getLocation();
+                        });
+                } else {
+                    showLocationUnsupported();
+                }
+            });
+        }
+
+        // Initialize weather location on page load
+        initializeWeatherLocation();
+
+        // Update welcome message with user's name
+        function updateWelcomeMessage() {
+            const savedPersonalInfo = localStorage.getItem('personalInfo');
+            if (savedPersonalInfo) {
+                try {
+                    const data = JSON.parse(savedPersonalInfo);
+                    const name = `${data.firstName || ''} ${data.lastName || ''}`.trim();
+                    if (name) {
+                        const welcomeTitle = document.querySelector('.welcome-title');
+                        if (welcomeTitle) {
+                            welcomeTitle.textContent = `Welcome, ${name}! 👋`;
+                        }
+                    }
+                } catch (e) {
+                    console.warn('Error parsing personal info:', e);
+                }
+            }
+        }
+        updateWelcomeMessage();
+
+        // ============================================================
+        // WEATHER TAB TOGGLE
+        // ============================================================
+        function switchWeatherTab(tabEl) {
+            document.querySelectorAll('.w-tab').forEach(t => {
+                t.classList.remove('active');
+                t.style.background = 'transparent';
+                t.style.boxShadow = 'none';
+                t.style.color = 'var(--text-secondary)';
+                t.style.fontWeight = '500';
+            });
+            tabEl.classList.add('active');
+            tabEl.style.background = 'var(--bg-card)';
+            tabEl.style.boxShadow = '0 1px 2px rgba(0,0,0,0.1)';
+            tabEl.style.color = 'var(--text-primary)';
+            tabEl.style.fontWeight = '600';
+
+            const tab = tabEl.getAttribute('data-tab');
+            const view24h = document.getElementById('weather24hView');
+            const view7d  = document.getElementById('weather7dView');
+            if (tab === '24h') {
+                if (view24h) view24h.style.display = 'block';
+                if (view7d)  view7d.style.display  = 'none';
+            } else {
+                if (view24h) view24h.style.display = 'none';
+                if (view7d)  view7d.style.display  = 'block';
+            }
+        }
+
+        // ============================================================
+        // BUILD 7-DAY LIST WITH EXPAND/COLLAPSE
+        // ============================================================
+        const sevenDayData = [
+            { day: 'Fri, Mar 14', icon: '⛅', rain: '0%',  high: '39°', low: '22°', hum: '33%', wind: '7 km/h (N)', rain2: '0 mm',  uv: 8, cloud: '2%'  },
+            { day: 'Sat, Mar 15', icon: '☀️',  rain: '0%',  high: '39°', low: '20°', hum: '28%', wind: '5 km/h (W)', rain2: '0 mm',  uv: 9, cloud: '5%'  },
+            { day: 'Sun, Mar 16', icon: '⛅', rain: '18%', high: '37°', low: '23°', hum: '40%', wind: '10 km/h (E)', rain2: '2 mm', uv: 6, cloud: '40%' },
+            { day: 'Mon, Mar 17', icon: '🌤️',  rain: '23%', high: '37°', low: '22°', hum: '38%', wind: '8 km/h (S)', rain2: '3 mm',  uv: 7, cloud: '30%' },
+            { day: 'Tue, Mar 18', icon: '🌧️', rain: '70%', high: '31°', low: '20°', hum: '65%', wind: '12 km/h (N)', rain2: '12 mm',uv: 3, cloud: '80%' },
+            { day: 'Wed, Mar 19', icon: '🌦️', rain: '40%', high: '33°', low: '21°', hum: '55%', wind: '9 km/h (NE)', rain2: '5 mm', uv: 5, cloud: '60%' },
+            { day: 'Thu, Mar 20', icon: '☀️',  rain: '5%',  high: '36°', low: '21°', hum: '32%', wind: '6 km/h (W)', rain2: '0 mm',  uv: 9, cloud: '10%' },
+        ];
+
+        const listEl = document.getElementById('weather7dayList');
+        if (listEl) {
+            sevenDayData.forEach((d, i) => {
+                const row = document.createElement('div');
+                row.style.cssText = 'border-bottom: 1px solid var(--border); padding: 8px 0;';
+                row.innerHTML = `
+                    <div class="w7-row-header" onclick="this.parentElement.querySelector('.w7-details').style.display = this.parentElement.querySelector('.w7-details').style.display==='none'?'grid':'none'; this.querySelector('.w7-arrow').classList.toggle('fa-chevron-down'); this.querySelector('.w7-arrow').classList.toggle('fa-chevron-up');"
+                        style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; cursor: pointer; padding: 4px 0;">
+                        <div style="width: 80px; color: var(--text-primary); font-weight: 500;">${d.day}</div>
+                        <div style="display: flex; align-items: center; gap: 4px;">
+                            <span style="font-size: 16px;">${d.icon}</span>
+                            <span style="color: #60a5fa; font-size: 11px;">${d.rain}</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span style="font-weight: 700; color: var(--text-primary);">${d.high}</span>
+                            <span style="color: var(--text-muted); font-size: 11px;">${d.low}</span>
+                            <i class="fas fa-chevron-down w7-arrow" style="color: var(--text-muted); font-size: 10px;"></i>
+                        </div>
+                    </div>
+                    <div class="w7-details" style="display: none; grid-template-columns: 1fr 1fr; gap: 6px 12px; font-size: 11px; color: var(--text-secondary); padding: 10px 0 4px; margin-top: 4px;">
+                        <div><i class="fas fa-tint" style="color: #60a5fa; width: 14px;"></i> Humidity: ${d.hum}</div>
+                        <div><i class="fas fa-wind" style="color: #94a3b8; width: 14px;"></i> ${d.wind}</div>
+                        <div><i class="fas fa-cloud-rain" style="color: #93c5fd; width: 14px;"></i> Rainfall: ${d.rain2}</div>
+                        <div><i class="fas fa-sun" style="color: #f87171; width: 14px;"></i> UV: <span style="color:#ef4444;font-weight:bold;">${d.uv}</span></div>
+                        <div style="grid-column: span 2;"><i class="fas fa-cloud" style="color: #cbd5e1; width: 14px;"></i> Cloud Cover: ${d.cloud}</div>
+                    </div>
+                `;
+                listEl.appendChild(row);
+                if (i === 0) {
+                    // Expand first row by default
+                    row.querySelector('.w7-details').style.display = 'grid';
+        }
+    });
+}
+
+function getLocation() {
+    navigator.geolocation.getCurrentPosition(
+        pos => {
+            updateLocationName(pos.coords.latitude, pos.coords.longitude);
+        },
+        error => {
+            handleLocationError(error);
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 300000 // 5 minutes
+        }
+    );
+}
+
+function handleLocationError(error) {
+    const locEl = document.getElementById('weatherLocationText');
+    let errorMessage = 'Location unavailable';
+    
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            errorMessage = 'Location permission denied';
+            break;
+        case error.POSITION_UNAVAILABLE:
+            errorMessage = 'Location information unavailable';
+            break;
+        case error.TIMEOUT:
+            errorMessage = 'Location request timed out';
+            break;
+        case error.UNKNOWN_ERROR:
+            errorMessage = 'Unknown location error';
+            break;
+    }
+    
+    if (locEl) {
+        locEl.textContent = errorMessage;
+    }
+    console.warn('Geolocation error:', error);
+}
+
+function showLocationDenied() {
+    const locationTextEl = document.getElementById('weatherLocationText');
+    if (locationTextEl) {
+        locationTextEl.textContent = 'Location permission denied';
+    }
+}
+
+function showLocationUnsupported() {
+    const locationTextEl = document.getElementById('weatherLocationText');
+    if (locationTextEl) {
+        locationTextEl.textContent = 'Geolocation not supported';
+    }
+}
+
+// ============================================================
+// VIEW ALL SCHEMES MODAL
+// ============================================================
+const viewAllBtn = document.getElementById('viewAllSchemesBtn');
+const schemesModal = document.getElementById('allSchemesModal');
+const closeSchemes = document.getElementById('closeAllSchemesModal');
+if (viewAllBtn && schemesModal) {
+    viewAllBtn.addEventListener('click', e => { e.preventDefault(); schemesModal.classList.add('active'); });
+}
+if (closeSchemes && schemesModal) {
+    closeSchemes.addEventListener('click', () => schemesModal.classList.remove('active'));
+}
+if (schemesModal) {
+    schemesModal.addEventListener('click', e => { if (e.target === schemesModal) schemesModal.classList.remove('active'); });
+}
+
+// ============================================================
+// QUICK ACTIONS color fix: theme-aware backgrounds
+// ============================================================
+
+    </script>
+</body>
+
+</html>

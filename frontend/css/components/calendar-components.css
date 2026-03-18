@@ -1,0 +1,1276 @@
+/*
+===========================================
+KRISHYASETU CALENDAR COMPONENTS
+===========================================
+Calendar components for farming schedules and events
+===========================================
+*/
+
+/* ========================================
+BASE CALENDAR COMPONENTS
+======================================= */
+
+/* Calendar Container */
+.calendar {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    font-family: inherit;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.calendar-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.calendar-navigation {
+    display: flex;
+    gap: 8px;
+}
+
+.calendar-nav-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--bg-secondary);
+    border-radius: 50%;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.calendar-nav-btn:hover {
+    background: var(--accent);
+    color: white;
+    transform: scale(1.05);
+}
+
+.calendar-nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Calendar Grid */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+/* Weekday Headers */
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.calendar-weekday {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 8px 4px;
+    text-transform: uppercase;
+}
+
+.calendar-weekday.weekend {
+    color: var(--accent);
+}
+
+/* Calendar Days */
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    background: var(--bg-primary);
+}
+
+.calendar-day:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent);
+    transform: scale(1.05);
+}
+
+.calendar-day.today {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+    font-weight: 600;
+}
+
+.calendar-day.selected {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-light-bg);
+}
+
+.calendar-day.other-month {
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+.calendar-day.disabled {
+    color: var(--text-muted);
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.calendar-day.disabled:hover {
+    background: transparent;
+    border-color: var(--border);
+    transform: none;
+}
+
+/* Day Events */
+.calendar-day-events {
+    display: flex;
+    gap: 2px;
+    margin-top: 2px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.calendar-event-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--info);
+}
+
+.calendar-event-dot.planting {
+    background: var(--success);
+}
+
+.calendar-event-dot.harvesting {
+    background: var(--warning);
+}
+
+.calendar-event-dot.watering {
+    background: var(--info);
+}
+
+.calendar-event-dot.fertilizing {
+    background: var(--accent);
+}
+
+.calendar-event-dot.pest-control {
+    background: var(--error);
+}
+
+.calendar-event-dot.weather {
+    background: var(--warning);
+}
+
+.calendar-event-dot.market {
+    background: var(--success);
+}
+
+/* Day Numbers */
+.calendar-day-number {
+    font-weight: 500;
+    line-height: 1;
+}
+
+.calendar-day.today .calendar-day-number {
+    font-weight: 700;
+}
+
+/* ========================================
+FARMING CALENDAR COMPONENTS
+======================================= */
+
+/* Farming Calendar */
+.farming-calendar {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.farming-calendar-header {
+    background: var(--bg-secondary);
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.farming-calendar-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 8px 0;
+}
+
+.farming-calendar-subtitle {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.farming-calendar-body {
+    padding: 20px;
+}
+
+/* Crop Calendar */
+.crop-calendar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.crop-calendar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+}
+
+.crop-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    background: var(--accent-light-bg);
+    color: var(--accent);
+}
+
+.crop-info {
+    flex: 1;
+}
+
+.crop-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+}
+
+.crop-details {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.crop-calendar-timeline {
+    position: relative;
+    padding: 20px 0;
+}
+
+.timeline-line {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+}
+
+.timeline-events {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+}
+
+.timeline-event {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.timeline-marker {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    margin-top: 4px;
+    position: relative;
+    z-index: 1;
+}
+
+.timeline-marker.planting {
+    background: var(--success);
+    border-color: var(--success);
+}
+
+.timeline-marker.harvesting {
+    background: var(--warning);
+    border-color: var(--warning);
+}
+
+.timeline-marker.watering {
+    background: var(--info);
+    border-color: var(--info);
+}
+
+.timeline-marker.fertilizing {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.timeline-marker.pest-control {
+    background: var(--error);
+    border-color: var(--error);
+}
+
+.timeline-content {
+    flex: 1;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
+}
+
+.timeline-content.planting {
+    border-left-color: var(--success);
+}
+
+.timeline-content.harvesting {
+    border-left-color: var(--warning);
+}
+
+.timeline-content.watering {
+    border-left-color: var(--info);
+}
+
+.timeline-content.fertilizing {
+    border-left-color: var(--accent);
+}
+
+.timeline-content.pest-control {
+    border-left-color: var(--error);
+}
+
+.timeline-date {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.timeline-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+}
+
+.timeline-description {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* ========================================
+EVENT CALENDAR COMPONENTS
+======================================= */
+
+/* Event Calendar */
+.event-calendar {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.event-calendar-header {
+    background: var(--bg-secondary);
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.event-calendar-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.event-calendar-body {
+    padding: 20px;
+}
+
+/* Event List */
+.event-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.event-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.event-item:hover {
+    background: var(--bg-hover);
+    transform: translateX(4px);
+}
+
+.event-item.planting {
+    border-left-color: var(--success);
+}
+
+.event-item.harvesting {
+    border-left-color: var(--warning);
+}
+
+.event-item.watering {
+    border-left-color: var(--info);
+}
+
+.event-item.fertilizing {
+    border-left-color: var(--accent);
+}
+
+.event-item.pest-control {
+    border-left-color: var(--error);
+}
+
+.event-item.weather {
+    border-left-color: var(--warning);
+}
+
+.event-item.market {
+    border-left-color: var(--success);
+}
+
+.event-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 48px;
+    padding: 8px;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.event-day {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.event-month {
+    font-size: 10px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.event-content {
+    flex: 1;
+}
+
+.event-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+}
+
+.event-description {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin: 0 0 4px 0;
+    line-height: 1.4;
+}
+
+.event-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.event-icon {
+    color: var(--accent);
+    font-size: 12px;
+}
+
+.event-item.planting .event-icon {
+    color: var(--success);
+}
+
+.event-item.harvesting .event-icon {
+    color: var(--warning);
+}
+
+.event-item.watering .event-icon {
+    color: var(--info);
+}
+
+.event-item.fertilizing .event-icon {
+    color: var(--accent);
+}
+
+.event-item.pest-control .event-icon {
+    color: var(--error);
+}
+
+.event-item.weather .event-icon {
+    color: var(--warning);
+}
+
+.event-item.market .event-icon {
+    color: var(--success);
+}
+
+/* ========================================
+DATE PICKER COMPONENTS
+======================================= */
+
+/* Date Picker */
+.date-picker {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.date-picker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.date-picker-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.date-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: 12px;
+}
+
+.date-picker-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--text-primary);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.date-picker-day:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent);
+}
+
+.date-picker-day.selected {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+.date-picker-day.today {
+    border-color: var(--accent);
+    font-weight: 600;
+}
+
+.date-picker-day.other-month {
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+.date-picker-day.disabled {
+    color: var(--text-muted);
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.date-picker-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+}
+
+.date-picker-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 12px;
+    background: var(--bg-input);
+    color: var(--text-primary);
+}
+
+.date-picker-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* ========================================
+SCHEDULE CALENDAR COMPONENTS
+======================================= */
+
+/* Schedule Calendar */
+.schedule-calendar {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.schedule-calendar-header {
+    background: var(--bg-secondary);
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.schedule-calendar-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.schedule-calendar-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.schedule-calendar-body {
+    padding: 20px;
+}
+
+/* Schedule Grid */
+.schedule-grid {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.schedule-time-header,
+.schedule-time-cell {
+    background: var(--bg-secondary);
+    padding: 8px;
+    font-size: 10px;
+    color: var(--text-secondary);
+    text-align: center;
+    font-weight: 600;
+}
+
+.schedule-day-header {
+    background: var(--bg-secondary);
+    padding: 8px;
+    font-size: 11px;
+    color: var(--text-primary);
+    text-align: center;
+    font-weight: 600;
+    border-left: 1px solid var(--border);
+}
+
+.schedule-day-header.weekend {
+    background: var(--accent-light-bg);
+    color: var(--accent);
+}
+
+.schedule-cell {
+    background: var(--bg-primary);
+    min-height: 60px;
+    padding: 4px;
+    border-left: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    position: relative;
+}
+
+.schedule-cell:hover {
+    background: var(--bg-hover);
+}
+
+.schedule-cell.today {
+    background: var(--accent-light-bg);
+}
+
+.schedule-cell-event {
+    background: var(--accent);
+    color: white;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 9px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.schedule-cell-event.planting {
+    background: var(--success);
+}
+
+.schedule-cell-event.harvesting {
+    background: var(--warning);
+}
+
+.schedule-cell-event.watering {
+    background: var(--info);
+}
+
+.schedule-cell-event.fertilizing {
+    background: var(--accent);
+}
+
+.schedule-cell-event.pest-control {
+    background: var(--error);
+}
+
+/* ========================================
+CALENDAR VARIANTS
+======================================= */
+
+/* Compact Calendar */
+.calendar-compact {
+    padding: 12px;
+}
+
+.calendar-compact .calendar-header {
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+}
+
+.calendar-compact .calendar-title {
+    font-size: 14px;
+}
+
+.calendar-compact .calendar-day {
+    font-size: 10px;
+}
+
+.calendar-compact .calendar-weekday {
+    font-size: 9px;
+    padding: 6px 2px;
+}
+
+/* Minimal Calendar */
+.calendar-minimal {
+    border: none;
+    padding: 0;
+    background: transparent;
+}
+
+.calendar-minimal .calendar-header {
+    border-bottom: none;
+    margin-bottom: 8px;
+}
+
+.calendar-minimal .calendar-day {
+    border: none;
+    background: transparent;
+}
+
+.calendar-minimal .calendar-day:hover {
+    background: var(--bg-hover);
+}
+
+.calendar-minimal .calendar-day.today {
+    background: var(--accent-light-bg);
+    color: var(--accent);
+}
+
+/* Event Calendar */
+.calendar-events {
+    position: relative;
+}
+
+.calendar-events .calendar-day {
+    min-height: 60px;
+    padding: 4px;
+}
+
+.calendar-events .calendar-day-number {
+    font-size: 10px;
+    margin-bottom: 2px;
+}
+
+.calendar-events .calendar-day-events {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    display: flex;
+    gap: 1px;
+    justify-content: center;
+}
+
+/* ========================================
+CALENDAR STATES
+======================================= */
+
+/* Loading State */
+.calendar-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    gap: 16px;
+}
+
+.calendar-loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--border);
+    border-top: 2px solid var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.calendar-loading-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* Empty State */
+.calendar-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    gap: 12px;
+    text-align: center;
+}
+
+.calendar-empty-icon {
+    font-size: 32px;
+    color: var(--text-muted);
+}
+
+.calendar-empty-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.calendar-empty-description {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Error State */
+.calendar-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    gap: 12px;
+    text-align: center;
+}
+
+.calendar-error-icon {
+    font-size: 32px;
+    color: var(--error);
+}
+
+.calendar-error-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--error);
+    margin: 0;
+}
+
+.calendar-error-description {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* ========================================
+ANIMATIONS
+======================================= */
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes calendar-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.calendar-day {
+    animation: calendar-fade-in 0.3s ease;
+}
+
+.calendar-event-dot {
+    animation: calendar-fade-in 0.5s ease;
+}
+
+/* ========================================
+RESPONSIVE DESIGN
+======================================= */
+
+@media (max-width: 768px) {
+    .calendar {
+        padding: 12px;
+    }
+    
+    .calendar-header {
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+    }
+    
+    .calendar-title {
+        font-size: 14px;
+    }
+    
+    .calendar-grid {
+        gap: 2px;
+    }
+    
+    .calendar-weekday {
+        font-size: 9px;
+        padding: 6px 2px;
+    }
+    
+    .calendar-day {
+        font-size: 10px;
+        border-radius: 4px;
+    }
+    
+    .calendar-nav-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+    
+    .crop-calendar-header {
+        padding: 8px;
+    }
+    
+    .crop-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+    }
+    
+    .crop-name {
+        font-size: 12px;
+    }
+    
+    .crop-details {
+        font-size: 10px;
+    }
+    
+    .timeline-event {
+        gap: 8px;
+    }
+    
+    .timeline-marker {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .timeline-content {
+        padding: 8px;
+    }
+    
+    .timeline-date {
+        font-size: 9px;
+    }
+    
+    .timeline-title {
+        font-size: 11px;
+    }
+    
+    .timeline-description {
+        font-size: 10px;
+    }
+    
+    .event-item {
+        padding: 8px;
+    }
+    
+    .event-date {
+        min-width: 40px;
+        padding: 6px;
+    }
+    
+    .event-day {
+        font-size: 14px;
+    }
+    
+    .event-month {
+        font-size: 9px;
+    }
+    
+    .event-title {
+        font-size: 11px;
+    }
+    
+    .event-description {
+        font-size: 10px;
+    }
+    
+    .event-time {
+        font-size: 9px;
+    }
+    
+    .date-picker {
+        padding: 12px;
+    }
+    
+    .date-picker-title {
+        font-size: 12px;
+    }
+    
+    .date-picker-day {
+        font-size: 10px;
+    }
+    
+    .date-picker-input {
+        font-size: 11px;
+    }
+    
+    .schedule-grid {
+        grid-template-columns: 60px 1fr;
+    }
+    
+    .schedule-time-header,
+    .schedule-time-cell {
+        font-size: 9px;
+        padding: 6px;
+    }
+    
+    .schedule-day-header {
+        font-size: 10px;
+        padding: 6px;
+    }
+    
+    .schedule-cell {
+        min-height: 40px;
+        padding: 2px;
+    }
+    
+    .schedule-cell-event {
+        font-size: 8px;
+        padding: 1px 2px;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar {
+        padding: 8px;
+    }
+    
+    .calendar-header {
+        margin-bottom: 8px;
+        padding-bottom: 6px;
+    }
+    
+    .calendar-title {
+        font-size: 12px;
+    }
+    
+    .calendar-grid {
+        gap: 1px;
+    }
+    
+    .calendar-weekday {
+        font-size: 8px;
+        padding: 4px 1px;
+    }
+    
+    .calendar-day {
+        font-size: 9px;
+        border-radius: 3px;
+    }
+    
+    .calendar-nav-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 10px;
+    }
+    
+    .crop-calendar-header {
+        padding: 6px;
+    }
+    
+    .crop-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+    
+    .crop-name {
+        font-size: 11px;
+    }
+    
+    .crop-details {
+        font-size: 9px;
+    }
+    
+    .timeline-event {
+        gap: 6px;
+    }
+    
+    .timeline-marker {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .timeline-content {
+        padding: 6px;
+    }
+    
+    .timeline-date {
+        font-size: 8px;
+    }
+    
+    .timeline-title {
+        font-size: 10px;
+    }
+    
+    .timeline-description {
+        font-size: 9px;
+    }
+    
+    .event-item {
+        padding: 6px;
+    }
+    
+    .event-date {
+        min-width: 32px;
+        padding: 4px;
+    }
+    
+    .event-day {
+        font-size: 12px;
+    }
+    
+    .event-month {
+        font-size: 8px;
+    }
+    
+    .event-title {
+        font-size: 10px;
+    }
+    
+    .event-description {
+        font-size: 9px;
+    }
+    
+    .event-time {
+        font-size: 8px;
+    }
+    
+    .date-picker {
+        padding: 8px;
+    }
+    
+    .date-picker-title {
+        font-size: 11px;
+    }
+    
+    .date-picker-day {
+        font-size: 9px;
+    }
+    
+    .date-picker-input {
+        font-size: 10px;
+    }
+    
+    .schedule-grid {
+        grid-template-columns: 50px 1fr;
+    }
+    
+    .schedule-time-header,
+    .schedule-time-cell {
+        font-size: 8px;
+        padding: 4px;
+    }
+    
+    .schedule-day-header {
+        font-size: 9px;
+        padding: 4px;
+    }
+    
+    .schedule-cell {
+        min-height: 30px;
+        padding: 1px;
+    }
+    
+    .schedule-cell-event {
+        font-size: 7px;
+        padding: 1px;
+    }
+}

@@ -1,0 +1,537 @@
+/*
+===========================================
+KRISHYASETU ACCESSIBILITY FEATURES
+===========================================
+WCAG compliant accessibility utilities
+PWA-optimized for screen readers and keyboard navigation
+===========================================
+*/
+
+/* ========================================
+FOCUS MANAGEMENT
+======================================= */
+
+/* Skip to Content Link */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--accent);
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 1000;
+    transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+    top: 6px;
+}
+
+/* Focus Indicators */
+.focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.focus-ring {
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.3);
+}
+
+/* High Contrast Focus */
+.focus-contrast:focus {
+    outline: 3px solid currentColor;
+    outline-offset: 2px;
+}
+
+/* Keyboard Navigation Focus */
+.keyboard-focus:focus {
+    outline: 2px dashed var(--accent);
+    outline-offset: 2px;
+}
+
+/* Remove focus for mouse users */
+.focus-reset:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* ========================================
+ARIA LABELS & SCREEN READER SUPPORT
+======================================= */
+
+/* Screen Reader Only Text */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Not Screen Reader Only */
+.not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+/* ARIA Live Regions */
+.aria-live-polite {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.aria-live-assertive {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.aria-live-off {
+    position: static;
+    left: auto;
+    width: auto;
+    height: auto;
+    overflow: visible;
+}
+
+/* ========================================
+COLOR CONTRAST & VISIBILITY
+======================================= */
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .high-contrast-text {
+        color: #000000 !important;
+        background: #ffffff !important;
+    }
+    
+    .high-contrast-border {
+        border: 2px solid #000000 !important;
+    }
+    
+    .high-contrast-focus:focus {
+        outline: 3px solid #000000 !important;
+        outline-offset: 2px !important;
+    }
+}
+
+/* Reduced Transparency */
+@media (prefers-reduced-transparency: reduce) {
+    .reduce-transparency {
+        background-color: var(--bg-card) !important;
+        backdrop-filter: none !important;
+    }
+}
+
+/* Forced Colors Mode */
+@media (forced-colors: active) {
+    .forced-colors {
+        border: 1px solid ButtonText !important;
+        background-color: ButtonFace !important;
+        color: ButtonText !important;
+    }
+}
+
+/* ========================================
+TOUCH TARGETS (PWA OPTIMIZED)
+======================================= */
+
+/* Minimum Touch Target Size (44px) */
+.touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Large Touch Targets */
+.touch-target-large {
+    min-height: 48px;
+    min-width: 48px;
+}
+
+/* Extra Large Touch Targets */
+.touch-target-xl {
+    min-height: 56px;
+    min-width: 56px;
+}
+
+/* Spacing for Touch Targets */
+.touch-spacing {
+    margin: 8px;
+}
+
+/* ========================================
+KEYBOARD NAVIGATION
+======================================= */
+
+/* Tab Order Management */
+.tab-order-1 { z-index: 1; }
+.tab-order-2 { z-index: 2; }
+.tab-order-3 { z-index: 3; }
+.tab-order-4 { z-index: 4; }
+.tab-order-5 { z-index: 5; }
+
+/* Focus Trap */
+.focus-trap {
+    position: relative;
+}
+
+.focus-trap::before,
+.focus-trap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+/* Keyboard Only Styles */
+.keyboard-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+/* Show when keyboard navigation is active */
+.keyboard-navigation .keyboard-only {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+}
+
+/* ========================================
+SEMANTIC HTML ENHANCEMENTS
+======================================= */
+
+/* Landmark Roles */
+[role="banner"] {
+    /* Header/Navigation area */
+}
+
+[role="navigation"] {
+    /* Navigation menu */
+}
+
+[role="main"] {
+    /* Main content area */
+}
+
+[role="complementary"] {
+    /* Sidebar/Aside content */
+}
+
+[role="contentinfo"] {
+    /* Footer information */
+}
+
+[role="search"] {
+    /* Search functionality */
+}
+
+/* Form Labels */
+.form-label-required::after {
+    content: ' *';
+    color: var(--error);
+    font-weight: bold;
+}
+
+.form-error {
+    color: var(--error);
+    font-size: 14px;
+    margin-top: 4px;
+    display: block;
+}
+
+.form-success {
+    color: var(--success);
+    font-size: 14px;
+    margin-top: 4px;
+    display: block;
+}
+
+/* ========================================
+PWA ACCESSIBILITY FEATURES
+======================================= */
+
+/* Install Button Accessibility */
+.pwa-install-button {
+    position: relative;
+}
+
+.pwa-install-button::before {
+    content: 'Install App';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text-primary);
+    color: var(--bg-card);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.pwa-install-button:hover::before,
+.pwa-install-button:focus::before {
+    opacity: 1;
+}
+
+/* Offline Mode Accessibility */
+.pwa-offline-mode {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--error);
+    color: white;
+    padding: 12px;
+    text-align: center;
+    z-index: 9999;
+}
+
+.pwa-offline-mode::before {
+    content: '⚠️ ';
+    margin-right: 8px;
+}
+
+/* Notification Accessibility */
+.pwa-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 300px;
+    z-index: 9999;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.pwa-notification[role="alert"] {
+    border-color: var(--error);
+}
+
+.pwa-notification[role="status"] {
+    border-color: var(--success);
+}
+
+.pwa-notification[role="dialog"] {
+    border-color: var(--accent);
+}
+
+/* ========================================
+MOTION & REDUCTION PREFERENCES
+======================================= */
+
+/* Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .respect-motion {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .respect-motion * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Data Saving Mode */
+@media (prefers-reduced-data: reduce) {
+    .respect-data {
+        background-image: none !important;
+        video { display: none !important; }
+        .auto-play-media { display: none !important; }
+    }
+}
+
+/* ========================================
+COLOR BLINDNESS SUPPORT
+======================================= */
+
+/* Protanopia (Red-blind) Safe Colors */
+@media (prefers-color-scheme: light) {
+    .colorblind-safe-red {
+        background-color: #0066cc !important;
+        color: #ffffff !important;
+    }
+}
+
+/* Deuteranopia (Green-blind) Safe Colors */
+@media (prefers-color-scheme: light) {
+    .colorblind-safe-green {
+        background-color: #ff6600 !important;
+        color: #ffffff !important;
+    }
+}
+
+/* Tritanopia (Blue-blind) Safe Colors */
+@media (prefers-color-scheme: light) {
+    .colorblind-safe-blue {
+        background-color: #ff0066 !important;
+        color: #ffffff !important;
+    }
+}
+
+/* ========================================
+PRINT ACCESSIBILITY
+======================================= */
+
+@media print {
+    .print-accessible {
+        font-size: 12pt;
+        line-height: 1.4;
+        color: #000000;
+        background: #ffffff;
+    }
+    
+    .print-accessible a {
+        color: #000000;
+        text-decoration: underline;
+    }
+    
+    .print-accessible a::after {
+        content: " (" attr(href) ")";
+        font-size: 10pt;
+        color: #666666;
+    }
+    
+    .print-hidden {
+        display: none !important;
+    }
+}
+
+/* ========================================
+CUSTOM PROPERTY ACCESSIBILITY
+======================================= */
+
+/* Accessible Focus Colors */
+:root {
+    --focus-color: #16a34a;
+    --focus-width: 2px;
+    --focus-offset: 2px;
+}
+
+/* High Contrast Override */
+@media (prefers-contrast: high) {
+    :root {
+        --focus-color: #000000;
+        --focus-width: 3px;
+        --focus-offset: 2px;
+    }
+}
+
+/* Dark Mode Focus */
+[data-theme="dark"] {
+    --focus-color: #22c55e;
+}
+
+/* ========================================
+UTILITY CLASSES
+======================================= */
+
+/* Accessible Button */
+.btn-accessible {
+    position: relative;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 8px 16px;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    background: var(--accent);
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-accessible:hover,
+.btn-accessible:focus {
+    border-color: var(--focus-color);
+    box-shadow: 0 0 0 var(--focus-offset) var(--focus-color);
+}
+
+/* Accessible Input */
+.input-accessible {
+    position: relative;
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-input);
+    color: var(--text-primary);
+    font-size: 16px; /* Prevents zoom on iOS */
+    transition: all 0.2s ease;
+}
+
+.input-accessible:hover,
+.input-accessible:focus {
+    border-color: var(--focus-color);
+    box-shadow: 0 0 0 var(--focus-offset) var(--focus-color);
+    outline: none;
+}
+
+.input-accessible:focus {
+    background: var(--bg-card);
+}
+
+/* Accessible Link */
+.link-accessible {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+    transition: all 0.2s ease;
+}
+
+.link-accessible:hover,
+.link-accessible:focus {
+    text-decoration-thickness: 3px;
+    color: var(--accent-hover);
+}
+
+/* Accessible Card */
+.card-accessible {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    background: var(--bg-card);
+    transition: all 0.2s ease;
+}
+
+.card-accessible:hover,
+.card-accessible:focus-within {
+    border-color: var(--focus-color);
+    box-shadow: 0 4px 12px var(--shadow);
+}

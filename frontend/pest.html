@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pest Detection - KrishyaSetu</title>
+    <link rel="manifest" href="pwa/manifest.json">
+    <meta name="theme-color" content="#16a34a">
+    <link rel="stylesheet" href="css/krishyasetu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="js/common.js"></script>
+</head>
+
+<body>
+    <!-- Navbar will be loaded here -->
+
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <ul class="mobile-sidebar-links">
+            <li><a href="dashboard.html" class="mobile-sidebar-link">Dashboard</a></li>
+            <li><a href="chatbot.html" class="mobile-sidebar-link">Chatbot</a></li>
+            <li><a href="arscan.html" class="mobile-sidebar-link">AR Scan</a></li>
+            <li><a href="soil.html" class="mobile-sidebar-link">Soil Analysis</a></li>
+            <li><a href="pest.html" class="mobile-sidebar-link active">Pest Detection</a></li>
+            <li><a href="calendar.html" class="mobile-sidebar-link">Calendar</a></li>
+            <li><a href="market.html" class="mobile-sidebar-link">Market</a></li>
+            <li><a href="reports.html" class="mobile-sidebar-link">Reports</a></li>
+            <li><a href="profile.html" class="mobile-sidebar-link">Profile</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Header -->
+            <div class="welcome-section">
+                <h1 class="welcome-title">Pest Detection 🐛</h1>
+                <p class="welcome-subtitle">Identify pests and get treatment recommendations</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Left Column - Upload Section -->
+                <div class="dashboard-left">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Upload Crop Image</h3>
+                            <div class="card-icon">📸</div>
+                        </div>
+
+                        <!-- Upload Area -->
+                        <div id="uploadContainer">
+                            <div id="uploadArea"
+                                style="border: 2px dashed var(--border); border-radius: 12px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all 0.2s ease; margin-bottom: 20px;">
+                                <input type="file" id="fileInput" accept="image/*" style="display: none;">
+
+                                <div id="uploadPlaceholder">
+                                    <i class="fas fa-cloud-upload-alt"
+                                        style="font-size: 48px; color: var(--text-muted); margin-bottom: 16px;"></i>
+                                    <h4 style="color: var(--text-primary); margin-bottom: 8px;">Drop image here or click to
+                                        upload</h4>
+                                    <p style="color: var(--text-secondary); font-size: 14px;">Supports JPG, PNG, WebP (Max
+                                        10MB)</p>
+                                </div>
+                            </div>
+
+                            <div id="imagePreview" style="display: none; margin-bottom: 20px;">
+                                <img id="previewImg"
+                                    style="max-width: 100%; max-height: 300px; display: block; margin: 0 auto 16px auto; border-radius: 8px;">
+                                <div style="display: flex; gap: 8px; justify-content: center;">
+                                    <button type="button" id="removeImageBtn" class="btn btn-secondary">
+                                        <i class="fas fa-trash"></i>
+                                        Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            style="background: var(--accent-light-bg); border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+                            <h5 style="color: var(--accent); font-weight: 600; margin-bottom: 8px;">📝 Tips for Best
+                                Results:</h5>
+                            <ul style="margin: 0; padding-left: 16px; color: var(--text-secondary); font-size: 13px;">
+                                <li>Take clear photos in good lighting</li>
+                                <li>Focus on the affected area</li>
+                                <li>Include both healthy and damaged parts</li>
+                                <li>Capture pests if visible</li>
+                            </ul>
+                        </div>
+
+                        <!-- Crop Selection -->
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label class="form-label">Crop Type</label>
+                            <select class="form-select" id="cropSelect">
+                                <option value="">Select crop type</option>
+                                <option value="wheat">Wheat</option>
+                                <option value="rice">Rice</option>
+                                <option value="maize">Maize</option>
+                                <option value="cotton">Cotton</option>
+                                <option value="tomato">Tomato</option>
+                                <option value="chili">Chili</option>
+                                <option value="brinjal">Brinjal</option>
+                                <option value="pulses">Pulses</option>
+                            </select>
+                        </div>
+
+                        <button id="analyzeBtn" class="btn btn-primary" style="width: 100%; padding: 12px; font-weight: 600;">
+                            <i class="fas fa-microscope" style="margin-right: 8px;"></i>
+                            Analyze Image
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Column - Results -->
+                <div class="dashboard-right">
+                    <!-- Detection Results -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Detection Results</h3>
+                            <div class="card-icon">🔍</div>
+                        </div>
+
+                        <div id="detectionResults" style="text-align: center; padding: 40px 20px;">
+                            <i class="fas fa-bug"
+                                style="font-size: 48px; margin-bottom: 16px; opacity: 0.5; color: var(--text-muted);"></i>
+                            <p style="color: var(--text-secondary);">Upload an image to detect pests</p>
+                        </div>
+                    </div>
+
+                    <!-- Treatment Recommendations -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Treatment Recommendations</h3>
+                            <div class="card-icon">💊</div>
+                        </div>
+
+                        <div id="treatmentRecommendations" style="text-align: center; padding: 40px 20px;">
+                            <i class="fas fa-prescription"
+                                style="font-size: 48px; margin-bottom: 16px; opacity: 0.5; color: var(--text-muted);"></i>
+                            <p style="color: var(--text-secondary);">Treatment suggestions will appear here</p>
+                        </div>
+                    </div>
+
+                    <!-- Common Pests -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Common Pests in Your Region</h3>
+                            <div class="card-icon">📍</div>
+                        </div>
+
+                        <div style="padding: 8px 0;">
+                            <div
+                                style="display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--bg-input); border-radius: 8px; margin-bottom: 8px; cursor: pointer;">
+                                <div
+                                    style="width: 40px; height: 40px; background: var(--accent-light-bg); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                                    🐛
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 2px;">
+                                        Aphids</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary);">Common in wheat, cotton
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-right" style="color: var(--text-muted);"></i>
+                            </div>
+
+                            <div
+                                style="display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--bg-input); border-radius: 8px; margin-bottom: 8px; cursor: pointer;">
+                                <div
+                                    style="width: 40px; height: 40px; background: var(--accent-light-bg); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                                    🦗
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 2px;">
+                                        Locusts</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary);">Seasonal threat</div>
+                                </div>
+                                <i class="fas fa-chevron-right" style="color: var(--text-muted);"></i>
+                            </div>
+
+                            <div
+                                style="display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--bg-input); border-radius: 8px; cursor: pointer;">
+                                <div
+                                    style="width: 40px; height: 40px; background: var(--accent-light-bg); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                                    🪲
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 2px;">
+                                        Bollworm</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary);">Cotton crop pest</div>
+                                </div>
+                                <i class="fas fa-chevron-right" style="color: var(--text-muted);"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Theme Toggle
+        const html = document.documentElement;
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme toggle and hamburger menu are handled by common.js initNavbar()
+
+            // File Upload
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+            const imagePreview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            const analyzeBtn = document.getElementById('analyzeBtn');
+
+            // Click to upload
+            if (uploadPlaceholder && fileInput) {
+                uploadPlaceholder.addEventListener('click', () => {
+                    fileInput.click();
+                });
+            }
+
+            // Drag and drop functionality
+            if (uploadArea) {
+                uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadArea.style.borderColor = 'var(--accent)';
+                    uploadArea.style.background = 'var(--accent-light-bg)';
+                });
+
+                uploadArea.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    uploadArea.style.borderColor = 'var(--border)';
+                    uploadArea.style.background = 'transparent';
+                });
+
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadArea.style.borderColor = 'var(--border)';
+                    uploadArea.style.background = 'transparent';
+
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        handleFileSelect(files[0]);
+                    }
+                });
+            }
+
+            if (fileInput) {
+                fileInput.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        handleFileSelect(e.target.files[0]);
+                    }
+                });
+            }
+
+            function handleFileSelect(file) {
+                // Validate file size (max 5MB)
+                const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+                
+                if (file.size > maxSize) {
+                    if (window.toast) {
+                        window.toast.error(`File size too large. Maximum size is 5MB. Your file is ${(file.size / 1024 / 1024).toFixed(2)}MB`);
+                    } else {
+                        alert(`File size too large. Maximum size is 5MB. Your file is ${(file.size / 1024 / 1024).toFixed(2)}MB`);
+                    }
+                    return;
+                }
+                
+                // Validate file type
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+                if (!allowedTypes.includes(file.type)) {
+                    if (window.toast) {
+                        window.toast.error('Please select a valid image file (JPEG, PNG, GIF, or WebP)');
+                    } else {
+                        alert('Please select a valid image file (JPEG, PNG, GIF, or WebP)');
+                    }
+                    return;
+                }
+                
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        if (previewImg) previewImg.src = e.target.result;
+                        if (uploadArea) uploadArea.style.display = 'none';
+                        if (imagePreview) imagePreview.style.display = 'block';
+                    };
+                    reader.onerror = () => {
+                        if (window.toast) {
+                            window.toast.error('Failed to read file. Please try again.');
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    if (window.toast) {
+                        window.toast.error('Please select an image file');
+                    } else {
+                        alert('Please select an image file');
+                    }
+                }
+            }
+
+            if (analyzeBtn) {
+                analyzeBtn.addEventListener('click', () => {
+                    analyzePest();
+                });
+            }
+
+            const removeImageBtn = document.getElementById('removeImageBtn');
+            if (removeImageBtn) {
+                removeImageBtn.addEventListener('click', () => {
+                    if (previewImg) previewImg.src = '';
+                    if (uploadArea) uploadArea.style.display = 'block';
+                    if (imagePreview) imagePreview.style.display = 'none';
+                    if (fileInput) fileInput.value = '';
+
+                    // Reset results
+                    const detectionResults = document.getElementById('detectionResults');
+                    if (detectionResults) {
+                        detectionResults.innerHTML = `
+                            <i class="fas fa-bug" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5; color: var(--text-muted);"></i>
+                            <p style="color: var(--text-secondary);">Upload an image to detect pests</p>
+                        `;
+                    }
+
+                    const treatmentRecommendations = document.getElementById('treatmentRecommendations');
+                    if (treatmentRecommendations) {
+                        treatmentRecommendations.innerHTML = `
+                            <i class="fas fa-prescription" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5; color: var(--text-muted);"></i>
+                            <p style="color: var(--text-secondary);">Treatment suggestions will appear here</p>
+                        `;
+                    }
+                });
+            }
+
+            function analyzePest() {
+                if (!previewImg || !previewImg.src || previewImg.src === '') {
+                    return;
+                }
+
+                const cropSelectInput = document.getElementById('cropSelect');
+                const cropSelect = cropSelectInput ? cropSelectInput.value : '';
+
+                if (!cropSelect) {
+                    alert('Please select a crop type');
+                    return;
+                }
+
+                // Show loading state
+                const detectionResults = document.getElementById('detectionResults');
+                if (detectionResults) {
+                    detectionResults.innerHTML = `
+                        <div style="display: flex; flex-direction: column; align-items: center; padding: 20px;">
+                            <div class="loading" style="width: 40px; height: 40px; margin-bottom: 16px;"></div>
+                            <p style="color: var(--text-secondary);">Analyzing image for pests...</p>
+                        </div>
+                    `;
+                }
+
+                // Simulate analysis
+                setTimeout(() => {
+                    showDetectionResults();
+                    showTreatmentRecommendations();
+                }, 2000);
+            }
+
+            function showDetectionResults() {
+                const pests = [
+                    {
+                        name: 'Aphids',
+                        confidence: 87,
+                        description: 'Small sap-sucking insects found on stems and leaves',
+                        severity: 'Medium',
+                        icon: '🐛'
+                    },
+                    {
+                        name: 'Spider Mites',
+                        confidence: 72,
+                        description: 'Tiny pests causing yellow spots on leaves',
+                        severity: 'Low',
+                        icon: '🕷️'
+                    },
+                    {
+                        name: 'Whiteflies',
+                        confidence: 45,
+                        description: 'Small white insects found on underside of leaves',
+                        severity: 'Low',
+                        icon: '🦟'
+                    }
+                ];
+
+                const detectedPest = pests[0]; // Use first pest for demo
+
+                const severityColor = detectedPest.severity === 'High' ? '#ef4444' :
+                    detectedPest.severity === 'Medium' ? '#f59e0b' : '#22c55e';
+                
+                const detectionResults = document.getElementById('detectionResults');
+                if (detectionResults) {
+                    detectionResults.innerHTML = `
+                        <div style="text-align: left;">
+                            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                                <div style="font-size: 48px;">${detectedPest.icon}</div>
+                                <div>
+                                    <h3 style="font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">
+                                        ${detectedPest.name}
+                                    </h3>
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                        <span style="font-size: 14px; color: var(--text-secondary);">Confidence:</span>
+                                        <span style="font-weight: 600; color: var(--accent);">${detectedPest.confidence}%</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="font-size: 14px; color: var(--text-secondary);">Severity:</span>
+                                        <span style="font-weight: 600; color: ${severityColor}; background: ${severityColor}20; padding: 2px 8px; border-radius: 4px; font-size: 12px;">
+                                            ${detectedPest.severity}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: var(--bg-input); border-radius: 8px; padding: 16px;">
+                                <h4 style="font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Description</h4>
+                                <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.5;">
+                                    ${detectedPest.description}
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            function showTreatmentRecommendations() {
+                const treatmentRecommendations = document.getElementById('treatmentRecommendations');
+                if (treatmentRecommendations) {
+                    treatmentRecommendations.innerHTML = `
+                        <div style="text-align: left;">
+                            <div style="background: var(--accent-light-bg); border: 1px solid var(--accent); border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                                <h4 style="font-weight: 600; color: var(--accent); margin-bottom: 8px;">🚨 Immediate Action Required</h4>
+                                <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.5;">
+                                    Apply neem oil spray (2%) immediately to control spread. Monitor plant health daily for next 7 days.
+                                </p>
+                            </div>
+                            
+                            <div style="margin-bottom: 16px;">
+                                <h4 style="font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Chemical Treatment</h4>
+                                <div style="background: var(--bg-input); border-radius: 8px; padding: 12px; margin-bottom: 8px;">
+                                    <div style="font-weight: 600; margin-bottom: 4px;">Imidacloprid 17.8 SL</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">
+                                        Dosage: 0.3 ml/liter water • Spray in evening hours
+                                    </div>
+                                </div>
+                                <div style="background: var(--bg-input); border-radius: 8px; padding: 12px;">
+                                    <div style="font-weight: 600; margin-bottom: 4px;">Dimethoate 30 EC</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">
+                                        Dosage: 2 ml/liter water • Repeat after 10 days if needed
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 style="font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Preventive Measures</h4>
+                                <ul style="margin: 0; padding-left: 16px; color: var(--text-secondary); font-size: 14px;">
+                                    <li style="margin-bottom: 4px;">Remove affected leaves immediately</li>
+                                    <li style="margin-bottom: 4px;">Introduce natural predators (ladybugs)</li>
+                                    <li style="margin-bottom: 4px;">Maintain proper plant spacing</li>
+                                    <li>Avoid over-fertilization with nitrogen</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            // Common pests click handlers
+            document.querySelectorAll('.card:last-child div[style*="cursor: pointer;"]').forEach(item => {
+                item.addEventListener('click', function () {
+                    const pestNameEl = this.querySelector('div[style*="font-weight: 600"]');
+                    const pestName = pestNameEl ? pestNameEl.textContent : 'Unknown Pest';
+                    if (window.toast) {
+                        window.toast.info(`Detailed information about ${pestName} would be shown here.`);
+                    } else {
+                        alert(`Detailed information about ${pestName} would be shown here.`);
+                    }
+                });
+            });
+
+            // Set active navigation link
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.navbar-link, .mobile-sidebar-link');
+
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath.split('/').pop()) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

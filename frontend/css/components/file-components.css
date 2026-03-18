@@ -1,0 +1,554 @@
+/*
+===========================================
+KRISHYASETU FILE UPLOAD COMPONENTS
+===========================================
+Components for file upload and image handling
+===========================================
+*/
+
+/* ========================================
+FILE UPLOAD COMPONENT
+======================================= */
+
+/* Base File Upload */
+.file-upload {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    background: var(--bg-card);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.file-upload:hover {
+    border-color: var(--accent);
+    background: var(--accent-light-bg);
+}
+
+.file-upload.drag-over {
+    border-color: var(--accent);
+    background: var(--accent-light-bg);
+    transform: scale(1.02);
+}
+
+.file-upload.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* File Upload Icon */
+.file-upload-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+}
+
+.file-upload:hover .file-upload-icon {
+    color: var(--accent);
+    transform: scale(1.1);
+}
+
+/* File Upload Text */
+.file-upload-text {
+    text-align: center;
+    color: var(--text-primary);
+}
+
+.file-upload-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.file-upload-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.file-upload-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* File Upload Input */
+.file-upload-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* File Upload Button */
+.file-upload-button {
+    margin-top: 16px;
+    padding: 8px 16px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-upload-button:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+}
+
+/* ========================================
+FILE PREVIEW COMPONENT
+======================================= */
+
+/* File Preview Container */
+.file-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+/* File Preview Item */
+.file-preview-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.file-preview-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+}
+
+/* File Preview Thumbnail */
+.file-preview-thumbnail {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-preview-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.file-preview-thumbnail .file-icon {
+    font-size: 24px;
+    color: var(--text-secondary);
+}
+
+/* File Preview Info */
+.file-preview-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.file-preview-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-preview-details {
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.file-preview-size {
+    color: var(--text-muted);
+}
+
+.file-preview-type {
+    color: var(--accent);
+}
+
+/* File Preview Actions */
+.file-preview-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.file-preview-action {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: var(--bg-card);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.file-preview-action:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.file-preview-action.delete {
+    color: var(--error);
+}
+
+.file-preview-action.delete:hover {
+    background: var(--error-light-bg);
+    color: var(--error);
+}
+
+/* ========================================
+FILE UPLOAD PROGRESS
+======================================= */
+
+/* File Progress Container */
+.file-progress {
+    margin-top: 8px;
+}
+
+.file-progress-bar {
+    height: 4px;
+    background: var(--bg-input);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.file-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.file-progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.file-progress-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.file-progress-percentage {
+    font-weight: 500;
+    color: var(--accent);
+}
+
+/* ========================================
+FILE UPLOAD VARIANTS
+======================================= */
+
+/* Compact File Upload */
+.file-upload-compact {
+    padding: 16px 12px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 12px;
+}
+
+.file-upload-compact .file-upload-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+.file-upload-compact .file-upload-text {
+    text-align: left;
+    flex: 1;
+}
+
+.file-upload-compact .file-upload-title {
+    font-size: 14px;
+}
+
+.file-upload-compact .file-upload-subtitle {
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+/* Image Upload Variant */
+.file-upload-image {
+    aspect-ratio: 1;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.file-upload-image .file-upload-icon {
+    font-size: 32px;
+}
+
+.file-upload-image .file-upload-title {
+    font-size: 14px;
+}
+
+.file-upload-image .file-upload-subtitle {
+    font-size: 12px;
+}
+
+/* Single File Upload */
+.file-upload-single .file-preview {
+    margin-top: 12px;
+}
+
+.file-upload-single .file-preview-item {
+    padding: 8px;
+}
+
+.file-upload-single .file-preview-thumbnail {
+    width: 40px;
+    height: 40px;
+}
+
+.file-upload-single .file-preview-thumbnail .file-icon {
+    font-size: 16px;
+}
+
+/* ========================================
+FILE UPLOAD STATES
+======================================= */
+
+/* Error State */
+.file-upload.error {
+    border-color: var(--error);
+    background: var(--error-light-bg);
+}
+
+.file-upload.error .file-upload-icon {
+    color: var(--error);
+}
+
+.file-upload.error .file-upload-title {
+    color: var(--error);
+}
+
+/* Success State */
+.file-upload.success {
+    border-color: var(--success);
+    background: var(--success-light-bg);
+}
+
+.file-upload.success .file-upload-icon {
+    color: var(--success);
+}
+
+.file-upload.success .file-upload-title {
+    color: var(--success);
+}
+
+/* Loading State */
+.file-upload.loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.file-upload.loading .file-upload-icon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ========================================
+FILE VALIDATION MESSAGES
+======================================= */
+
+/* File Validation Container */
+.file-validation {
+    margin-top: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.file-validation.error {
+    background: var(--error-light-bg);
+    color: var(--error);
+    border: 1px solid var(--error);
+}
+
+.file-validation.warning {
+    background: var(--warning-light-bg);
+    color: var(--warning);
+    border: 1px solid var(--warning);
+}
+
+.file-validation.info {
+    background: var(--info-light-bg);
+    color: var(--info);
+    border: 1px solid var(--info);
+}
+
+.file-validation-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.file-validation-message {
+    flex: 1;
+}
+
+/* ========================================
+RESPONSIVE DESIGN
+======================================= */
+
+@media (max-width: 768px) {
+    .file-upload {
+        padding: 24px 16px;
+    }
+    
+    .file-upload-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    .file-upload-title {
+        font-size: 14px;
+    }
+    
+    .file-upload-subtitle {
+        font-size: 12px;
+    }
+    
+    .file-upload-hint {
+        font-size: 11px;
+    }
+    
+    .file-preview-item {
+        padding: 8px;
+    }
+    
+    .file-preview-thumbnail {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .file-preview-name {
+        font-size: 13px;
+    }
+    
+    .file-preview-details {
+        font-size: 11px;
+        gap: 8px;
+    }
+    
+    .file-preview-action {
+        width: 24px;
+        height: 24px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .file-upload {
+        padding: 20px 12px;
+    }
+    
+    .file-upload-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+    }
+    
+    .file-upload-title {
+        font-size: 13px;
+    }
+    
+    .file-upload-subtitle {
+        font-size: 11px;
+    }
+    
+    .file-upload-hint {
+        font-size: 10px;
+    }
+    
+    .file-preview-item {
+        padding: 6px;
+        gap: 8px;
+    }
+    
+    .file-preview-thumbnail {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .file-preview-thumbnail .file-icon {
+        font-size: 18px;
+    }
+    
+    .file-preview-name {
+        font-size: 12px;
+    }
+    
+    .file-preview-details {
+        font-size: 10px;
+        gap: 6px;
+    }
+    
+    .file-preview-action {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
+}
