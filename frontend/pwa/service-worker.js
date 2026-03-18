@@ -104,16 +104,15 @@ async function enforceCacheSizeLimit() {
         // Remove oldest entries until under limit
         while (currentSize > MAX_CACHE_SIZE * 0.8 && requests.length > 0) {
             const oldestRequest = requests.shift();
-            await cache.delete(oldestRequest);
-            console.log('Cache size limit exceeded, removed:', oldestRequest);
 
-            // Recalculate size
             const response = await cache.match(oldestRequest);
             if (response) {
-                const responseClone = response.clone();
-                const blob = await responseClone.blob();
-                currentSize -= blob.size;
+                const blob = await response.clone().blob();
+                currentSize -= blob.size;   
             }
+
+            await cache.delete(oldestRequest);
+            console.log('Cache size limit exceeded, removed:', oldestRequest);
         }
     }
 }
@@ -222,16 +221,11 @@ self.addEventListener('fetch', (event) => {
 
 
                         // Cache response for future use
-                        caches.open(CACHE_NAME)
-                            .then((cache) => {
-                                // Add timestamp for expiry tracking
-                                const responseClone = networkResponse.clone();
+                        const responseClone = networkResponse.clone();
 
-                                caches.open(CACHE_NAME)
-                                    .then((cache) => {
-                                        cache.put(event.request, responseClone);
-                                    });
-                            });
+                        caches.open(CACHE_NAME).then(cache => {
+                            cache.put(event.request, responseClone);
+                        });
 
                         return networkResponse;
                     })
