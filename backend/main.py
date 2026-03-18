@@ -46,6 +46,9 @@ CHATBOT_API_KEY = os.getenv("CHATBOT_API_KEY")
 CHATBOT_API_ENDPOINT = os.getenv("CHATBOT_API_ENDPOINT")
 
 # ✅ SAFE FRONTEND LOAD (IMPORTANT FIX)
+
+import os
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FRONTEND_DIR = os.path.join(BASE_DIR, "..", "frontend")
 
@@ -53,11 +56,11 @@ if os.path.exists(FRONTEND_DIR):
     app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
 
 @app.get("/")
-async def root():
+def serve_home():
     index_path = os.path.join(FRONTEND_DIR, "index.html")
     if os.path.exists(index_path):
         return FileResponse(index_path)
-    return {"message": "KrishyaSetu API running 🚀"}
+    return {"message": "Frontend not found"}
 
 @app.get("/health")
 async def health():
